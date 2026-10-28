@@ -24,32 +24,19 @@ from PIL import Image, ImageDraw, ImageFont
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import medias as banques
 
+import charte
+from charte import font, marque
+
 W, H, FPS = 1080, 1920, 30
-VERT = (28, 42, 31)          # #1C2A1F, couleur de marque
-VERT_FONCE = (16, 26, 19)
-VERT_CLAIR = (58, 92, 66)
-CREME = (244, 239, 230)
-AMBRE = (232, 180, 74)
-ROUGE = (226, 104, 86)
-TURQUOISE = (72, 160, 150)
-FONT_DIR = "/usr/share/fonts/opentype/inter/"
-if not os.path.isdir(FONT_DIR):  # Windows / poste local : polices Inter livrées à côté du script
-    FONT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts", "")
-FONTS = {
-    "display": FONT_DIR + "InterDisplay-Bold.otf",
-    "black": FONT_DIR + "InterDisplay-Black.otf",
-    "bold": FONT_DIR + "Inter-Bold.otf",
-    "medium": FONT_DIR + "Inter-Medium.otf",
-}
+# couleurs du site lecoinrare.com (voir charte.py)
+VERT = charte.CARTE            # bas du dégradé de fond (presque noir, comme le site)
+VERT_FONCE = charte.FOND       # haut du dégradé, texte sur les pastilles dorées
+VERT_CLAIR = charte.VERT       # halos, volets
+CREME = charte.BLANC           # texte
+AMBRE = charte.OR              # surlignage, accents
+ROUGE = charte.ROUGE           # erreurs
+TURQUOISE = charte.VERT_VIF
 TRANSITION = 0.45  # durée du volet entre deux scènes, en secondes
-
-
-@lru_cache(maxsize=None)
-def font(name, size):
-    path = FONTS[name]
-    if not os.path.exists(path):
-        path = FONTS["display"]
-    return ImageFont.truetype(path, size)
 
 
 def clamp(x, a=0.0, b=1.0):
@@ -86,11 +73,12 @@ GRAIN = [(_rng.normal(0, 3.5, (H, W, 1))).astype(np.float32) for _ in range(6)]
 _yy = np.linspace(0, 1, H, dtype=np.float32)[:, None, None]
 BASE = (np.array(VERT_FONCE, np.float32) * (1 - _yy) + np.array(VERT, np.float32) * _yy) * np.ones((1, W, 1), np.float32)
 SHADE = np.clip((_yy - 0.35) / 0.65, 0, 1) ** 1.3  # assombrit le bas d'une photo pour le texte
+SHADE_HAUT = np.clip((0.16 - _yy) / 0.16, 0, 1) ** 1.2  # et le haut, pour le logo
 
 BLOBS = [  # couleur, intensité, centre, amplitude, vitesse, phase
-    (AMBRE, 0.22, (880, 380), (140, 120), 0.35, 0.0),
-    (TURQUOISE, 0.20, (180, 1100), (160, 200), 0.28, 1.7),
-    (VERT_CLAIR, 0.45, (760, 1650), (200, 120), 0.22, 3.1),
+    (AMBRE, 0.13, (880, 380), (140, 120), 0.35, 0.0),
+    (TURQUOISE, 0.14, (180, 1100), (160, 200), 0.28, 1.7),
+    (VERT_CLAIR, 0.30, (760, 1650), (200, 120), 0.22, 3.1),
 ]
 
 
@@ -109,8 +97,10 @@ def add_blob(canvas, color, alpha, cx, cy):
 class MediaSource:
     """Photo ou vidéo de fond, recadrée en 1080x1920 avec un lent zoom."""
 
-    def __init__(self, path, duration):
+    def __init__(self, path, duration, focus=None):
+        """focus = [x, y] entre 0 et 1 : où se trouve l'animal sur la photo (le recadrage vertical le garde au centre)."""
         self.path, self.duration = path, duration
+        self.focus = focus
         ext = os.path.splitext(path)[1].lower()
         self.is_video = ext in (".mp4", ".mov", ".webm", ".mkv", ".ogv", ".ogg")
         if self.is_video:
@@ -133,8 +123,13 @@ class MediaSource:
         z = 1.0 + 0.13 * ease_in_out(local)  # Ken Burns
         cw, ch = W * self.img.width / (W * 1.15 * z), H * self.img.height / (H * 1.15 * z)
         cw, ch = min(cw, self.img.width), min(ch, self.img.height)
-        x0 = (self.img.width - cw) * (0.35 + 0.3 * local)
-        y0 = (self.img.height - ch) * 0.4
+        if self.focus:  # léger travelling autour du sujet
+            fx, fy = self.focus
+            x0 = (self.img.width - cw) * min(1, max(0, fx - 0.08 + 0.16 * local))
+            y0 = (self.img.height - ch) * min(1, max(0, fy))
+        else:
+            x0 = (self.img.width - cw) * (0.35 + 0.3 * local)
+            y0 = (self.img.height - ch) * 0.4
         crop = self.img.crop((int(x0), int(y0), int(x0 + cw), int(y0 + ch))).resize((W, H), Image.BILINEAR)
         return np.asarray(crop, np.float32)
 
@@ -145,7 +140,8 @@ class MediaSource:
 
 def background(t, media_frame=None):
     if media_frame is not None:
-        canvas = media_frame * (1 - 0.75 * SHADE) + np.array(VERT_FONCE, np.float32) * 0.75 * SHADE
+        shade = np.maximum(0.75 * SHADE, 0.7 * SHADE_HAUT)
+        canvas = media_frame * (1 - shade) + np.array(VERT_FONCE, np.float32) * shade
         canvas = canvas * 0.82 + BASE * 0.18
         blob_gain = 0.5
     else:
@@ -283,11 +279,29 @@ def icon_thermo(d, cx, cy, p, label):
         yy = cy - 190 + k * 50
         d.line([cx + 50, yy, cx + 80, yy], fill=CREME + (a // 2,), width=5)
     if label:
-        num = "".join(ch for ch in label if ch.isdigit())
-        if num:
-            val = int(int(num) * ease_out((p - 0.15) / 0.7))
-            txt = label.replace(num, str(val))
-            d.text((cx + 120, cy - 40), txt, font=font("display", 110), fill=AMBRE + (a,), anchor="lm")
+        m = re.search(r"\d+", label)  # seul le premier nombre défile (« 32-35 °C » : le 32 monte, le 35 reste)
+        txt = label
+        if m:
+            val = int(int(m.group()) * ease_out((p - 0.15) / 0.7))
+            txt = label[:m.start()] + str(val) + label[m.end():]
+        size = 110 if len(label) <= 6 else 84
+        d.text((cx + 120, cy - 40), txt, font=font("display", size), fill=AMBRE + (a,), anchor="lm")
+
+
+def icon_sun(d, cx, cy, p, label, t):
+    """Soleil dont les rayons s'allument et tournent lentement : lumière, UVB."""
+    a = int(255 * ease_out(p * 2))
+    r = 95
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=AMBRE + (a,))
+    n_on = int(12 * ease_out((p - 0.1) / 0.6))
+    for k in range(n_on):
+        ang = k * math.pi / 6 + t * 0.4
+        r1, r2 = r + 30, r + 30 + 70 * (0.85 + 0.15 * math.sin(t * 3 + k))
+        d.line([cx + r1 * math.cos(ang), cy + r1 * math.sin(ang), cx + r2 * math.cos(ang), cy + r2 * math.sin(ang)],
+               fill=AMBRE + (a,), width=14)
+    d.text((cx, cy), "UV", font=font("display", 64), fill=VERT + (a,), anchor="mm")
+    if label:
+        d.text((cx, cy + 260), label, font=font("bold", 54), fill=CREME + (a,), anchor="mm")
 
 
 def icon_powder(d, cx, cy, p, label, t):
@@ -362,6 +376,8 @@ def draw_icon(layer, scene, local, t):
         icon_powder(d, cx, cy - 40, p, label, t)
     elif kind == "solo":
         icon_solo(d, cx, cy - 40, p, label)
+    elif kind == "sun":
+        icon_sun(d, cx, cy - 80, p, label, t)
 
 
 # ---------------------------------------------------------------- scènes
@@ -388,17 +404,19 @@ def scene_point(layer, s, lt):
 
 
 def scene_outro(layer, s, lt):
-    # mot-symbole lettre par lettre
+    # le caméléon du site apparaît, puis le nom lettre par lettre (« Rare » en vert, comme sur le site)
+    p = lt / 0.45
+    if p > 0:
+        paste_scaled(layer, charte.logo(300), W / 2, 400, 0.4 + 0.6 * ease_back(p), ease_out(p * 1.5))
     word = "LeCoinRare"
-    f = font("black", 150)
-    total = f.getlength(word)
-    x = (W - total) / 2
+    f = font("bold", 128)
+    x = (W - f.getlength(word)) / 2
     for k, ch in enumerate(word):
-        p = (lt - k * 0.045) / 0.4
+        p = (lt - 0.2 - k * 0.045) / 0.4
         w = f.getlength(ch)
         if p > 0:
-            col = AMBRE if k >= 6 else CREME
-            paste_scaled(layer, word_sprite(ch, "black", 150, col), x + w / 2, 640 + (1 - ease_out(p)) * 50, 0.5 + 0.5 * ease_back(p), ease_out(p * 1.5))
+            col = charte.VERT_RARE if k >= 6 else CREME
+            paste_scaled(layer, word_sprite(ch, "bold", 128, col), x + w / 2, 660 + (1 - ease_out(p)) * 50, 0.5 + 0.5 * ease_back(p), ease_out(p * 1.5))
         x += w
     y = kinetic_text(layer, s["title"], lt, 0.6, "display", 76, CREME, 800, align="center", max_w=900, stagger=0.06)
     y = fade_lines(layer, s["text"], lt, 1.1, "bold", 54, AMBRE, y + 30, align="center")
@@ -462,10 +480,7 @@ def chrome(layer, scenes, t, total):
         if fill > 0:
             d.rounded_rectangle([sx, y, sx + max(8, seg_w * fill), y + 8], radius=4, fill=CREME + (235,))
         acc += s["duration"]
-    # marque
-    pulse = 0.5 + 0.5 * math.sin(t * 4)
-    d.ellipse([72, 132, 96, 156], fill=AMBRE + (int(160 + 95 * pulse),))
-    d.text((112, 144), "LeCoinRare", font=font("bold", 42), fill=CREME + (255,), anchor="lm")
+    marque(layer, 70, 148, size=40)  # logo du site + nom
 
 
 def wipe(layer, t, boundaries):
@@ -486,7 +501,8 @@ def wipe(layer, t, boundaries):
 VOIX_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "voix")
 DICTION = [  # ce que la voix doit dire à la place de ce qui est écrit
     ("lecoinrare.com", "le coin rare point com"), ("@lecoinrare", "le coin rare"), ("LeCoinRare", "Le Coin Rare"),
-    (" °C", " degrés"), ("°C", " degrés"), ("n°", "numéro "), ("NAC", "nac"), ("UVB", "U V B"), ("&", "et"),
+    (" °C", " degrés"), ("°C", " degrés"), ("n°", "numéro "), ("NAC", "nac"), ("UVI", "indice UV"), ("UVB", "U V B"),
+    ("&", "et"),
 ]
 
 
@@ -529,18 +545,44 @@ def synth(voice, text):
     return sr, data
 
 
+VOIX_NATURELLES = ("estelle",)  # Chatterbox (voix_naturelle.py) ; "siwis" et "tom" = Piper, plus synthétiques
+VOIX_PY = os.environ.get("LECOINRARE_VOIX_PY",
+                         os.path.join(os.environ.get("LOCALAPPDATA", ""), "lecoinrare-voix", "venv", "Scripts", "python.exe"))
+
+
+def synth_naturelle(name, texts):
+    """Toutes les phrases d'un Reel d'un coup (le modèle ne se charge qu'une fois), dans l'environnement de la voix."""
+    import subprocess, tempfile, wave
+    with tempfile.TemporaryDirectory() as tmp:
+        demandes = [{"text": t, "out": os.path.join(tmp, f"{i}.wav")} for i, t in enumerate(texts)]
+        with open(os.path.join(tmp, "demandes.json"), "w", encoding="utf-8") as f:
+            json.dump(demandes, f, ensure_ascii=False)
+        script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "voix_naturelle.py")
+        subprocess.run([VOIX_PY, script, os.path.join(tmp, "demandes.json"), name], check=True)
+        out = []
+        for d in demandes:
+            with wave.open(d["out"]) as wf:
+                data = np.frombuffer(wf.readframes(wf.getnframes()), np.int16).astype(np.float32) / 32768
+                out.append((wf.getframerate(), data))
+        return out
+
+
 def prepare_voix(spec):
-    """Synthétise la voix off ("voix": "siwis" ou "tom") et allonge les scènes pour qu'elle ne soit jamais coupée.
-    Renvoie [(instant en s, fréquence, échantillons)], ou [] sans voix."""
+    """Synthétise la voix off ("voix": "estelle", ou "siwis"/"tom" en Piper) et allonge les scènes pour
+    qu'elle ne soit jamais coupée. Renvoie [(instant en s, fréquence, échantillons)], ou [] sans voix."""
     name = spec.get("voix")
     if not name:
         return []
-    from piper import PiperVoice
-    voice = PiperVoice.load(os.path.join(VOIX_DIR, f"fr_FR-{name}-medium.onnx"))
+    par_scene = [[diction(t) for t in narrations(s)] for s in spec["scenes"]]
+    if name in VOIX_NATURELLES:
+        flat = iter(synth_naturelle(name, [t for texts in par_scene for t in texts]))
+        audios = [[next(flat) for _ in texts] for texts in par_scene]
+    else:
+        from piper import PiperVoice
+        voice = PiperVoice.load(os.path.join(VOIX_DIR, f"fr_FR-{name}-medium.onnx"))
+        audios = [[synth(voice, t) for t in texts] for texts in par_scene]
     clips, acc = [], 0.0
-    for s in spec["scenes"]:
-        texts = [diction(t) for t in narrations(s)]
-        audio = [synth(voice, t) for t in texts]
+    for s, audio in zip(spec["scenes"], audios):
         lens = [len(a[1]) / a[0] for a in audio]
         start = 0.6 if s["type"] == "outro" else 0.35
         if s["type"] == "quiz":
@@ -596,7 +638,7 @@ def load_medias(scenes, base_dir):
             else:
                 print(f"Scène {i + 1} : aucune image trouvée pour « {s['media_query']} », fond animé seul.")
         if path:
-            medias[i] = MediaSource(path, s["duration"])
+            medias[i] = MediaSource(path, s["duration"], s.get("media_focus"))
     return medias, credits
 
 

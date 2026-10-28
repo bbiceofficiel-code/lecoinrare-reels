@@ -42,11 +42,12 @@
   },
   {
    "type": "checklist",
+   "warn": true,
    "kicker": "À RETENIR",
    "title": "Les erreurs à éviter",
    "items": [
     "Acheter le bac et les poissons le même jour",
-    "Mettre un poisson dans un bocal sans filtre ni chauffage",
+    "Rincer la masse filtrante à l'eau du robinet : le chlore tue les bactéries, rincez-la dans l'eau du bac",
     "Vider l'eau ou les poissons dans la nature : risque d'espèce invasive",
     "Ajouter tous les poissons d'un coup"
    ]

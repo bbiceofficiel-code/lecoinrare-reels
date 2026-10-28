@@ -7,37 +7,25 @@ Une slide peut avoir une photo de fond : "media" (chemin relatif au JSON) ou "me
 (recherche en anglais dans Pexels, Pixabay puis Wikimedia Commons, voir medias.py ; "media_index", "media_source").
 """
 import json, os, sys
-from functools import lru_cache
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import charte
 import medias
+from charte import font, marque
 
 W, H = 1080, 1350
-VERT = (28, 42, 31)          # #1C2A1F, couleur de marque
-VERT_FONCE = (16, 26, 19)
-VERT_CLAIR = (58, 92, 66)
-CREME = (244, 239, 230)
-AMBRE = (232, 180, 74)
-ROUGE = (226, 104, 86)
-TURQUOISE = (72, 160, 150)
-FONT_DIR = "/usr/share/fonts/opentype/inter/"
-if not os.path.isdir(FONT_DIR):  # Windows / poste local : polices Inter livrées à côté du script
-    FONT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts", "")
-FONTS = {
-    "display": FONT_DIR + "InterDisplay-Bold.otf",
-    "black": FONT_DIR + "InterDisplay-Black.otf",
-    "bold": FONT_DIR + "Inter-Bold.otf",
-    "medium": FONT_DIR + "Inter-Medium.otf",
-}
+# couleurs du site lecoinrare.com (voir charte.py)
+VERT = charte.CARTE  # fond presque noir, comme le site
+VERT_FONCE = charte.FOND
+VERT_CLAIR = charte.VERT
+CREME = charte.BLANC
+AMBRE = charte.OR
+ROUGE = charte.ROUGE
+TURQUOISE = charte.VERT_VIF
 M = 84  # marge latérale
-
-
-@lru_cache(maxsize=None)
-def font(name, size):
-    return ImageFont.truetype(FONTS[name], size)
 
 
 def backdrop(seed, photo=None):
@@ -46,7 +34,7 @@ def backdrop(seed, photo=None):
     base = (np.array(VERT_FONCE, np.float32) * (1 - y) + np.array(VERT, np.float32) * y) * np.ones((1, W, 1), np.float32)
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
     rng = np.random.default_rng(seed)
-    for color, alpha, rad in ((AMBRE, 0.20, 520), (TURQUOISE, 0.15, 600), (VERT_CLAIR, 0.40, 640)):
+    for color, alpha, rad in ((AMBRE, 0.12, 520), (TURQUOISE, 0.10, 600), (VERT_CLAIR, 0.28, 640)):
         cx, cy = rng.uniform(0, W), rng.uniform(0, H)
         base += np.exp(-((xx - cx) ** 2 + (yy - cy) ** 2) / rad ** 2 * 1.6)[..., None] * (np.array(color, np.float32) * alpha)
     if photo:
@@ -55,6 +43,8 @@ def backdrop(seed, photo=None):
         img = img.resize((int(img.width * s) + 1, int(img.height * s) + 1), Image.LANCZOS)
         x0, y0 = (img.width - W) // 2, (img.height - H) // 2
         base = np.asarray(img.crop((x0, y0, x0 + W, y0 + H)), np.float32) * 0.42 + base * 0.58
+        scrim = np.clip((y - (1 - 300 / H)) / (300 / H), 0, 1) ** 1.5  # bas assombri : le logo reste lisible
+        base = base * (1 - 0.75 * scrim) + np.array(VERT_FONCE, np.float32) * 0.75 * scrim
     base += rng.normal(0, 3, (H, W, 1)).astype(np.float32)
     return Image.fromarray(np.clip(base, 0, 255).astype(np.uint8), "RGB")
 
@@ -124,18 +114,24 @@ def slide_checklist(img, s):
     y = rich(d, s["title"], y, "black", 76, CREME, gap=1.08) + 36
     for item in s["items"]:
         b = 52
-        d.rounded_rectangle([M, y + 8, M + b, y + 8 + b], radius=12, fill=AMBRE)
-        d.line([(M + 13, y + 36), (M + 23, y + 46), (M + 40, y + 22)], fill=VERT_FONCE, width=7, joint="curve")
+        if s.get("warn"):  # liste d'erreurs : une croix rouge, pas une coche (qui dirait « à faire »)
+            d.rounded_rectangle([M, y + 8, M + b, y + 8 + b], radius=12, fill=ROUGE)
+            d.line([(M + 15, y + 23), (M + 37, y + 45)], fill=CREME, width=7)
+            d.line([(M + 37, y + 23), (M + 15, y + 45)], fill=CREME, width=7)
+        else:
+            d.rounded_rectangle([M, y + 8, M + b, y + 8 + b], radius=12, fill=AMBRE)
+            d.line([(M + 13, y + 36), (M + 23, y + 46), (M + 40, y + 22)], fill=VERT_FONCE, width=7, joint="curve")
         y = rich(d, item, y, "medium", 42, CREME, x=M + b + 28, max_w=W - 2 * M - b - 28, gap=1.28) + 22
     return img
 
 
 def slide_end(img, s):
+    img.paste(charte.logo(220), ((W - 220) // 2, 150), charte.logo(220))
     d = ImageDraw.Draw(img)
-    f = font("black", 120)
+    f = font("bold", 104)
     x = (W - f.getlength("LeCoinRare")) / 2
     d.text((x, 470), "LeCoin", font=f, fill=CREME, anchor="ls")
-    d.text((x + f.getlength("LeCoin"), 470), "Rare", font=f, fill=AMBRE, anchor="ls")
+    d.text((x + f.getlength("LeCoin"), 470), "Rare", font=f, fill=charte.VERT_RARE, anchor="ls")
     y = rich(d, s["title"], 540, "display", 64, CREME, align="center")
     if s.get("text"):
         y = rich(d, s["text"], y + 20, "bold", 44, AMBRE, align="center", gap=1.3)
@@ -149,8 +145,7 @@ SLIDES = {"cover": slide_cover, "point": slide_point, "checklist": slide_checkli
 def footer(img, i, n):
     d = ImageDraw.Draw(img)
     y = H - 84
-    d.ellipse([M, y - 11, M + 22, y + 11], fill=AMBRE)
-    d.text((M + 36, y), "LeCoinRare", font=font("bold", 34), fill=CREME, anchor="lm")
+    marque(img, M, y, size=32)
     for k in range(n):  # points de progression
         cx = W / 2 + (k - (n - 1) / 2) * 26
         d.ellipse([cx - 6, y - 6, cx + 6, y + 6], fill=AMBRE if k == i - 1 else (90, 110, 96))

@@ -1,15 +1,21 @@
 {
- "voix": "siwis",
+ "voix": "estelle",
  "cover_ms": 2800,
- "caption": "3 erreurs qui rendent un gecko léopard malade 🦎\n\n1. Pas de point chaud : il digère grâce à la chaleur. Un point chaud autour de 32 °C au sol, toujours avec un thermostat.\n2. Oublier le calcium : sans supplémentation, risque de maladie métabolique osseuse.\n3. Le mettre à plusieurs : il vit très bien seul, et deux mâles ensemble se battent.\n\nUn gecko léopard vit 15 à 20 ans : renseignez-vous avant d'adopter. Fiche complète sur lecoinrare.com\n\nEnregistrez ce post pour ne pas l'oublier 📌\n\n#geckoleopard #terrariophilie #reptiles #NAC #lecoinrare",
+ "sources": ["ReptiFiles, Leopard Gecko Temperatures (point chaud 32-35 °C en surface, UVI 2-3)", "Gould et al. 2018, J. Herp. Med. Surg. (UVB et vitamine D3 chez le gecko léopard)"],
+ "caption": "3 erreurs que font même des éleveurs avec le gecko léopard (Eublepharis macularius) 🦎\n\n1. Régler le point chaud sur la température de l'air. Ce qui compte, c'est la surface où il digère : 32 à 35 °C, mesurés au thermomètre infrarouge, et 22 à 25 °C côté frais. Un thermostat sur chaque source de chaleur.\n2. Penser qu'il n'a pas besoin d'UVB. Il est crépusculaire, mais il synthétise sa vitamine D3 sous UVB. On recommande aujourd'hui un UVB doux (UVI 2 à 3 au point chaud) avec des zones d'ombre, en plus du calcium sur les repas.\n3. Le maintenir à plusieurs. C'est un solitaire : deux mâles se battent, et même entre femelles, la compétition pour le point chaud et la nourriture crée du stress.\n\nIl vit 15 à 20 ans : renseignez-vous avant d'adopter. Fiche complète sur lecoinrare.com\n\nEt chez vous, UVB ou pas ? On lit tout en commentaire 👇\n\n#geckoleopard #terrariophilie #reptiles #NAC #lecoinrare",
  "scenes": [
   {
    "type": "hook",
    "duration": 3.2,
    "kicker": "GECKO LÉOPARD",
-   "title": "3 erreurs qui le rendent *malade*",
-   "subtitle": "La n°3 surprend souvent",
-   "narration": "Trois erreurs qui rendent un gecko léopard malade. La numéro trois surprend souvent."
+   "title": "3 erreurs que font *même des éleveurs*",
+   "subtitle": "Pour la n°2, les recommandations ont changé",
+   "narration": "Gecko léopard : trois erreurs que font même des éleveurs. Et pour la deuxième, les recommandations ont changé.",
+   "media_query": "Eublepharis macularius",
+   "media_kind": "photo",
+   "media_source": "wikimedia",
+   "media_index": 5,
+   "media_focus": [0.5, 0.2]
   },
   {
    "type": "point",
@@ -17,10 +23,11 @@
    "n": 1,
    "warn": true,
    "tag": "ERREUR",
-   "title": "Pas de *point chaud*",
-   "text": "Il digère grâce à la chaleur. Point chaud au sol, toujours avec un thermostat.",
+   "title": "Mesurer *l'air* au lieu du sol",
+   "text": "Le point chaud se mesure en surface : 32 à 35 °C au thermomètre infrarouge.",
+   "narration": "Un : régler le point chaud sur la température de l'air. Ce qui compte, c'est la surface où il se couche pour digérer. Trente-deux à trente-cinq degrés, au thermomètre infrarouge.",
    "icon": "thermo",
-   "icon_label": "32 °C"
+   "icon_label": "32-35 °C"
   },
   {
    "type": "point",
@@ -28,10 +35,11 @@
    "n": 2,
    "warn": true,
    "tag": "ERREUR",
-   "title": "Oublier le *calcium*",
-   "text": "Saupoudrez ses insectes. Sans ça : maladie osseuse.",
-   "icon": "powder",
-   "icon_label": "Calcium sur chaque repas"
+   "title": "Croire qu'il se passe *d'UVB*",
+   "text": "Crépusculaire, mais il fabrique sa vitamine D3 sous UV. Visez un UVI de 2 à 3.",
+   "narration": "Deux : croire qu'il n'a pas besoin d'ultraviolets. Il vit surtout au crépuscule, mais il fabrique sa vitamine D trois grâce à eux. Aujourd'hui, on conseille une lampe U.V. douce, avec de l'ombre.",
+   "icon": "sun",
+   "icon_label": "UVI 2 à 3, avec de l'ombre"
   },
   {
    "type": "point",
@@ -39,17 +47,19 @@
    "n": 3,
    "warn": true,
    "tag": "ERREUR",
-   "title": "Le mettre à *plusieurs*",
-   "text": "Deux mâles ensemble se battent.",
+   "title": "Le maintenir *à plusieurs*",
+   "text": "Solitaire : deux mâles se battent, et entre femelles, la compétition stresse.",
+   "narration": "Trois : le maintenir à plusieurs. C'est un solitaire. Deux mâles se battent, et même entre femelles, la compétition le stresse.",
    "icon": "solo",
-   "icon_label": "Il vit très bien seul"
+   "icon_label": "Un gecko par terrarium"
   },
   {
    "type": "outro",
    "duration": 4.2,
    "title": "Il vit 15 à 20 ans",
    "text": "Fiche complète sur lecoinrare.com",
-   "cta": "Abonnez-vous"
+   "cta": "Et vous, UVB ou pas ?",
+   "narration": "Il vit quinze à vingt ans. Toute la fiche est sur le coin rare point com. Et chez vous, lampe U.V. ou pas ? Dites-le en commentaire."
   }
  ]
 }

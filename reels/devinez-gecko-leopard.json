@@ -1,6 +1,7 @@
 {
- "voix": "siwis",
- "caption": "Devinez l'espèce 🦎\n\nElle ne grimpe pas aux vitres, elle cligne des yeux et elle stocke ses réserves dans sa queue. Vous aviez trouvé avant la réponse ? Dites-le en commentaire 👇\n\nUn gecko léopard vit 15 à 20 ans : renseignez-vous avant d'adopter. Fiche complète sur lecoinrare.com\n\n#geckoleopard #terrariophilie #reptiles #NAC #lecoinrare",
+ "voix": "estelle",
+ "sources": ["Viets et al. 1993, J. Exp. Zool. 265:679-683 (détermination du sexe par la température chez Eublepharis macularius)"],
+ "caption": "Devinez l'espèce 🦎\n\nIl ne grimpe pas aux vitres (pas de lamelles adhésives sous les doigts), il cligne des yeux (il a des paupières, rare chez les geckos), et c'est la température d'incubation qui a décidé de son sexe : vers 26 °C, presque uniquement des femelles ; vers 32 °C, surtout des mâles (Viets et al., 1993).\n\nVous aviez trouvé avant la réponse ? Dites-le en commentaire 👇\n\nLe gecko léopard (Eublepharis macularius) vit 15 à 20 ans : renseignez-vous avant d'adopter. Fiche complète sur lecoinrare.com\n\n#geckoleopard #terrariophilie #reptiles #NAC #lecoinrare",
  "cover_ms": 2500,
  "scenes": [
   {
@@ -9,9 +10,11 @@
    "reveal": 6,
    "kicker": "DEVINEZ L'ESPÈCE",
    "title": "Je ne grimpe pas aux *vitres* et je cligne des *yeux.* Qui suis-je ?",
-   "text": "Indice : mes réserves sont dans ma queue.",
+   "text": "Indice : c'est la chaleur de mon œuf qui a choisi mon sexe.",
+   "narration": "Je ne grimpe pas aux vitres, je cligne des yeux, et c'est la chaleur de mon œuf qui a décidé si je serais mâle ou femelle. Qui suis-je ?",
    "answer": "Le *gecko léopard*",
-   "answer_text": "Contrairement à la plupart des geckos, il a des paupières et pas de lamelles adhésives sous les doigts.",
+   "answer_text": "Œuf incubé vers 26 °C : presque que des femelles. Vers 32 °C : surtout des mâles.",
+   "narration_reponse": "Le gecko léopard ! Un œuf incubé vers vingt-six degrés donne presque toujours une femelle. Vers trente-deux degrés, surtout des mâles.",
    "media_query": "leopard gecko",
    "media_kind": "photo",
    "media_source": "wikimedia",
@@ -22,7 +25,8 @@
    "duration": 4.2,
    "title": "Il vit 15 à 20 ans",
    "text": "Fiche complète sur lecoinrare.com",
-   "cta": "Abonnez-vous"
+   "cta": "Abonnez-vous",
+   "narration": "Il vit quinze à vingt ans. Toute la fiche est sur le coin rare point com. Abonnez-vous pour le prochain quiz !"
   }
  ]
 }

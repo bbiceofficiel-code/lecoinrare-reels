@@ -81,10 +81,7 @@ STORIES = {"savoir": story_savoir, "sondage": story_sondage, "quiz": story_quiz,
 
 
 def brand(img):
-    d = ImageDraw.Draw(img)
-    y = BOTTOM + 40
-    d.ellipse([M, y - 11, M + 22, y + 11], fill=c.AMBRE)
-    d.text((M + 36, y), "LeCoinRare", font=c.font("bold", 34), fill=c.CREME, anchor="lm")
+    c.marque(img, M, BOTTOM + 40, size=34)
 
 
 def main(spec_path, out_dir):

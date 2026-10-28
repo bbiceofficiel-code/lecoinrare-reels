@@ -1,6 +1,9 @@
 # clés Pexels et Pixabay : jamais dans le dépôt, il est public
 .pexels_key
 .pixabay_key
+# bot Telegram de validation : jeton et état (conversation reliée, décisions)
+.telegram_token
+.telegram_etat.json
 # cache des photos et vidéos téléchargées (re-téléchargeables)
 reels/media/
 *.part
