@@ -6,7 +6,9 @@
    "kicker": "AQUARIOPHILIE",
    "title": "Cycler son aquarium en *5 étapes*",
    "subtitle": "Avant d'y mettre le moindre poisson. Comptez 4 à 5 semaines.",
-   "media_query": "planted aquarium"
+   "media_query": "freshwater aquarium",
+   "media_source": "wikimedia",
+   "media_index": 0
   },
   {
    "type": "point",

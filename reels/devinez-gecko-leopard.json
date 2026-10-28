@@ -12,7 +12,9 @@
    "answer": "Le *gecko léopard*",
    "answer_text": "Contrairement à la plupart des geckos, il a des paupières et pas de lamelles adhésives sous les doigts.",
    "media_query": "leopard gecko",
-   "media_kind": "video"
+   "media_kind": "photo",
+   "media_source": "wikimedia",
+   "media_index": 0
   },
   {
    "type": "outro",

@@ -1,6 +1,7 @@
-# clé Pexels : jamais dans le dépôt, il est public
+# clés Pexels et Pixabay : jamais dans le dépôt, il est public
 .pexels_key
-# cache des photos et vidéos Pexels (re-téléchargeables)
+.pixabay_key
+# cache des photos et vidéos téléchargées (re-téléchargeables)
 reels/media/
 *.part
 # aperçus de mise en page

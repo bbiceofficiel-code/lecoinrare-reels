@@ -4,7 +4,9 @@ Usage : python3 reel.py spec.json sortie.mp4 [--apercu]
 
 Types de scènes : hook, point, quiz (« Devinez l'espèce »), outro.
 Chaque scène peut avoir un fond : "media" (chemin d'une photo ou d'une vidéo, relatif au JSON) ou
-"media_query" (recherche Pexels, "media_kind" video|photo, "media_index" pour un autre résultat).
+"media_query" (recherche en anglais dans Pexels, Pixabay puis Wikimedia Commons, voir medias.py),
+avec "media_kind" video|photo, "media_index" pour un autre résultat et "media_source" pour forcer une source.
+Sans vidéo trouvée, une photo est utilisée.
 Le fond garde un lent zoom et un dégradé pour que le texte reste lisible.
 Dans les titres, les mots entre *astérisques* sont surlignés.
 À côté du MP4, une couverture JPG est extraite à "cover_ms" (7500 par défaut).
@@ -17,7 +19,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pexels
+import medias as banques
 
 W, H, FPS = 1080, 1920, 30
 VERT = (28, 42, 31)          # #1C2A1F, couleur de marque
@@ -107,7 +109,7 @@ class MediaSource:
     def __init__(self, path, duration):
         self.path, self.duration = path, duration
         ext = os.path.splitext(path)[1].lower()
-        self.is_video = ext in (".mp4", ".mov", ".webm", ".mkv")
+        self.is_video = ext in (".mp4", ".mov", ".webm", ".mkv", ".ogv", ".ogg")
         if self.is_video:
             cover = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS}"
             self.proc = subprocess.Popen(
@@ -486,11 +488,14 @@ def load_medias(scenes, base_dir):
     for i, s in enumerate(scenes):
         path = os.path.join(base_dir, s["media"]) if s.get("media") else None
         if not path and s.get("media_query"):
-            path, credit = pexels.fetch(s["media_query"], s.get("media_kind", "video"), s.get("media_index", 0))
+            kind, idx, src = s.get("media_kind", "video"), s.get("media_index", 0), s.get("media_source")
+            path, credit = banques.fetch(s["media_query"], kind, idx, src)
+            if not path and kind == "video":
+                path, credit = banques.fetch(s["media_query"], "photo", idx, src)
             if path:
                 credits.append(credit)
             else:
-                print(f"Scène {i + 1} : pas d'image Pexels pour « {s['media_query']} » (clé absente ou aucun résultat), fond animé seul.")
+                print(f"Scène {i + 1} : aucune image trouvée pour « {s['media_query']} », fond animé seul.")
         if path:
             medias[i] = MediaSource(path, s["duration"])
     return medias, credits

@@ -3,7 +3,8 @@
 Usage : python3 carrousel.py spec.json dossier_sortie
 
 Types de slides : cover, point, checklist, end. Dans les titres, les mots entre *astérisques* sont surlignés.
-Une slide peut avoir une photo de fond : "media" (chemin relatif au JSON) ou "media_query" (recherche Pexels).
+Une slide peut avoir une photo de fond : "media" (chemin relatif au JSON) ou "media_query"
+(recherche en anglais dans Pexels, Pixabay puis Wikimedia Commons, voir medias.py ; "media_index", "media_source").
 """
 import json, os, sys
 from functools import lru_cache
@@ -12,7 +13,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pexels
+import medias
 
 W, H = 1080, 1350
 VERT = (28, 42, 31)          # #1C2A1F, couleur de marque
@@ -162,11 +163,11 @@ def main(spec_path, out_dir):
     for i, s in enumerate(slides, 1):
         photo = os.path.join(base_dir, s["media"]) if s.get("media") else None
         if not photo and s.get("media_query"):
-            photo, credit = pexels.fetch(s["media_query"], "photo", s.get("media_index", 0))
+            photo, credit = medias.fetch(s["media_query"], "photo", s.get("media_index", 0), s.get("media_source"))
             if credit:
                 credits.append(credit)
             else:
-                print(f"Slide {i} : pas de photo Pexels pour « {s['media_query']} » (clé absente ou aucun résultat), fond de marque seul.")
+                print(f"Slide {i} : aucune photo trouvée pour « {s['media_query']} », fond de marque seul.")
         img = SLIDES[s["type"]](backdrop(i * 7, photo), s)
         footer(img, i, len(slides))
         img.save(os.path.join(out_dir, f"{i:02d}.jpg"), quality=92, subsampling=0)
