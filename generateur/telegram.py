@@ -140,6 +140,14 @@ def envoyer(args):
     chat = etat.get("chat")
     if not chat:
         sys.exit("Telegram pas encore relié : python telegram.py lier")
+    ancien = etat["envois"].get(args.id)
+    if ancien:  # nouvelle version : on retire les boutons de l'ancienne pour qu'elle ne puisse plus être validée
+        try:
+            api("editMessageReplyMarkup", {"chat_id": chat, "message_id": ancien["message_id"], "reply_markup": {"inline_keyboard": []}})
+            api("sendMessage", {"chat_id": chat, "text": "♻️ Version remplacée : la nouvelle arrive juste en dessous.",
+                                "reply_parameters": {"message_id": ancien["message_id"]}})
+        except RuntimeError:
+            pass
     videos = [f for f in args.fichiers if f.lower().endswith((".mp4", ".mov"))]
     images = [f for f in args.fichiers if f.lower().endswith((".jpg", ".jpeg", ".png"))]
     for v in videos:
