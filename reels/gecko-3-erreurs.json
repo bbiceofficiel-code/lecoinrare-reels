@@ -1,0 +1,10 @@
+{
+  "caption": "3 erreurs qui rendent un gecko léopard malade 🦎\n\n1. Pas de point chaud : il digère grâce à la chaleur. Un point chaud autour de 32 °C au sol, toujours avec un thermostat.\n2. Oublier le calcium : sans supplémentation, risque de maladie métabolique osseuse.\n3. Le mettre à plusieurs : il vit très bien seul, et deux mâles ensemble se battent.\n\nUn gecko léopard vit 15 à 20 ans : renseignez-vous avant d'adopter. Fiche complète sur lecoinrare.com\n\nEnregistrez ce post pour ne pas l'oublier 📌\n\n#geckoleopard #terrariophilie #reptiles #NAC #lecoinrare",
+  "scenes": [
+    {"type": "hook", "duration": 3.0, "kicker": "GECKO LÉOPARD", "title": "3 erreurs qui le rendent malade"},
+    {"type": "point", "duration": 4.5, "n": 1, "warn": true, "title": "Pas de point chaud", "text": "Il digère grâce à la chaleur. Point chaud autour de 32 °C au sol, toujours avec un thermostat."},
+    {"type": "point", "duration": 4.5, "n": 2, "warn": true, "title": "Oublier le calcium", "text": "Saupoudrez ses insectes de calcium. Sans ça : maladie osseuse."},
+    {"type": "point", "duration": 4.5, "n": 3, "warn": true, "title": "Le mettre à plusieurs", "text": "Il vit très bien seul. Deux mâles ensemble se battent."},
+    {"type": "outro", "duration": 4.0, "title": "Il vit 15 à 20 ans", "text": "Fiche complète sur lecoinrare.com", "cta": "Abonnez-vous"}
+  ]
+}
