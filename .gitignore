@@ -1,0 +1,8 @@
+# clé Pexels : jamais dans le dépôt, il est public
+.pexels_key
+# cache des photos et vidéos Pexels (re-téléchargeables)
+reels/media/
+*.part
+# aperçus de mise en page
+*-apercu-*.png
+__pycache__/

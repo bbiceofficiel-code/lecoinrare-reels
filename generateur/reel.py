@@ -1,16 +1,23 @@
 """Génère un Reel vertical 1080x1920 aux couleurs de LeCoinRare à partir d'un fichier JSON.
 
-Usage : python3 reel.py spec.json sortie.mp4
+Usage : python3 reel.py spec.json sortie.mp4 [--apercu]
 
-Chaque scène peut avoir un champ "media" (chemin d'une photo ou d'une vidéo, relatif au JSON) :
-elle sert alors de fond, avec un lent zoom et un dégradé pour garder le texte lisible.
+Types de scènes : hook, point, quiz (« Devinez l'espèce »), outro.
+Chaque scène peut avoir un fond : "media" (chemin d'une photo ou d'une vidéo, relatif au JSON) ou
+"media_query" (recherche Pexels, "media_kind" video|photo, "media_index" pour un autre résultat).
+Le fond garde un lent zoom et un dégradé pour que le texte reste lisible.
 Dans les titres, les mots entre *astérisques* sont surlignés.
+À côté du MP4, une couverture JPG est extraite à "cover_ms" (7500 par défaut).
+--apercu écrit seulement une image PNG par scène, pour vérifier la mise en page en quelques secondes.
 """
 import json, math, os, subprocess, sys
 from functools import lru_cache
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import pexels
 
 W, H, FPS = 1080, 1920, 30
 VERT = (28, 42, 31)          # #1C2A1F, couleur de marque
@@ -21,6 +28,8 @@ AMBRE = (232, 180, 74)
 ROUGE = (226, 104, 86)
 TURQUOISE = (72, 160, 150)
 FONT_DIR = "/usr/share/fonts/opentype/inter/"
+if not os.path.isdir(FONT_DIR):  # Windows / poste local : polices Inter livrées à côté du script
+    FONT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts", "")
 FONTS = {
     "display": FONT_DIR + "InterDisplay-Bold.otf",
     "black": FONT_DIR + "InterDisplay-Black.otf",
@@ -400,7 +409,33 @@ def scene_outro(layer, s, lt):
         paste_scaled(layer, img, W / 2, y + 140, (0.6 + 0.4 * ease_back(p)) * pulse, ease_out(p * 1.5))
 
 
-SCENES = {"hook": scene_hook, "point": scene_point, "outro": scene_outro}
+def quiz_reveal(s):
+    return s.get("reveal", s["duration"] * 0.6)
+
+
+def scene_quiz(layer, s, lt):
+    """« Devinez l'espèce » : indices et compte à rebours, puis la réponse (le fond flouté devient net)."""
+    reveal = quiz_reveal(s)
+    pill(layer, s.get("kicker", "DEVINEZ L'ESPÈCE"), 90, 470, lt / 0.4, AMBRE, VERT_FONCE, size=40)
+    if lt < reveal:
+        y = kinetic_text(layer, s["title"], lt, 0.3, "black", 92, CREME, 590, max_w=900, stagger=0.07, line_gap=1.08)
+        if s.get("text"):
+            fade_lines(layer, s["text"], lt, 0.3 + 0.07 * len(s["title"].split()) + 0.2, "medium", 50, AMBRE, y + 36, max_w=880)
+        d = ImageDraw.Draw(layer)
+        cx, cy, r = W // 2, 1500, 115
+        frac = clamp(lt / reveal)
+        d.ellipse([cx - r, cy - r, cx + r, cy + r], outline=CREME + (60,), width=14)
+        d.arc([cx - r, cy - r, cx + r, cy + r], start=-90, end=-90 + 360 * (1 - frac), fill=AMBRE + (255,), width=14)
+        d.text((cx, cy), str(max(1, math.ceil(reveal - lt))), font=font("black", 120), fill=CREME + (255,), anchor="mm")
+    else:
+        rt = lt - reveal
+        pill(layer, "RÉPONSE", 90, 590, rt / 0.35, ROUGE, CREME, size=38)
+        y = kinetic_text(layer, s["answer"], rt, 0.15, "black", 124, CREME, 700, max_w=920, stagger=0.08, line_gap=1.06)
+        if s.get("answer_text"):
+            fade_lines(layer, s["answer_text"], rt, 0.6, "medium", 52, CREME, y + 36, max_w=880)
+
+
+SCENES = {"hook": scene_hook, "point": scene_point, "quiz": scene_quiz, "outro": scene_outro}
 
 
 # ---------------------------------------------------------------- habillage
@@ -437,48 +472,98 @@ def wipe(layer, t, boundaries):
                 d.polygon([(x_a, 0), (x_b, 0), (x_b - H * 0.6, H), (x_a - H * 0.6, H)], fill=col + (255,))
 
 
-def main(spec_path, out_path):
+def soften(arr, k):
+    """Floute fortement une image (réduction puis agrandissement) : k=1 flou total, k=0 net."""
+    if k <= 0:
+        return arr
+    img = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
+    blurred = np.asarray(img.resize((W // 28, H // 28), Image.BILINEAR).resize((W, H), Image.BILINEAR), np.float32)
+    return arr * (1 - k) + blurred * k
+
+
+def load_medias(scenes, base_dir):
+    medias, credits = {}, []
+    for i, s in enumerate(scenes):
+        path = os.path.join(base_dir, s["media"]) if s.get("media") else None
+        if not path and s.get("media_query"):
+            path, credit = pexels.fetch(s["media_query"], s.get("media_kind", "video"), s.get("media_index", 0))
+            if path:
+                credits.append(credit)
+            else:
+                print(f"Scène {i + 1} : pas d'image Pexels pour « {s['media_query']} » (clé absente ou aucun résultat), fond animé seul.")
+        if path:
+            medias[i] = MediaSource(path, s["duration"])
+    return medias, credits
+
+
+def locate(scenes, t):
+    acc = 0
+    for i, s in enumerate(scenes):
+        if t < acc + s["duration"] or i == len(scenes) - 1:
+            return i, s, t - acc
+        acc += s["duration"]
+
+
+def render_frame(scenes, medias, bounds, total, t):
+    idx, scene, lt = locate(scenes, t)
+    local = clamp(lt / scene["duration"])
+    media = medias[idx].frame(local) if idx in medias else None
+    if media is not None and scene["type"] == "quiz":
+        media = soften(media, 1 - ease_out((lt - quiz_reveal(scene)) / 0.5))
+    frame = background(t, media)
+    layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    SCENES[scene["type"]](layer, scene, lt)
+    draw_icon(layer, scene, local, t)
+    chrome(layer, scenes, t, total)
+    frame.alpha_composite(layer)
+    wipe(frame, t, bounds)
+    return frame.convert("RGB")
+
+
+def main(spec_path, out_path, apercu=False):
     spec = json.load(open(spec_path, encoding="utf-8"))
     scenes = spec["scenes"]
-    base_dir = os.path.dirname(os.path.abspath(spec_path))
     total = sum(s["duration"] for s in scenes)
     bounds, acc = [], 0
     for s in scenes[:-1]:
         acc += s["duration"]
         bounds.append(acc)
-    medias = {}
-    for i, s in enumerate(scenes):
-        if s.get("media"):
-            medias[i] = MediaSource(os.path.join(base_dir, s["media"]), s["duration"])
-    proc = subprocess.Popen(
-        ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-         "-f", "lavfi", "-t", str(total), "-i", "anullsrc=r=44100:cl=stereo",
-         "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "slow", "-crf", "21", "-maxrate", "10M", "-bufsize", "20M", "-c:a", "aac",
-         "-shortest", "-movflags", "+faststart", out_path],
-        stdin=subprocess.PIPE)
-    for f in range(int(total * FPS)):
-        t = f / FPS
-        acc = 0
-        for i, s in enumerate(scenes):
-            if t < acc + s["duration"] or i == len(scenes) - 1:
-                idx, scene, lt = i, s, t - acc
-                break
-            acc += s["duration"]
-        local = clamp(lt / scene["duration"])
-        media = medias[idx].frame(local) if idx in medias else None
-        frame = background(t, media)
-        layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-        SCENES[scene["type"]](layer, scene, lt)
-        draw_icon(layer, scene, local, t)
-        chrome(layer, scenes, t, total)
-        frame.alpha_composite(layer)
-        wipe(frame, t, bounds)
-        proc.stdin.write(frame.convert("RGB").tobytes())
-    proc.stdin.close()
-    proc.wait()
-    for m in medias.values():
-        m.close()
+    medias, credits = load_medias(scenes, os.path.dirname(os.path.abspath(spec_path)))
+    stem = os.path.splitext(out_path)[0]
+    try:
+        if apercu:
+            acc = 0
+            for i, s in enumerate(scenes):
+                if s["type"] == "quiz":  # la question avant la réponse, puis la réponse affichée
+                    render_frame(scenes, medias, bounds, total, acc + quiz_reveal(s) * 0.8).save(f"{stem}-apercu-{i + 1}q.png")
+                    t = acc + min(s["duration"] - 0.05, quiz_reveal(s) + 2.2)
+                else:
+                    t = acc + s["duration"] * 0.75
+                render_frame(scenes, medias, bounds, total, t).save(f"{stem}-apercu-{i + 1}.png")
+                acc += s["duration"]
+            print(f"Aperçus écrits : {stem}-apercu-*.png")
+            return
+        proc = subprocess.Popen(
+            ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
+             "-f", "lavfi", "-t", str(total), "-i", "anullsrc=r=44100:cl=stereo",
+             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "slow", "-crf", "21", "-maxrate", "10M", "-bufsize", "20M", "-c:a", "aac",
+             "-shortest", "-movflags", "+faststart", out_path],
+            stdin=subprocess.PIPE)
+        for f in range(int(total * FPS)):
+            proc.stdin.write(render_frame(scenes, medias, bounds, total, f / FPS).tobytes())
+        proc.stdin.close()
+        proc.wait()
+    finally:
+        for m in medias.values():
+            m.close()
+    # couverture du Reel : même image que celle choisie dans Metricool (videoCoverMilliseconds)
+    cover = min(spec.get("cover_ms", 7500) / 1000, total - 0.1)
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", str(cover), "-i", out_path, "-frames:v", "1", "-q:v", "3", stem + ".jpg"], check=True)
+    print(f"Reel prêt : {out_path} ({total:.1f} s) + couverture {stem}.jpg")
+    if credits:
+        print("Crédits images : " + " ; ".join(credits))
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    main(args[0], args[1], apercu="--apercu" in sys.argv)

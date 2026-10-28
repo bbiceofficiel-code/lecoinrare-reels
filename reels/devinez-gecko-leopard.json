@@ -1,0 +1,25 @@
+{
+ "caption": "Devinez l'espèce 🦎\n\nElle ne grimpe pas aux vitres, elle cligne des yeux et elle stocke ses réserves dans sa queue. Vous aviez trouvé avant la réponse ? Dites-le en commentaire 👇\n\nUn gecko léopard vit 15 à 20 ans : renseignez-vous avant d'adopter. Fiche complète sur lecoinrare.com\n\n#geckoleopard #terrariophilie #reptiles #NAC #lecoinrare",
+ "cover_ms": 2500,
+ "scenes": [
+  {
+   "type": "quiz",
+   "duration": 9,
+   "reveal": 6,
+   "kicker": "DEVINEZ L'ESPÈCE",
+   "title": "Je ne grimpe pas aux *vitres* et je cligne des *yeux.* Qui suis-je ?",
+   "text": "Indice : mes réserves sont dans ma queue.",
+   "answer": "Le *gecko léopard*",
+   "answer_text": "Contrairement à la plupart des geckos, il a des paupières et pas de lamelles adhésives sous les doigts.",
+   "media_query": "leopard gecko",
+   "media_kind": "video"
+  },
+  {
+   "type": "outro",
+   "duration": 4.2,
+   "title": "Il vit 15 à 20 ans",
+   "text": "Fiche complète sur lecoinrare.com",
+   "cta": "Abonnez-vous"
+  }
+ ]
+}

@@ -1,0 +1,59 @@
+{
+ "caption": "Cycler son aquarium en 5 étapes 🐠\n\nLa règle d'or : ne jamais acheter le bac et les poissons le même jour. Un aquarium neuf n'a pas encore les bactéries qui transforment les déchets toxiques des poissons. Il faut 4 à 5 semaines pour les installer.\n\nEnregistrez ce post pour votre prochain bac 📌 et partagez-le à un ami qui se lance.\n\n#aquariophilie #aquarium #cyclage #poissons #lecoinrare",
+ "slides": [
+  {
+   "type": "cover",
+   "kicker": "AQUARIOPHILIE",
+   "title": "Cycler son aquarium en *5 étapes*",
+   "subtitle": "Avant d'y mettre le moindre poisson. Comptez 4 à 5 semaines.",
+   "media_query": "planted aquarium"
+  },
+  {
+   "type": "point",
+   "n": 1,
+   "title": "Installer et remplir",
+   "text": "Bac, filtre et chauffage en place. Remplissez avec une eau traitée au conditionneur pour neutraliser le chlore du robinet."
+  },
+  {
+   "type": "point",
+   "n": 2,
+   "title": "Lancer le *cycle de l'azote*",
+   "text": "Apportez une source d'ammoniaque (un peu de nourriture ou un produit dédié). Des bactéries vont s'installer dans le filtre pour la transformer."
+  },
+  {
+   "type": "point",
+   "n": 3,
+   "title": "Tester l'eau chaque semaine",
+   "text": "L'ammoniaque monte puis redescend, puis ce sont les nitrites. Notez vos résultats pour suivre la progression."
+  },
+  {
+   "type": "point",
+   "n": 4,
+   "title": "Attendre le *bon signal*",
+   "text": "Le bac est prêt quand l'ammoniaque et les nitrites restent à 0 et que les nitrates apparaissent. En général après 4 à 5 semaines."
+  },
+  {
+   "type": "point",
+   "n": 5,
+   "title": "Ajouter les poissons *peu à peu*",
+   "text": "Quelques poissons à la fois, en les acclimatant. Puis des changements d'eau réguliers pour garder les nitrates bas."
+  },
+  {
+   "type": "checklist",
+   "kicker": "À RETENIR",
+   "title": "Les erreurs à éviter",
+   "items": [
+    "Acheter le bac et les poissons le même jour",
+    "Mettre un poisson dans un bocal sans filtre ni chauffage",
+    "Vider l'eau ou les poissons dans la nature : risque d'espèce invasive",
+    "Ajouter tous les poissons d'un coup"
+   ]
+  },
+  {
+   "type": "end",
+   "title": "Enregistrez ce guide pour votre prochain bac",
+   "text": "Fiches espèces et communauté aquario sur lecoinrare.com",
+   "cta": "Suivez @lecoinrare"
+  }
+ ]
+}
