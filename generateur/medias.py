@@ -158,14 +158,27 @@ def fetch(query, kind="video", index=0, source=None):
 
 
 def planche(query, kind, source, out, n=6):
-    """Planche des n premiers candidats, numérotés comme media_index, avec leur source."""
+    """Planche des candidats numérotés comme media_index, avec leur source.
+
+    Sans source imposée : 3 candidats de chaque source disponible, pour comparer (Pixabay est très net
+    mais souvent approximatif sur une espèce précise ; Wikimedia est plus juste sur l'espèce)."""
     import subprocess
     from PIL import Image, ImageDraw, ImageFont
+    fdir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts")
+    try:
+        label_font = ImageFont.truetype(os.path.join(fdir, "Inter-Medium.otf"), 15)
+    except OSError:
+        label_font = ImageFont.load_default()
+    if source:
+        picks = [(source, i) for i in range(n)]
+    else:
+        avail = [s for s in SOURCES if s == "wikimedia" or api_key(s)]
+        picks = [(s, i) for s in avail for i in range(3)]
     tiles = []
-    for i in range(n):
-        path, credit = fetch(query, kind, i, source)
+    for src, i in picks:
+        path, credit = fetch(query, kind, i, src)
         if not path:
-            break
+            continue
         if kind == "video":  # une image prise à 1 s de la vidéo
             still = path + ".png"
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", "1", "-i", path, "-frames:v", "1", still], check=False)
@@ -177,7 +190,8 @@ def planche(query, kind, source, out, n=6):
         tile = img.crop((x0, y0, x0 + 270, y0 + 480))  # même recadrage vertical que dans le Reel
         d = ImageDraw.Draw(tile)
         d.rectangle([0, 0, 270, 34], fill=(16, 26, 19))
-        d.text((8, 7), f"#{i}  {credit.split(',')[0][:30]}", fill=(244, 239, 230), font=ImageFont.load_default())
+        d.text((8, 8), f"{src} #{i}  {credit.split(':')[-1].split(',')[0].replace(' sur Pexels', '').replace(' sur Pixabay', '').strip()[:18]}",
+               fill=(244, 239, 230), font=label_font)
         tiles.append(tile)
     if not tiles:
         print("Aucun candidat.")
