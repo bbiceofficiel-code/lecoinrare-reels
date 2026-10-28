@@ -63,9 +63,11 @@ def rich(d, text, y, fname, size, color, x=M, max_w=W - 2 * M, align="left", gap
     """Texte avec retour à la ligne ; les *mots* sont surlignés en ambre. Renvoie le y de fin."""
     f = font(fname, size)
     sp, pad = f.getlength(" "), size * 0.16
-    lines, cur, cw = [], [], 0
+    lines, cur, cw, inside = [], [], 0, False
     for raw in text.split():
-        word, hl = raw.replace("*", ""), "*" in raw
+        word, hl = raw.replace("*", ""), inside or "*" in raw
+        start, end = raw.startswith("*"), raw.rstrip(".,;:!?…»").endswith("*")
+        inside = (inside or start) and not end
         ww = f.getlength(word) + (2 * pad if hl else 0)
         if cur and cw + sp + ww > max_w:
             lines.append((cur, cw))

@@ -7,3 +7,6 @@ reels/media/
 # aperçus de mise en page
 *-apercu-*.png
 __pycache__/
+# voix Piper (60 Mo chacune, re-téléchargeables : python -m piper.download_voices fr_FR-siwis-medium fr_FR-tom-medium)
+generateur/voix/
+*-voix.wav

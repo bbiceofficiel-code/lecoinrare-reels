@@ -1,0 +1,63 @@
+{
+ "semaine": "2026-11-02",
+ "theme": "La vitrine",
+ "stories": [
+  {
+   "date": "2026-11-02T12:30:00",
+   "type": "sondage",
+   "title": "Votre *première* espèce, c'était plutôt…",
+   "options": ["Un reptile", "Des poissons"],
+   "sticker": "Sondage : « Un reptile » / « Des poissons »"
+  },
+  {
+   "date": "2026-11-03T12:30:00",
+   "type": "savoir",
+   "title": "Le gecko léopard ne grimpe *pas* aux vitres",
+   "text": "Il n'a pas de lamelles adhésives sous les doigts, contrairement à la plupart des geckos. Il préfère un terrarium plus long que haut.",
+   "media_query": "leopard gecko",
+   "media_source": "wikimedia",
+   "media_index": 1
+  },
+  {
+   "date": "2026-11-04T12:30:00",
+   "type": "quiz",
+   "title": "Combien de temps pour *cycler* un aquarium neuf ?",
+   "options": ["2 jours", "1 semaine", "4 à 5 semaines"],
+   "sticker": "Quiz : bonne réponse C (4 à 5 semaines)"
+  },
+  {
+   "date": "2026-11-05T12:30:00",
+   "type": "question",
+   "title": "Une question sur votre *terrarium* ou votre *aquarium* ?",
+   "text": "Posez-la ici : on vous répond en story cette semaine.",
+   "sticker": "Boîte à questions dans le cadre"
+  },
+  {
+   "date": "2026-11-06T12:30:00",
+   "type": "savoir",
+   "title": "Un poisson rouge peut vivre *plus de 20 ans*",
+   "text": "Il dépasse souvent 20 cm. Un bocal ne suffit jamais : il lui faut un grand bac ou un bassin.",
+   "media_query": "goldfish aquarium",
+   "media_source": "pixabay",
+   "media_index": 2
+  },
+  {
+   "date": "2026-11-07T19:30:00",
+   "type": "teaser",
+   "title": "Devinez l'espèce : vous aurez la réponse en *3 secondes* ?",
+   "media_query": "leopard gecko",
+   "media_source": "wikimedia",
+   "media_index": 0,
+   "cta": "Le Reel est sur notre profil",
+   "sticker": "Lien ou mention du Reel du jour"
+  },
+  {
+   "date": "2026-11-08T11:00:00",
+   "type": "question",
+   "kicker": "LE BAC DU DIMANCHE",
+   "title": "Montrez-nous votre *installation*",
+   "text": "Envoyez une photo en message : on repartage les plus belles, avec votre accord et en vous mentionnant.",
+   "sticker": "Boîte à questions ou simple « Répondre en message »"
+  }
+ ]
+}

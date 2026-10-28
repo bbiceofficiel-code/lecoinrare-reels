@@ -10,9 +10,12 @@ Sans vidéo trouvée, une photo est utilisée.
 Le fond garde un lent zoom et un dégradé pour que le texte reste lisible.
 Dans les titres, les mots entre *astérisques* sont surlignés.
 À côté du MP4, une couverture JPG est extraite à "cover_ms" (7500 par défaut).
+Voix off française gratuite (Piper, hors ligne) : "voix": "siwis" (féminine) ou "tom" (masculine) à la racine.
+Chaque scène lit son texte affiché, ou son champ "narration" ("narration_reponse" pour la réponse d'un quiz) ;
+les scènes s'allongent toutes seules pour que la voix ne soit jamais coupée.
 --apercu écrit seulement une image PNG par scène, pour vérifier la mise en page en quelques secondes.
 """
-import json, math, os, subprocess, sys
+import json, math, os, re, subprocess, sys
 from functools import lru_cache
 
 import numpy as np
@@ -167,11 +170,15 @@ def word_sprite(word, fname, size, color):
 
 
 def parse_words(text):
-    """'Un *mot* surligné' -> [('Un', False), ('mot', True), ('surligné', False)]"""
-    out = []
+    """'Un *mot* et *plusieurs mots* surlignés' -> [('Un', False), ('mot', True), ('et', False), ('plusieurs', True), ('mots', True), ...]"""
+    out, inside = [], False
     for raw in text.split():
-        hl = raw.startswith("*") or raw.endswith("*") or "*" in raw
-        out.append((raw.replace("*", ""), hl))
+        start, end = raw.startswith("*"), raw.rstrip(".,;:!?…»").endswith("*")
+        out.append((raw.replace("*", ""), inside or "*" in raw))
+        if start and not end:
+            inside = True
+        elif end:
+            inside = False
     return out
 
 
@@ -474,6 +481,98 @@ def wipe(layer, t, boundaries):
                 d.polygon([(x_a, 0), (x_b, 0), (x_b - H * 0.6, H), (x_a - H * 0.6, H)], fill=col + (255,))
 
 
+# ---------------------------------------------------------------- voix off (Piper : gratuit, hors ligne)
+
+VOIX_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "voix")
+DICTION = [  # ce que la voix doit dire à la place de ce qui est écrit
+    ("lecoinrare.com", "le coin rare point com"), ("@lecoinrare", "le coin rare"), ("LeCoinRare", "Le Coin Rare"),
+    (" °C", " degrés"), ("°C", " degrés"), ("n°", "numéro "), ("NAC", "nac"), ("UVB", "U V B"), ("&", "et"),
+]
+
+
+def diction(text):
+    t = text.replace("*", "")
+    for a, b in DICTION:
+        t = t.replace(a, b)
+    t = re.sub(r"\s+", " ", t)
+    return re.sub(r"\s*\.\s*\.", ".", t).strip(" .") + "."
+
+
+def narrations(s):
+    """Ce que la voix lit dans une scène : champ "narration" (et "narration_reponse" pour un quiz), sinon le texte affiché."""
+    if s["type"] == "quiz":
+        return [s.get("narration", f'{s["title"]} {s.get("text", "")}'),
+                s.get("narration_reponse", f'{s["answer"]}. {s.get("answer_text", "")}')]
+    if s.get("narration"):
+        return [s["narration"]]
+    if s["type"] == "hook":
+        return [f'{s["title"]}. {s.get("subtitle", "")}']
+    if s["type"] == "point":
+        n = f'Erreur numéro {s["n"]}' if s.get("tag", "ERREUR") == "ERREUR" else f'Numéro {s["n"]}'
+        return [f'{n} : {s["title"]}. {s["text"]}']
+    return [f'{s["title"]}. {s.get("text", "")}. {s.get("cta", "Abonnez-vous")} !']
+
+
+def synth(voice, text):
+    import io, wave
+    buf = io.BytesIO()
+    with wave.open(buf, "wb") as wf:
+        try:
+            from piper import SynthesisConfig
+            voice.synthesize_wav(text, wf, syn_config=SynthesisConfig(length_scale=0.9))  # un peu plus vif, rythme Reel
+        except ImportError:
+            voice.synthesize_wav(text, wf)
+    buf.seek(0)
+    with wave.open(buf) as wf:
+        sr = wf.getframerate()
+        data = np.frombuffer(wf.readframes(wf.getnframes()), np.int16).astype(np.float32) / 32768
+    return sr, data
+
+
+def prepare_voix(spec):
+    """Synthétise la voix off ("voix": "siwis" ou "tom") et allonge les scènes pour qu'elle ne soit jamais coupée.
+    Renvoie [(instant en s, fréquence, échantillons)], ou [] sans voix."""
+    name = spec.get("voix")
+    if not name:
+        return []
+    from piper import PiperVoice
+    voice = PiperVoice.load(os.path.join(VOIX_DIR, f"fr_FR-{name}-medium.onnx"))
+    clips, acc = [], 0.0
+    for s in spec["scenes"]:
+        texts = [diction(t) for t in narrations(s)]
+        audio = [synth(voice, t) for t in texts]
+        lens = [len(a[1]) / a[0] for a in audio]
+        start = 0.6 if s["type"] == "outro" else 0.35
+        if s["type"] == "quiz":
+            s["reveal"] = max(quiz_reveal(s), start + lens[0] + 0.5)
+            s["duration"] = max(s["duration"], s["reveal"] + 0.15 + lens[1] + 0.6)
+            offsets = [start, s["reveal"] + 0.15]
+        else:
+            s["duration"] = max(s["duration"], start + lens[0] + 0.5)
+            offsets = [start]
+        for off, (sr, data) in zip(offsets, audio):
+            clips.append((acc + off, sr, data))
+        acc += s["duration"]
+    return clips
+
+
+def write_voix(clips, total, path):
+    import wave
+    sr = clips[0][1]
+    track = np.zeros(int(total * sr) + 1, np.float32)
+    for t, _, data in clips:
+        i = int(t * sr)
+        n = min(len(data), len(track) - i)
+        track[i:i + n] += data[:n]
+    peak = np.abs(track).max() or 1
+    track = track / peak * 0.89  # -1 dB
+    with wave.open(path, "wb") as wf:
+        wf.setnchannels(1)
+        wf.setsampwidth(2)
+        wf.setframerate(sr)
+        wf.writeframes((track * 32767).astype(np.int16).tobytes())
+
+
 def soften(arr, k):
     """Floute fortement une image (réduction puis agrandissement) : k=1 flou total, k=0 net."""
     if k <= 0:
@@ -528,6 +627,7 @@ def render_frame(scenes, medias, bounds, total, t):
 def main(spec_path, out_path, apercu=False):
     spec = json.load(open(spec_path, encoding="utf-8"))
     scenes = spec["scenes"]
+    clips = prepare_voix(spec)  # allonge les scènes si la voix off en a besoin
     total = sum(s["duration"] for s in scenes)
     bounds, acc = [], 0
     for s in scenes[:-1]:
@@ -535,6 +635,12 @@ def main(spec_path, out_path, apercu=False):
         bounds.append(acc)
     medias, credits = load_medias(scenes, os.path.dirname(os.path.abspath(spec_path)))
     stem = os.path.splitext(out_path)[0]
+    audio = ["-f", "lavfi", "-t", str(total), "-i", "anullsrc=r=44100:cl=stereo"]
+    voix_wav = None
+    if clips and not apercu:
+        voix_wav = stem + "-voix.wav"
+        write_voix(clips, total, voix_wav)
+        audio = ["-i", voix_wav]
     try:
         if apercu:
             acc = 0
@@ -550,9 +656,10 @@ def main(spec_path, out_path, apercu=False):
             return
         proc = subprocess.Popen(
             ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-             "-f", "lavfi", "-t", str(total), "-i", "anullsrc=r=44100:cl=stereo",
-             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "slow", "-crf", "21", "-maxrate", "10M", "-bufsize", "20M", "-c:a", "aac",
-             "-shortest", "-movflags", "+faststart", out_path],
+             *audio,
+             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "slow", "-crf", "21", "-maxrate", "10M", "-bufsize", "20M",
+             "-c:a", "aac", "-b:a", "160k", "-ar", "44100", "-ac", "2",
+             "-t", str(total), "-movflags", "+faststart", out_path],
             stdin=subprocess.PIPE)
         for f in range(int(total * FPS)):
             proc.stdin.write(render_frame(scenes, medias, bounds, total, f / FPS).tobytes())
@@ -561,6 +668,8 @@ def main(spec_path, out_path, apercu=False):
     finally:
         for m in medias.values():
             m.close()
+        if voix_wav and os.path.exists(voix_wav):
+            os.remove(voix_wav)
     # couverture du Reel : même image que celle choisie dans Metricool (videoCoverMilliseconds)
     cover = min(spec.get("cover_ms", 7500) / 1000, total - 0.1)
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", str(cover), "-i", out_path, "-frames:v", "1", "-q:v", "3", stem + ".jpg"], check=True)

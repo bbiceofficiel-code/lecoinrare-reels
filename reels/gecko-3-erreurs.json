@@ -1,4 +1,6 @@
 {
+ "voix": "siwis",
+ "cover_ms": 2800,
  "caption": "3 erreurs qui rendent un gecko léopard malade 🦎\n\n1. Pas de point chaud : il digère grâce à la chaleur. Un point chaud autour de 32 °C au sol, toujours avec un thermostat.\n2. Oublier le calcium : sans supplémentation, risque de maladie métabolique osseuse.\n3. Le mettre à plusieurs : il vit très bien seul, et deux mâles ensemble se battent.\n\nUn gecko léopard vit 15 à 20 ans : renseignez-vous avant d'adopter. Fiche complète sur lecoinrare.com\n\nEnregistrez ce post pour ne pas l'oublier 📌\n\n#geckoleopard #terrariophilie #reptiles #NAC #lecoinrare",
  "scenes": [
   {
@@ -6,7 +8,8 @@
    "duration": 3.2,
    "kicker": "GECKO LÉOPARD",
    "title": "3 erreurs qui le rendent *malade*",
-   "subtitle": "La n°3 surprend souvent"
+   "subtitle": "La n°3 surprend souvent",
+   "narration": "Trois erreurs qui rendent un gecko léopard malade. La numéro trois surprend souvent."
   },
   {
    "type": "point",

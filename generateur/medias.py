@@ -22,7 +22,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE = os.path.join(ROOT, "reels", "media")
 UA = {"User-Agent": "lecoinrare-reels/1.0 (https://github.com/bbiceofficiel-code/lecoinrare-reels)"}
 SOURCES = ("pexels", "pixabay", "wikimedia")
-MIN_SHARP = {"video": 600, "photo": 800}  # largeur utile minimale après recadrage vertical, en pixels
+MIN_SHARP = {"video": 600, "photo": 700}  # largeur utile minimale après recadrage vertical (Pixabay plafonne ses photos à 1280 px)
 FREE_LICENSES = ("cc0", "public domain", "pd")
 
 
@@ -74,16 +74,22 @@ def _pexels(query, kind, key):
     return out
 
 
+def _not_ai(hit):
+    """Pixabay contient des images générées par IA : on les écarte (étiquette « ai generated »), on veut de vrais animaux."""
+    tags = hit.get("tags", "").lower()
+    return "ai generated" not in tags and "ai-generated" not in tags and "generative" not in tags
+
+
 def _pixabay(query, kind, key):
     q, out = urllib.parse.quote(query), []
     if kind == "video":
-        for v in _json(f"https://pixabay.com/api/videos/?key={key}&q={q}&per_page=30&safesearch=true").get("hits", []):
+        for v in filter(_not_ai, _json(f"https://pixabay.com/api/videos/?key={key}&q={q}&per_page=30&safesearch=true").get("hits", [])):
             files = [f for f in v["videos"].values() if f.get("url") and f.get("width")]
             if files:
                 f = max(files, key=lambda f: sharpness(f["width"], f["height"]))
                 out.append(dict(url=f["url"], w=f["width"], h=f["height"], ext=".mp4", credit=f'Vidéo : {v["user"]} sur Pixabay', page=v["pageURL"]))
     else:
-        for p in _json(f"https://pixabay.com/api/?key={key}&q={q}&image_type=photo&per_page=30&safesearch=true").get("hits", []):
+        for p in filter(_not_ai, _json(f"https://pixabay.com/api/?key={key}&q={q}&image_type=photo&per_page=30&safesearch=true").get("hits", [])):
             s = min(1, 1280 / max(p["imageWidth"], p["imageHeight"]))  # largeImageURL : 1280 px max sur le grand côté
             out.append(dict(url=p["largeImageURL"], w=int(p["imageWidth"] * s), h=int(p["imageHeight"] * s), ext=".jpg", credit=f'Photo : {p["user"]} sur Pixabay', page=p["pageURL"]))
     return out
