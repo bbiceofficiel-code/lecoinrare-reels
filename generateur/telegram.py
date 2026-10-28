@@ -12,7 +12,7 @@ Ensuite :
     Pour demander une correction, on répond au message de la légende en écrivant ce qu'il faut changer.
   python telegram.py decisions [--json]
     lit les réponses reçues depuis le dernier passage et donne l'état de chaque envoi.
-  python telegram.py dire "texte"        envoie un message (compte rendu, rappel)
+  python telegram.py dire "texte"  ou  dire -f message.txt     envoie un message (compte rendu, rappel, rapport)
   python telegram.py oublier <id> [--messages]   retire un envoi traité (et les messages libres lus)
 
 Le bot ne tourne pas en permanence : un appui sur un bouton est pris en compte au passage suivant de l'agent.
@@ -227,7 +227,10 @@ def dire(args):
     chat = charger().get("chat")
     if not chat:
         sys.exit("Telegram pas encore relié : python telegram.py lier")
-    api("sendMessage", {"chat_id": chat, "text": " ".join(args.texte)[:4000]})
+    texte = open(args.fichier, encoding="utf-8-sig").read() if args.fichier else " ".join(args.texte)
+    if not texte.strip():
+        sys.exit("Message vide.")
+    api("sendMessage", {"chat_id": chat, "text": texte[:4000]})
 
 
 def oublier(args):
@@ -257,7 +260,8 @@ if __name__ == "__main__":
     d.add_argument("--json", action="store_true")
     d.set_defaults(f=decisions)
     m = sub.add_parser("dire")
-    m.add_argument("texte", nargs="+")
+    m.add_argument("texte", nargs="*")
+    m.add_argument("-f", "--fichier", help="texte du message dans un fichier UTF-8 (pratique pour plusieurs lignes)")
     m.set_defaults(f=dire)
     o = sub.add_parser("oublier")
     o.add_argument("ids", nargs="*")
