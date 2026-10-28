@@ -12,6 +12,8 @@ Ensuite :
     Pour demander une correction, on répond au message de la légende en écrivant ce qu'il faut changer.
   python telegram.py decisions [--json]
     lit les réponses reçues depuis le dernier passage et donne l'état de chaque envoi.
+  python telegram.py dire "texte"        envoie un message (compte rendu, rappel)
+  python telegram.py oublier <id> [--messages]   retire un envoi traité (et les messages libres lus)
 
 Le bot ne tourne pas en permanence : un appui sur un bouton est pris en compte au passage suivant de l'agent.
 Seuls les messages de la conversation reliée (« lier ») comptent ; le bot ignore tous les autres.
@@ -220,6 +222,14 @@ def decisions(args):
         print(f"Message libre : {t}")
 
 
+def dire(args):
+    """Envoie un simple message dans la conversation reliée (compte rendu de l'agent, rappel)."""
+    chat = charger().get("chat")
+    if not chat:
+        sys.exit("Telegram pas encore relié : python telegram.py lier")
+    api("sendMessage", {"chat_id": chat, "text": " ".join(args.texte)[:4000]})
+
+
 def oublier(args):
     """Retire de l'état les envois traités (publiés ou abandonnés), pour garder la liste courte."""
     etat = charger()
@@ -246,6 +256,9 @@ if __name__ == "__main__":
     d = sub.add_parser("decisions")
     d.add_argument("--json", action="store_true")
     d.set_defaults(f=decisions)
+    m = sub.add_parser("dire")
+    m.add_argument("texte", nargs="+")
+    m.set_defaults(f=dire)
     o = sub.add_parser("oublier")
     o.add_argument("ids", nargs="*")
     o.add_argument("--messages", action="store_true", help="vider aussi les messages libres déjà lus")
