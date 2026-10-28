@@ -19,7 +19,7 @@ import json, math, os, re, subprocess, sys
 from functools import lru_cache
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageChops, ImageDraw, ImageFont
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import medias as banques
@@ -67,13 +67,20 @@ def _radial_sprite(size):
     return np.clip(np.exp(-(d ** 2) * 3.2), 0, 1)[..., None]
 
 
-BLOB = _radial_sprite(1100)
+LOW = 4  # les halos sont flous : calculés en 270x480 puis agrandis (rendu identique, 4 à 5 fois plus rapide)
+BLOB = _radial_sprite(1100 // LOW)
 _rng = np.random.default_rng(7)
 GRAIN = [(_rng.normal(0, 3.5, (H, W, 1))).astype(np.float32) for _ in range(6)]
 _yy = np.linspace(0, 1, H, dtype=np.float32)[:, None, None]
 BASE = (np.array(VERT_FONCE, np.float32) * (1 - _yy) + np.array(VERT, np.float32) * _yy) * np.ones((1, W, 1), np.float32)
 SHADE = np.clip((_yy - 0.35) / 0.65, 0, 1) ** 1.3  # assombrit le bas d'une photo pour le texte
 SHADE_HAUT = np.clip((0.16 - _yy) / 0.16, 0, 1) ** 1.2  # et le haut, pour le logo
+_SH = np.maximum(0.75 * SHADE, 0.7 * SHADE_HAUT)
+MEDIA_KEEP = (1 - _SH) * 0.82  # fond photo = photo * MEDIA_KEEP + MEDIA_ADD (assombrissements précalculés)
+MEDIA_ADD = np.array(VERT_FONCE, np.float32) * _SH * 0.82 + BASE * 0.18
+# versions 8 bits pour les additions rapides de Pillow (le grain est décalé de +16, retiré à l'addition)
+BASE_IMG = Image.fromarray(np.clip(BASE, 0, 255).astype(np.uint8), "RGB")
+GRAIN_IMG = [Image.fromarray(np.clip(g[..., 0] + 16, 0, 255).astype(np.uint8), "L").convert("RGB") for g in GRAIN]
 
 BLOBS = [  # couleur, intensité, centre, amplitude, vitesse, phase
     (AMBRE, 0.13, (880, 380), (140, 120), 0.35, 0.0),
@@ -83,11 +90,12 @@ BLOBS = [  # couleur, intensité, centre, amplitude, vitesse, phase
 
 
 def add_blob(canvas, color, alpha, cx, cy):
-    s = BLOB.shape[0]
-    x0, y0 = int(cx - s / 2), int(cy - s / 2)
+    """Ajoute un halo sur le canevas basse résolution (H/LOW x W/LOW) ; cx, cy en pixels pleine résolution."""
+    s, (h, w) = BLOB.shape[0], canvas.shape[:2]
+    x0, y0 = int(cx / LOW - s / 2), int(cy / LOW - s / 2)
     sx0, sy0 = max(0, -x0), max(0, -y0)
     x0c, y0c = max(0, x0), max(0, y0)
-    x1c, y1c = min(W, x0 + s), min(H, y0 + s)
+    x1c, y1c = min(w, x0 + s), min(h, y0 + s)
     if x1c <= x0c or y1c <= y0c:
         return
     sprite = BLOB[sy0:sy0 + (y1c - y0c), sx0:sx0 + (x1c - x0c)]
@@ -104,19 +112,36 @@ class MediaSource:
         ext = os.path.splitext(path)[1].lower()
         self.is_video = ext in (".mp4", ".mov", ".webm", ".mkv", ".ogv", ".ogg")
         if self.is_video:
-            cover = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS}"
-            self.proc = subprocess.Popen(
-                ["ffmpeg", "-loglevel", "error", "-stream_loop", "-1", "-i", path, "-t", str(duration + 1),
-                 "-vf", cover, "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
-            self.last = None
+            probe = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path],
+                                   capture_output=True, text=True).stdout.strip()
+            self.media_len = float(probe) if probe else 0.0
+            self.proc, self.next, self.last = None, None, None
         else:
             img = Image.open(path).convert("RGB")
             scale = max(W / img.width, H / img.height) * 1.15
             self.img = img.resize((int(img.width * scale) + 1, int(img.height * scale) + 1), Image.LANCZOS)
 
+    def _open(self, idx):
+        """(Re)lit la vidéo à partir de l'image idx : les images peuvent être rendues par morceaux, en parallèle."""
+        self.close()
+        start = (idx / FPS) % self.media_len if self.media_len else 0
+        cover = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS}"
+        self.proc = subprocess.Popen(
+            ["ffmpeg", "-loglevel", "error", "-stream_loop", "-1", "-ss", f"{start:.3f}", "-i", self.path,
+             "-t", str(self.duration + 1), "-vf", cover, "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
+        self.next = idx
+
     def frame(self, local):
         if self.is_video:
+            idx = int(round(local * self.duration * FPS))
+            if self.next is not None and idx == self.next - 1 and self.last is not None:
+                return self.last.astype(np.float32)  # même image (arrondi)
+            if self.next is None or not 0 <= idx - self.next <= 3:
+                self._open(idx)
+            for _ in range(idx - self.next):  # petit saut : on lit et on jette
+                self.proc.stdout.read(W * H * 3)
             raw = self.proc.stdout.read(W * H * 3)
+            self.next = idx + 1
             if len(raw) == W * H * 3:
                 self.last = np.frombuffer(raw, np.uint8).reshape(H, W, 3)
             return self.last.astype(np.float32) if self.last is not None else BASE.copy()
@@ -134,24 +159,26 @@ class MediaSource:
         return np.asarray(crop, np.float32)
 
     def close(self):
-        if self.is_video:
+        if self.is_video and self.proc:
             self.proc.kill()
+            self.proc = None
 
 
 def background(t, media_frame=None):
     if media_frame is not None:
-        shade = np.maximum(0.75 * SHADE, 0.7 * SHADE_HAUT)
-        canvas = media_frame * (1 - shade) + np.array(VERT_FONCE, np.float32) * shade
-        canvas = canvas * 0.82 + BASE * 0.18
+        img = Image.fromarray(np.clip(media_frame * MEDIA_KEEP + MEDIA_ADD, 0, 255).astype(np.uint8), "RGB")
         blob_gain = 0.5
     else:
-        canvas = BASE.copy()
+        img = BASE_IMG
         blob_gain = 1.0
+    halos = np.zeros((H // LOW, W // LOW, 3), np.float32)
     for color, alpha, (cx, cy), (ax, ay), speed, phase in BLOBS:
-        add_blob(canvas, color, alpha * blob_gain,
+        add_blob(halos, color, alpha * blob_gain,
                  cx + ax * math.sin(t * speed + phase), cy + ay * math.cos(t * speed * 0.8 + phase))
-    canvas += GRAIN[int(t * 8) % len(GRAIN)]
-    return Image.fromarray(np.clip(canvas, 0, 255).astype(np.uint8), "RGB").convert("RGBA")
+    halos = Image.fromarray(np.clip(halos, 0, 255).astype(np.uint8), "RGB").resize((W, H), Image.BILINEAR)
+    img = ImageChops.add(img, halos)
+    img = ImageChops.add(img, GRAIN_IMG[int(t * 8) % len(GRAIN_IMG)], 1.0, -16)
+    return img.convert("RGBA")
 
 
 # ---------------------------------------------------------------- texte animé
@@ -666,10 +693,41 @@ def render_frame(scenes, medias, bounds, total, t):
     return frame.convert("RGB")
 
 
+# ---------------------------------------------------------------- rendu en parallèle et encodage
+
+_W = {}  # état de chaque processus de rendu
+
+
+def _init_worker(scenes, base_dir, bounds, total):
+    medias, _ = load_medias(scenes, base_dir)
+    _W.update(scenes=scenes, medias=medias, bounds=bounds, total=total)
+
+
+def _render_chunk(rng):
+    f0, f1 = rng
+    return b"".join(render_frame(_W["scenes"], _W["medias"], _W["bounds"], _W["total"], f / FPS).tobytes()
+                    for f in range(f0, f1))
+
+
+@lru_cache(maxsize=1)
+def encodeur():
+    """NVENC (carte graphique NVIDIA) s'il est là : bien plus rapide ; sinon x264 sur le processeur."""
+    test = subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i", "color=c=black:s=256x256:d=0.2",
+                           "-c:v", "h264_nvenc", "-f", "null", "-"], capture_output=True)
+    if test.returncode == 0:
+        return ["-c:v", "h264_nvenc", "-preset", "p6", "-tune", "hq", "-rc", "vbr", "-cq", "23", "-b:v", "5M",
+                "-maxrate", "7M", "-bufsize", "14M", "-profile:v", "high"]
+    # débit plafonné : un Reel de 60 s reste sous 50 Mo (limite d'envoi des bots Telegram)
+    return ["-c:v", "libx264", "-preset", "slow", "-crf", "21", "-maxrate", "7M", "-bufsize", "14M"]
+
+
 def main(spec_path, out_path, apercu=False):
+    import time
+    t_start = time.time()
     spec = json.load(open(spec_path, encoding="utf-8"))
     scenes = spec["scenes"]
     clips = prepare_voix(spec)  # allonge les scènes si la voix off en a besoin
+    t_voix = time.time()
     total = sum(s["duration"] for s in scenes)
     bounds, acc = [], 0
     for s in scenes[:-1]:
@@ -698,15 +756,25 @@ def main(spec_path, out_path, apercu=False):
             return
         proc = subprocess.Popen(
             ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-             *audio,
-             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "slow", "-crf", "21", "-maxrate", "10M", "-bufsize", "20M",
+             *audio, *encodeur(), "-pix_fmt", "yuv420p",
              "-c:a", "aac", "-b:a", "160k", "-ar", "44100", "-ac", "2",
              "-t", str(total), "-movflags", "+faststart", out_path],
             stdin=subprocess.PIPE)
-        for f in range(int(total * FPS)):
-            proc.stdin.write(render_frame(scenes, medias, bounds, total, f / FPS).tobytes())
+        # images rendues par paquets de 12 sur plusieurs processus, écrites dans l'ordre ; au plus 2 paquets
+        # d'avance par processus pour ne pas remplir la mémoire
+        import multiprocessing as mp
+        n, step = int(total * FPS), 12
+        chunks = [(f, min(n, f + step)) for f in range(0, n, step)]
+        workers = max(1, min(6, (os.cpu_count() or 2) - 1))
+        with mp.Pool(workers, _init_worker, (scenes, os.path.dirname(os.path.abspath(spec_path)), bounds, total)) as pool:
+            pending = [pool.apply_async(_render_chunk, (c,)) for c in chunks[:workers * 2]]
+            for k in range(len(chunks)):
+                proc.stdin.write(pending.pop(0).get())
+                if k + workers * 2 < len(chunks):
+                    pending.append(pool.apply_async(_render_chunk, (chunks[k + workers * 2],)))
         proc.stdin.close()
-        proc.wait()
+        if proc.wait():
+            raise RuntimeError("ffmpeg a échoué pendant l'encodage")
     finally:
         for m in medias.values():
             m.close()
@@ -715,7 +783,8 @@ def main(spec_path, out_path, apercu=False):
     # couverture du Reel : même image que celle choisie dans Metricool (videoCoverMilliseconds)
     cover = min(spec.get("cover_ms", 7500) / 1000, total - 0.1)
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", str(cover), "-i", out_path, "-frames:v", "1", "-q:v", "3", stem + ".jpg"], check=True)
-    print(f"Reel prêt : {out_path} ({total:.1f} s) + couverture {stem}.jpg")
+    print(f"Reel prêt : {out_path} ({total:.1f} s, {os.path.getsize(out_path) / 1e6:.0f} Mo) + couverture {stem}.jpg "
+          f"— voix {t_voix - t_start:.0f} s, images et encodage {time.time() - t_voix:.0f} s")
     if credits:
         print("Crédits images : " + " ; ".join(credits))
 
