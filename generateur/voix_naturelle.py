@@ -18,7 +18,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 VOIX = os.path.join(HERE, "voix")
 CACHE = os.path.join(VOIX, "cache")
 REFS = {"estelle": ("kyutai/tts-voices", "unmute-prod-website/developpeuse-3.wav")}
-REGLAGES = dict(exaggeration=0.5, cfg_weight=0.5)  # choix de l'utilisateur le 28/10 (échantillon C)
+REGLAGES = dict(exaggeration=0.7, cfg_weight=0.5)  # choix de l'utilisateur le 28/10 : échantillon D, plus vif (C jugé trop mou)
 ESSAIS, SEUIL = 5, 0.85
 
 
