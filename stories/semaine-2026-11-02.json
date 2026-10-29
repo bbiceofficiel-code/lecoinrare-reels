@@ -1,53 +1,51 @@
 {
  "semaine": "2026-11-02",
- "theme": "La vitrine",
+ "theme": "Bourses d'hiver : acheter, transporter, acclimater",
  "stories": [
   {
    "date": "2026-11-02T12:30:00",
    "type": "sondage",
-   "title": "Votre *première* espèce, c'était plutôt…",
-   "options": ["Un reptile", "Des poissons"],
-   "sticker": "Sondage : « Un reptile » / « Des poissons »"
+   "title": "Vos nouveaux poissons, vous les *acclimatez* comment ?",
+   "options": ["Au goutte-à-goutte", "Sac qui flotte, puis épuisette"],
+   "sticker": "Sondage : « Goutte-à-goutte » / « Sac qui flotte »"
   },
   {
    "date": "2026-11-03T12:30:00",
    "type": "savoir",
-   "title": "Le gecko léopard ne grimpe *pas* aux vitres",
-   "text": "Il n'a pas de lamelles adhésives sous les doigts, contrairement à la plupart des geckos. Il préfère un terrarium plus long que haut.",
-   "media_query": "leopard gecko",
-   "media_source": "wikimedia",
-   "media_index": 1
+   "kicker": "AGENDA",
+   "title": "Vous allez en *bourse* ce week-end ?",
+   "text": "Montauban (82), Bolbec (76), Argenteuil (95)… Vérifiez dates et horaires sur le site de chaque organisateur, et dites-nous où vous allez.",
+   "media": "media/bac-malawi.jpg"
   },
   {
-   "date": "2026-11-04T12:30:00",
-   "type": "quiz",
-   "title": "Combien de temps pour *cycler* un aquarium neuf ?",
-   "options": ["2 jours", "1 semaine", "4 à 5 semaines"],
-   "sticker": "Quiz : bonne réponse C (4 à 5 semaines)"
-  },
-  {
-   "date": "2026-11-05T12:30:00",
-   "type": "question",
-   "title": "Une question sur votre *terrarium* ou votre *aquarium* ?",
-   "text": "Posez-la ici : on vous répond en story cette semaine.",
-   "sticker": "Boîte à questions dans le cadre"
-  },
-  {
-   "date": "2026-11-06T12:30:00",
-   "type": "savoir",
-   "title": "Un poisson rouge peut vivre *plus de 20 ans*",
-   "text": "Il peut dépasser 20 cm et produit beaucoup de déchets : sa place est dans un grand aquarium bien filtré ou, mieux, un bassin.",
-   "media_query": "goldfish aquarium",
-   "media_source": "pixabay",
-   "media_index": 2
-  },
-  {
-   "date": "2026-11-07T19:30:00",
+   "date": "2026-11-04T19:30:00",
    "type": "teaser",
    "title": "Incubé à 32 °C… et c'est une *femelle* ?",
    "media_query": "leopard gecko",
    "media_source": "wikimedia",
    "media_index": 0,
+   "cta": "Le Reel est sur notre profil",
+   "sticker": "Lien ou mention du Reel du jour"
+  },
+  {
+   "date": "2026-11-05T12:30:00",
+   "type": "question",
+   "title": "Une question avant la *bourse* ?",
+   "text": "Papiers, transport, quarantaine : posez-la ici, on vous répond en story.",
+   "sticker": "Boîte à questions dans le cadre"
+  },
+  {
+   "date": "2026-11-06T12:30:00",
+   "type": "quiz",
+   "title": "En hiver, pour transporter des poissons, le sac contient…",
+   "options": ["Que de l'eau", "1/4 d'eau, 3/4 d'air", "Moitié eau, moitié air"],
+   "sticker": "Quiz : bonne réponse B (1/4 d'eau, 3/4 d'air)"
+  },
+  {
+   "date": "2026-11-07T19:30:00",
+   "type": "teaser",
+   "title": "Votre serpent vous entend… mais pas comme vous *croyez*",
+   "media": "media/serpent-des-bles.jpg",
    "cta": "Le Reel est sur notre profil",
    "sticker": "Lien ou mention du Reel du jour"
   },

@@ -1,0 +1,144 @@
+{
+ "voix": "estelle",
+ "vitesse": 1.15,
+ "musique": "musique/mixkit-need-for-speed.mp3",
+ "musique_debut": 13,
+ "musique_volume": 0.36,
+ "cover_ms": 2200,
+ "accroche": "Le piège ? Quand vous *ouvrez* le sac",
+ "sources": [
+  "LSU AgCenter (Lutz), Stocking procedures : CO2 et pH bas pendant le transport, pH qui remonte à l'ouverture, aérer ou éclabousser accélère le phénomène, moins grave si trajet court et poissons à jeun : https://www.lsuagcenter.com/topics/aquaculture/recreational_ponds/stocking_managing_fish_populations/stocking_procedures/stocking-procedures",
+  "Table d'Emerson et al. 1975 (fiche SRAC) : part de NH3 à 25 °C environ 0,06 % à pH 6, 0,57 % à pH 7, 5,5 % à pH 8 : https://srac-aquaponics.tamu.edu/fact-sheets/serve/3",
+  "WetWebMedia (Fenner), acclimatation après long transport : dilution progressive : http://wetwebmedia.com/acclimcontrovf.htm",
+  "American Killifish Association, Shipping fish (sacs 1/4 eau 3/4 air, sacs respirants à ne jamais faire flotter) : https://aka.org/general-shipping-fish-an-overview/"
+ ],
+ "caption": "Le piège quand vous ramenez des poissons ? Le moment où vous ouvrez le sac 🐟\n\nDans le sac fermé, les poissons respirent : le CO2 s'accumule et l'eau devient plus acide. À ce pH plus bas, leurs déchets restent surtout sous forme d'ammonium (NH4+), peu toxique.\n\nÀ l'ouverture, le CO2 s'échappe, le pH remonte… et une partie de l'ammonium repasse en ammoniac (NH3), toxique pour les branchies : à 25 °C, environ 0,6 % à pH 7 contre 5 % à pH 8. Dix fois plus par point de pH. Plus le trajet a été long (et les poissons nourris juste avant), plus il y en a.\n\nLa règle en 3 cas :\n1. Trajet court depuis une bourse : sac fermé qui flotte 15 à 30 min pour la température, puis transfert au filet (épuisette) et quarantaine.\n2. Colis de 24 h ou plus : on ne laisse pas le sac ouvert, on transfère vite (ou on dilue avec une eau au même pH).\n3. Gros écart de dureté, ou crevettes Caridina : goutte-à-goutte.\n\nDans tous les cas : on ne fait pas buller l'eau du sac, on ne la verse jamais dans le bac, et on ne fait jamais flotter un sac respirant (le poisson étoufferait).\n\nVous êtes équipe 1, 2 ou 3 ? 👇\n\nEn bourse samedi 7 ou dimanche 8 ? Exposants : sacs 1/4 d'eau pour 3/4 d'air, et poissons à jeun la veille.\n\n#aquariophilie #aquarium #poissons #bourseaquariophile #lecoinrare",
+ "phrases": [
+  {
+   "texte": "Vous ramenez des poissons… Le piège, c'est quand vous ouvrez le sac.",
+   "plans": [
+    {
+     "pixabay": 108366,
+     "debut": 9,
+     "x": 0.65
+    },
+    {
+     "pixabay": 27784,
+     "debut": 2,
+     "x": 0.5,
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "Sac fermé : le gaz carbonique s'accumule, l'eau s'acidifie, et leurs déchets restent sous une forme peu toxique.",
+   "plans": [
+    {
+     "photo": "wikimedia:180144877"
+    },
+    {
+     "pixabay": 52017,
+     "debut": 0.3,
+     "x": 0.3,
+     "zoom": "out"
+    },
+    {
+     "pixabay": 169633,
+     "debut": 1,
+     "x": 0.28
+    }
+   ]
+  },
+  {
+   "texte": "À l'ouverture, le pH remonte… et l'ammoniac toxique avec lui : dix fois plus par point de pH.",
+   "carte": "×10 d'ammoniac par point de pH",
+   "plans": [
+    {
+     "pixabay": 133871,
+     "debut": 0.5,
+     "x": 0.45
+    },
+    {
+     "pixabay": 150227,
+     "debut": 3,
+     "x": 0.6,
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "Alors : sac fermé qui flotte, sans bulles, et l'eau du sac ne va jamais dans le bac.",
+   "plans": [
+    {
+     "pixabay": 133870,
+     "debut": 2,
+     "x": 0.62
+    },
+    {
+     "pixabay": 212986,
+     "debut": 12.5,
+     "x": 0.6
+    }
+   ]
+  },
+  {
+   "texte": "Un : trajet court ? Au filet, puis quarantaine.",
+   "carte": "1. Trajet court : au filet",
+   "plans": [
+    {
+     "pixabay": 108366,
+     "debut": 1,
+     "x": 0.35
+    }
+   ]
+  },
+  {
+   "texte": "Deux : long colis ? Transfert rapide.",
+   "carte": "2. Long colis : transfert rapide",
+   "plans": [
+    {
+     "pixabay": 169633,
+     "debut": 20,
+     "x": 0.4
+    }
+   ]
+  },
+  {
+   "texte": "Trois : eau très différente, ou crevettes ? Goutte-à-goutte.",
+   "carte": "3. Eau très différente : goutte-à-goutte",
+   "plans": [
+    {
+     "pixabay": 133871,
+     "debut": 10,
+     "x": 0.65
+    }
+   ]
+  },
+  {
+   "texte": "Vous êtes équipe un, deux ou trois ? Dites-le en commentaire.",
+   "plans": [
+    {
+     "pixabay": 27784,
+     "debut": 12,
+     "x": 0.5
+    },
+    {
+     "pixabay": 150227,
+     "debut": 9,
+     "x": 0.4,
+     "zoom": "out"
+    }
+   ]
+  }
+ ],
+ "fin": {
+  "texte": "Abonnez-vous pour la suite !",
+  "plans": [
+   {
+    "pixabay": 133870,
+    "debut": 15,
+    "x": 0.6
+   }
+  ]
+ }
+}

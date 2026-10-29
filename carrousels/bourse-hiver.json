@@ -1,0 +1,72 @@
+{
+ "sources": [
+  "Légifrance, arrêté du 8 octobre 2018 consolidé, en vigueur depuis le 10/09/2025 (arrêté du 5 septembre 2025) : art. 7 IV (original de la déclaration de marquage), art. 10 (attestation de cession : facture seulement hors espèces protégées, CITES annexes A à D, colonnes b/c), art. 11 (document d'information avec coût d'entretien annuel), art. 14 et annexe 2 (seuils, juvéniles comptés), art. 16 (déclaration préalable à l'acquisition) : https://www.legifrance.gouv.fr/loda/id/JORFTEXT000037491137",
+  "Plaquette CITES éleveurs d'agrément, DREAL Auvergne-Rhône-Alpes, antérieure à 2018 : valable seulement pour le CIC des espèces de l'annexe A : https://www.auvergne-rhone-alpes.developpement-durable.gouv.fr/IMG/pdf/plaquette_cites_eleveurs_d_agrement.pdf",
+  "American Killifish Association, Shipping fish (sacs 1/4 eau 3/4 air, sacs respirants, chaufferettes) : https://aka.org/general-shipping-fish-an-overview/",
+  "mythes-aqua.md n° 21 (pH et ammoniac à l'ouverture du sac, LSU AgCenter)"
+ ],
+ "caption": "Acheter en bourse par temps froid : les 6 réflexes d'éleveur 🦎🐠\n\n1. Avant de partir : les seuils de l'espèce (arrêté du 8 octobre 2018). Si une déclaration est nécessaire, elle se fait en préfecture AVANT l'achat. Depuis septembre 2025, les juvéniles comptent aussi.\n2. Le transport : boîte isotherme un peu aérée, voiture préchauffée, chaufferette enveloppée et jamais au contact (gare à la surchauffe).\n3. Les poissons : sacs remplis à 1/4 d'eau et 3/4 d'air.\n4. L'origine : né en captivité (NC) ou prélevé dans la nature (WC) ? Âge, alimentation, conditions de maintien.\n5. Les papiers : attestation de cession (une simple facture ne suffit pas pour une espèce protégée ou CITES comme le python royal), document d'information sur l'espèce, original de la déclaration de marquage pour un animal marqué, original du CIC pour une tortue d'Hermann ou toute espèce de l'annexe A.\n6. À la maison : quarantaine, et l'eau du sac ne va jamais dans l'aquarium.\n\nVous allez à une bourse ce week-end ? Dites-nous laquelle en commentaire 👇 (et vérifiez toujours les horaires sur le site de l'organisateur).\n\nEnregistrez ce post pour votre prochaine bourse 📌\n\n#bourseauxreptiles #terrariophilie #aquariophilie #reptiles #lecoinrare",
+ "slides": [
+  {
+   "type": "cover",
+   "kicker": "BOURSES D'HIVER",
+   "title": "*6 réflexes* d'éleveur pour acheter en bourse par temps froid",
+   "subtitle": "Dont un à faire avant même de partir.",
+   "media": "../stories/media/bac-malawi.jpg"
+  },
+  {
+   "type": "point",
+   "n": 1,
+   "title": "Vérifier les *seuils* avant d'acheter",
+   "text": "Pas de formalité, déclaration en préfecture (à faire avant l'achat) ou certificat de capacité : ça dépend de l'espèce et du nombre. Depuis septembre 2025, les juvéniles comptent aussi."
+  },
+  {
+   "type": "point",
+   "n": 2,
+   "title": "Préparer le *transport*",
+   "text": "Boîte isotherme avec quelques trous d'aération, un contenant par reptile, voiture préchauffée. Chaufferette enveloppée, jamais au contact : gare à la surchauffe."
+  },
+  {
+   "type": "point",
+   "n": 3,
+   "title": "Poissons : *1/4 d'eau, 3/4 d'air*",
+   "text": "Dans un sac classique, c'est l'air qui fait tenir le trajet. Un sac respirant se remplit d'eau, mais ne doit jamais flotter dans un bac."
+  },
+  {
+   "type": "point",
+   "n": 4,
+   "title": "Demander *l'origine*",
+   "text": "Né en captivité (NC) ou prélevé dans la nature (WC) ? Âge, alimentation actuelle, conditions de maintien : un éleveur sérieux répond sans hésiter."
+  },
+  {
+   "type": "point",
+   "n": 5,
+   "title": "Repartir avec les *bons papiers*",
+   "text": "Attestation de cession (une facture ne suffit pas pour une espèce CITES comme le python royal) et document d'information. Animal marqué : l'original de sa déclaration de marquage."
+  },
+  {
+   "type": "point",
+   "n": 6,
+   "title": "À la maison : *quarantaine*",
+   "text": "60 à 90 jours à part pour un reptile, un bac séparé pour les poissons. L'eau du sac ne va jamais dans l'aquarium : à l'ouverture, l'ammoniac devient plus toxique."
+  },
+  {
+   "type": "checklist",
+   "warn": true,
+   "kicker": "À RETENIR",
+   "title": "Les erreurs à éviter",
+   "items": [
+    "L'achat coup de cœur d'une espèce à déclarer",
+    "Acheter sans installation prête (et cyclée pour un aquarium)",
+    "Laisser un animal dans la voiture, même dix minutes",
+    "Mettre le nouvel arrivant tout de suite avec les autres"
+   ]
+  },
+  {
+   "type": "end",
+   "title": "Enregistrez-le avant votre prochaine bourse",
+   "text": "Fiches espèces et communauté sur lecoinrare.com",
+   "cta": "Suivez @lecoinrare"
+  }
+ ]
+}

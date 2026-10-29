@@ -34,6 +34,7 @@ W, H, FPS, SR = 1080, 1920, 30, 44100
 OVER = 1.12          # les images sont décodées 12 % plus grandes : place pour les zooms
 GAP = 0.12           # silence entre deux phrases
 CAP_Y = 1180         # centre des sous-titres (au-dessus de la zone des boutons Instagram)
+AUTEURS_IA = {"Solarselle77"}  # comptes Pixabay qui ne publient que des vidéos générées par IA
 
 
 # ---------------------------------------------------------------- vidéos
@@ -45,6 +46,8 @@ def pixabay_clip(vid):
         return path
     os.makedirs(banques.CACHE, exist_ok=True)
     hit = banques._json(f"https://pixabay.com/api/videos/?key={banques.api_key('pixabay')}&id={vid}")["hits"][0]
+    if hit["user"] in AUTEURS_IA or any(m in hit["tags"].lower() for m in ("ai generated", "photorealistic", "generative")):
+        raise ValueError(f"pixabay {vid} : vidéo générée par IA ({hit['user']}), on veut de vrais animaux")
     best = max((f for f in hit["videos"].values() if f.get("url")), key=lambda f: f.get("width") or 0)
     banques._download(best["url"], path)
     with open(path + ".json", "w", encoding="utf-8") as f:
