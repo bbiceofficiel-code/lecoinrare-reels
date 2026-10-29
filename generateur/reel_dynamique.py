@@ -7,7 +7,9 @@ de la voix (le mot prononcé en couleur), une musique rythmée qui s'efface sous
 nouvelle phrase, une accroche en gros dès la première image, 20 à 30 s en tout.
 
 JSON :
-  "voix": "estelle", "vitesse": 1.1 (voix accélérée sans changer sa hauteur),
+  "voix": "estelle-qwen" (par défaut : Qwen3-TTS, texte lu d'une traite, mixage studio ; "studio": false pour l'enlever)
+  ou "estelle" (Chatterbox, phrase par phrase), "vitesse" (accélère sans changer la hauteur ; 1.1 par défaut pour
+  Chatterbox, 1.0 pour Qwen, dont le débit est déjà naturel),
   "musique": "musique/<fichier>.mp3" (relatif à generateur/), "musique_debut": s, "musique_volume": 0.5,
   "accroche": "Texte de l'accroche avec *mots* surlignés" (en gros pendant la 1re phrase),
   "phrases": [{"texte": "Ce que dit la voix, affiché mot à mot", "plans": [{"pixabay": 233037, "debut": 3.5, "x": 0.4}]}],
@@ -33,6 +35,11 @@ from reel import diction, encodeur, parse_words, synth_naturelle
 W, H, FPS, SR = 1080, 1920, 30, 44100
 OVER = 1.12          # les images sont décodées 12 % plus grandes : place pour les zooms
 GAP = 0.12           # silence entre deux phrases
+# mixage « studio » de la voix Qwen, choisi par l'utilisateur le 29/10 (essai D) : grave nettoyé, présence,
+# un peu d'air, sifflantes adoucies, compression douce et une très petite pièce (moins « sec », moins IA)
+STUDIO = ("highpass=f=75,equalizer=f=250:t=q:w=1:g=-2,equalizer=f=3200:t=q:w=1.2:g=2.5,"
+          "equalizer=f=10000:t=h:w=0.7:g=1.5,deesser=i=0.4,"
+          "acompressor=threshold=-21dB:ratio=3:attack=6:release=90:makeup=3,aecho=0.9:0.9:18|31:0.07|0.04")
 CAP_Y = 1180         # centre des sous-titres (au-dessus de la zone des boutons Instagram)
 AUTEURS_IA = {"Solarselle77"}  # comptes Pixabay qui ne publient que des vidéos générées par IA
 
@@ -166,8 +173,10 @@ def voix_phrases(spec):
     """Synthétise chaque phrase, accélérée de "vitesse" sans changer la hauteur. Renvoie [(échantillons 44,1 kHz)].
     La voix Qwen ("estelle-qwen") a déjà un débit naturel : pas d'accélération par défaut."""
     textes = [p["texte"] for p in spec["phrases"]] + ([spec["fin"]["texte"]] if spec.get("fin") else [])
-    nom = spec.get("voix", "estelle")
-    vitesse = spec.get("vitesse", 1.0 if nom.endswith("-qwen") else 1.1)
+    nom = spec.get("voix", "estelle-qwen")  # voix par défaut depuis le 29/10 (essai D)
+    qwen = nom.endswith("-qwen")
+    vitesse = spec.get("vitesse", 1.0 if qwen else 1.1)
+    filtre = f"atempo={vitesse}" + (f",{STUDIO}" if qwen and spec.get("studio", True) else "")
     brut = synth_naturelle(nom, [diction(t.replace("*", "")) for t in textes])
     out = []
     with tempfile.TemporaryDirectory() as tmp:
@@ -176,7 +185,7 @@ def voix_phrases(spec):
             with wave.open(src, "wb") as wf:
                 wf.setnchannels(1), wf.setsampwidth(2), wf.setframerate(sr)
                 wf.writeframes((np.clip(data, -1, 1) * 32767).astype(np.int16).tobytes())
-            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", src, "-af", f"atempo={vitesse}",
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", src, "-af", filtre,
                             "-ar", str(SR), "-ac", "1", dst], check=True)
             with wave.open(dst) as wf:
                 out.append(np.frombuffer(wf.readframes(wf.getnframes()), np.int16).astype(np.float32) / 32768)

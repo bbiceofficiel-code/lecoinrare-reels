@@ -1,6 +1,5 @@
 {
- "voix": "estelle",
- "vitesse": 1.15,
+ "voix": "estelle-qwen",
  "musique": "musique/mixkit-epical-drums-02.mp3",
  "musique_debut": 2,
  "musique_volume": 0.38,
@@ -13,27 +12,109 @@
  ],
  "caption": "Incubé à 32 °C… et c'est une femelle ? 🦎🌡️\n\nChez le gecko léopard (Eublepharis macularius), on ne connaît pas de chromosomes sexuels : c'est la température d'incubation qui oriente le sexe.\n• vers 26-28 °C : 100 % de femelles ;\n• vers 31-33 °C : une majorité de mâles, mais aucune température n'en donne 100 % ;\n• vers 34 °C : de nouveau surtout des femelles (Viets et al., 1993), et on frôle la limite : juste au-dessus de 35 °C, les embryons meurent.\n\nEt à température égale, tous les couples ne donnent pas les mêmes proportions : la génétique des parents joue aussi.\n\nVous incubez à quelle température, et avec quels résultats ? 👇\n\n#geckoleopard #terrariophilie #reptiles #NAC #lecoinrare",
  "phrases": [
-  {"texte": "Vous incubez à trente-deux degrés pour avoir des mâles… et il sort une femelle ?",
-   "plans": [{"photo": "pixabay:8375500"}, {"photo": "pixabay:3287920", "zoom": "out"}]},
-  {"texte": "Chez le gecko léopard, pas de chromosomes sexuels connus : c'est la chaleur qui oriente le sexe.",
-   "plans": [{"photo": "pixabay:591291"}, {"photo": "pixabay:3695960", "zoom": "out"}]},
-  {"texte": "Vers vingt-six degrés : que des femelles.",
+  {
+   "texte": "Vous incubez à trente-deux degrés pour avoir des mâles… et il sort une femelle ?",
+   "plans": [
+    {
+     "photo": "pixabay:8375500"
+    },
+    {
+     "photo": "pixabay:3287920",
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "En fait, chez le gecko léopard, on ne connaît pas de chromosomes sexuels : c'est la température d'incubation qui oriente le sexe.",
+   "plans": [
+    {
+     "photo": "pixabay:591291"
+    },
+    {
+     "photo": "pixabay:3695960",
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "Vers vingt-six degrés ? Que des femelles.",
    "carte": "26 °C = 100 % femelles",
-   "plans": [{"photo": "pixabay:3195466"}, {"photo": "pixabay:517670", "zoom": "out"}]},
-  {"texte": "Vers trente-deux : surtout des mâles… mais jamais cent pour cent.",
+   "plans": [
+    {
+     "photo": "pixabay:3195466"
+    },
+    {
+     "photo": "pixabay:517670",
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "Vers trente-deux, surtout des mâles… mais jamais cent pour cent.",
    "carte": "32 °C = surtout des mâles",
-   "plans": [{"photo": "pixabay:3782952"}, {"photo": "pixabay:515496", "zoom": "out"}]},
-  {"texte": "Et à trente-quatre degrés ? De nouveau surtout des femelles.",
+   "plans": [
+    {
+     "photo": "pixabay:3782952"
+    },
+    {
+     "photo": "pixabay:515496",
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "Et à trente-quatre degrés ? De nouveau, surtout des femelles !",
    "carte": "34 °C = surtout des femelles",
-   "plans": [{"photo": "pixabay:256046"}, {"photo": "pixabay:2842594", "zoom": "out"}]},
-  {"texte": "Mais juste au-dessus de trente-cinq degrés, les embryons meurent.",
+   "plans": [
+    {
+     "photo": "pixabay:256046"
+    },
+    {
+     "photo": "pixabay:2842594",
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "Attention quand même : juste au-dessus de trente-cinq degrés, les embryons meurent.",
    "carte": "Plus de 35 °C : danger",
-   "plans": [{"photo": "pixabay:2327817"}]},
-  {"texte": "Et à température égale, chaque couple donne des résultats différents : la génétique joue aussi.",
-   "plans": [{"photo": "pixabay:327259"}, {"photo": "pixabay:2018986", "zoom": "out"}]},
-  {"texte": "Et vous, vous incubez à combien ? Dites-le en commentaire.",
-   "plans": [{"photo": "pixabay:3782953"}, {"photo": "pixabay:8909504", "zoom": "out"}]}
+   "plans": [
+    {
+     "photo": "pixabay:2327817"
+    }
+   ]
+  },
+  {
+   "texte": "Même à température égale, tous les couples ne donnent pas les mêmes proportions : la génétique joue aussi.",
+   "plans": [
+    {
+     "photo": "pixabay:327259"
+    },
+    {
+     "photo": "pixabay:2018986",
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "Et vous, vous incubez à combien ? Dites-le en commentaire.",
+   "plans": [
+    {
+     "photo": "pixabay:3782953"
+    },
+    {
+     "photo": "pixabay:8909504",
+     "zoom": "out"
+    }
+   ]
+  }
  ],
- "fin": {"texte": "Abonnez-vous pour le prochain secret d'éleveur !",
-   "plans": [{"photo": "pixabay:3695959"}]}
+ "fin": {
+  "texte": "Abonnez-vous pour la suite !",
+  "plans": [
+   {
+    "photo": "pixabay:3695959"
+   }
+  ]
+ }
 }

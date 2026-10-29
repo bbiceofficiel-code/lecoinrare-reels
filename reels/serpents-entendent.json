@@ -1,6 +1,5 @@
 {
- "voix": "estelle",
- "vitesse": 1.15,
+ "voix": "estelle-qwen",
  "musique": "musique/mixkit-i-wont-surrender.mp3",
  "musique_debut": 0,
  "musique_volume": 0.34,
@@ -11,29 +10,131 @@
   "Christensen et al. 2012, Journal of Experimental Biology 215:331-342 : 11 pythons royaux, meilleure sensibilité 80-160 Hz, seuil aérien d'environ 78 dB, détection de la pression sonore médiocre mais sensibilité aux vibrations très fine",
   "Communiqué University of Queensland, 15/02/2023 (« possibly human voices ») : https://news.uq.edu.au/2023-02-15-snakes-can-hear-more-you-think"
  ],
- "caption": "Votre serpent vous entend… mais pas comme vous croyez 🐍\n\nPas d'oreille externe ni de tympan, mais une oreille interne, reliée à la mâchoire. En 2023, une équipe de l'Université du Queensland a testé 19 serpents australiens (5 genres) en salle insonorisée : ils réagissent aussi aux sons de l'air, sans vibration du sol. Le python woma a plutôt tendance à aller vers le son ; les taïpans et les vipères de la mort à s'en éloigner, les taïpans adoptant aussi plus souvent une posture défensive (Chapuis, Zdenek et al., PLOS ONE, 2023).\n\nMais le test était fait à 85 dB, bien plus fort qu'une conversation (environ 60 dB). Et chez le python royal, une étude de 2012 sur 11 animaux montre une ouïe aérienne médiocre (seuil vers 78 dB) mais une sensibilité très fine aux vibrations (Christensen et al., J Exp Biol).\n\nCe qu'il capte le mieux : une porte qui claque, des pas lourds, une machine à laver ou un caisson de basses posé sur le même meuble.\n\nVotre terrarium est près d'une enceinte, d'une porte ou de la machine à laver ? 👇\n\n#serpent #pythonroyal #terrariophilie #reptiles #lecoinrare",
+ "caption": "Votre serpent vous entend… mais pas comme vous croyez 🐍\n\nPas d'oreille externe ni de tympan, mais une oreille interne, reliée à la mâchoire. En 2023, une équipe de l'Université du Queensland a testé 19 serpents australiens (5 genres) en salle insonorisée : plusieurs réagissent aussi aux sons de l'air, sans vibration du sol. Le python woma a plutôt tendance à aller vers le son ; les taïpans et les vipères de la mort à s'en éloigner, les taïpans adoptant aussi plus souvent une posture défensive (Chapuis, Zdenek et al., PLOS ONE, 2023).\n\nMais le test était fait à 85 dB, bien plus fort qu'une conversation (environ 60 dB). Et chez le python royal, une étude de 2012 sur 11 animaux montre une ouïe aérienne médiocre (seuil vers 78 dB) mais une sensibilité très fine aux vibrations (Christensen et al., J Exp Biol).\n\nCe qu'il capte le mieux : une porte qui claque, des pas lourds, une machine à laver ou un caisson de basses posé sur le même meuble.\n\nVotre terrarium est près d'une enceinte, d'une porte ou de la machine à laver ? 👇\n\n#serpent #pythonroyal #terrariophilie #reptiles #lecoinrare",
  "phrases": [
-  {"texte": "Votre serpent n'a ni oreille externe ni tympan… et pourtant, il entend.",
-   "plans": [{"pixabay": 173405, "debut": 1, "x": 0.45}, {"pixabay": 220923, "debut": 2, "x": 0.55, "zoom": "out"}]},
-  {"texte": "En 2023, une étude australienne sur dix-neuf serpents l'a montré : ils réagissent aussi aux sons de l'air.",
+  {
+   "texte": "Votre serpent n'a ni oreille externe, ni tympan… et pourtant, il entend.",
+   "plans": [
+    {
+     "pixabay": 173405,
+     "debut": 1,
+     "x": 0.45
+    },
+    {
+     "pixabay": 220923,
+     "debut": 2,
+     "x": 0.55,
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "En 2023, une étude australienne sur dix-neuf serpents l'a montré : plusieurs espèces réagissent aussi aux sons transmis par l'air.",
    "carte": "19 serpents, 5 genres australiens",
-   "plans": [{"pixabay": 220923, "debut": 12, "x": 0.55}, {"pixabay": 67506, "debut": 2, "x": 0.42, "zoom": "out"}]},
-  {"texte": "Le python woma a plutôt tendance à aller vers le son… les taïpans et les vipères de la mort, à s'en éloigner.",
+   "plans": [
+    {
+     "pixabay": 220923,
+     "debut": 12,
+     "x": 0.55
+    },
+    {
+     "pixabay": 67506,
+     "debut": 2,
+     "x": 0.42,
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "Le python woma, lui, a plutôt tendance à aller vers le son… les taïpans et les vipères de la mort, à s'en éloigner.",
    "carte": "Woma : vers le son. Taïpans : à l'opposé",
-   "plans": [{"pixabay": 123178, "debut": 2, "x": 0.45}, {"pixabay": 212324, "debut": 3, "x": 0.5, "zoom": "out"}]},
-  {"texte": "Mais le test était à quatre-vingt-cinq décibels. Bien plus fort qu'une conversation.",
+   "plans": [
+    {
+     "pixabay": 123178,
+     "debut": 2,
+     "x": 0.45
+    },
+    {
+     "pixabay": 212324,
+     "debut": 3,
+     "x": 0.5,
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "Mais attention : le test était à quatre-vingt-cinq décibels. C'est bien plus fort qu'une conversation.",
    "carte": "Test : 85 dB. Une voix : environ 60 dB",
-   "plans": [{"photo": "pixabay:601831"}, {"photo": "pixabay:689178", "zoom": "out"}]},
-  {"texte": "Et chez le python royal, une étude de 2012 montre une ouïe aérienne médiocre…",
-   "plans": [{"photo": "pixabay:660781"}, {"photo": "pixabay:605344", "zoom": "out"}]},
-  {"texte": "…mais une sensibilité très fine aux vibrations.",
+   "plans": [
+    {
+     "photo": "pixabay:601831"
+    },
+    {
+     "photo": "pixabay:689178",
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "Et chez le python royal, une étude de 2012 montre qu'il entend plutôt mal les sons faibles transmis par l'air…",
+   "plans": [
+    {
+     "photo": "pixabay:660781"
+    },
+    {
+     "photo": "pixabay:605344",
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "…par contre, il est très sensible aux vibrations.",
    "carte": "Ce qu'il capte : les vibrations",
-   "plans": [{"photo": "pixabay:732113"}]},
-  {"texte": "Une porte qui claque, des pas lourds, un caisson de basses sur le même meuble : voilà ce qu'il capte le mieux.",
-   "plans": [{"pixabay": 173143, "debut": 2, "x": 0.6}, {"pixabay": 214346, "debut": 1, "x": 0.5, "zoom": "out"}]},
-  {"texte": "Votre terrarium est près d'une enceinte, d'une porte ou de la machine à laver ? Dites-le en commentaire.",
-   "plans": [{"pixabay": 67506, "debut": 12, "x": 0.42}, {"photo": "pixabay:1644072", "zoom": "out"}]}
+   "plans": [
+    {
+     "photo": "pixabay:732113"
+    }
+   ]
+  },
+  {
+   "texte": "Une porte qui claque, quelqu'un qui marche lourdement, un caisson de basses posé sur le même meuble : ça, il le ressent bien plus qu'une voix.",
+   "plans": [
+    {
+     "pixabay": 173143,
+     "debut": 2,
+     "x": 0.6
+    },
+    {
+     "pixabay": 214346,
+     "debut": 1,
+     "x": 0.5,
+     "zoom": "out"
+    }
+   ]
+  },
+  {
+   "texte": "Et chez vous, le terrarium est près d'une enceinte, d'une porte, ou de la machine à laver ? Dites-le en commentaire.",
+   "plans": [
+    {
+     "pixabay": 67506,
+     "debut": 12,
+     "x": 0.42
+    },
+    {
+     "photo": "pixabay:1644072",
+     "zoom": "out"
+    }
+   ]
+  }
  ],
- "fin": {"texte": "Abonnez-vous pour la suite !",
-   "plans": [{"pixabay": 173405, "debut": 10, "x": 0.45}]}
+ "fin": {
+  "texte": "Et abonnez-vous pour la suite !",
+  "plans": [
+   {
+    "pixabay": 173405,
+    "debut": 10,
+    "x": 0.45
+   }
+  ]
+ }
 }
