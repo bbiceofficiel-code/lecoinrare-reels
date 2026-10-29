@@ -572,9 +572,13 @@ def synth(voice, text):
     return sr, data
 
 
-VOIX_NATURELLES = ("estelle",)  # Chatterbox (voix_naturelle.py) ; "siwis" et "tom" = Piper, plus synthétiques
+# "estelle" = Chatterbox (voix_naturelle.py), phrase par phrase ; "estelle-qwen" = Qwen3-TTS (voix_qwen.py),
+# tout le texte d'une traite, plus humain ; "siwis" et "tom" = Piper, plus synthétiques
+VOIX_NATURELLES = ("estelle", "estelle-qwen")
 VOIX_PY = os.environ.get("LECOINRARE_VOIX_PY",
                          os.path.join(os.environ.get("LOCALAPPDATA", ""), "lecoinrare-voix", "venv", "Scripts", "python.exe"))
+QWEN_PY = os.environ.get("LECOINRARE_QWEN_PY",
+                         os.path.join(os.environ.get("LOCALAPPDATA", ""), "lecoinrare-qwen", "venv", "Scripts", "python.exe"))
 
 
 def synth_naturelle(name, texts):
@@ -584,8 +588,10 @@ def synth_naturelle(name, texts):
         demandes = [{"text": t, "out": os.path.join(tmp, f"{i}.wav")} for i, t in enumerate(texts)]
         with open(os.path.join(tmp, "demandes.json"), "w", encoding="utf-8") as f:
             json.dump(demandes, f, ensure_ascii=False)
-        script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "voix_naturelle.py")
-        subprocess.run([VOIX_PY, script, os.path.join(tmp, "demandes.json"), name], check=True)
+        qwen = name.endswith("-qwen")
+        script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "voix_qwen.py" if qwen else "voix_naturelle.py")
+        subprocess.run([QWEN_PY if qwen else VOIX_PY, script, os.path.join(tmp, "demandes.json"),
+                        name.removesuffix("-qwen")], check=True)
         out = []
         for d in demandes:
             with wave.open(d["out"]) as wf:

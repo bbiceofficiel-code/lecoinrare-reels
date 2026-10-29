@@ -233,6 +233,18 @@ def dire(args):
     api("sendMessage", {"chat_id": chat, "text": texte[:4000]})
 
 
+def son(args):
+    """Envoie des fichiers audio à écouter (essais de voix, musiques), sans boutons de validation."""
+    chat = charger().get("chat")
+    if not chat:
+        sys.exit("Telegram pas encore relié : python telegram.py lier")
+    if args.texte:
+        api("sendMessage", {"chat_id": chat, "text": args.texte[:4000]})
+    for f in args.fichiers:
+        titre = os.path.splitext(os.path.basename(f))[0]
+        api("sendAudio", {"chat_id": str(chat), "title": titre, "performer": "LeCoinRare"}, {"audio": f})
+
+
 def oublier(args):
     """Retire de l'état les envois traités (publiés ou abandonnés), pour garder la liste courte."""
     etat = charger()
@@ -263,6 +275,10 @@ if __name__ == "__main__":
     m.add_argument("texte", nargs="*")
     m.add_argument("-f", "--fichier", help="texte du message dans un fichier UTF-8 (pratique pour plusieurs lignes)")
     m.set_defaults(f=dire)
+    a = sub.add_parser("son", help="envoie des fichiers audio à écouter (essais de voix)")
+    a.add_argument("fichiers", nargs="+")
+    a.add_argument("-t", "--texte", default="", help="message envoyé avant les fichiers")
+    a.set_defaults(f=son)
     o = sub.add_parser("oublier")
     o.add_argument("ids", nargs="*")
     o.add_argument("--messages", action="store_true", help="vider aussi les messages libres déjà lus")

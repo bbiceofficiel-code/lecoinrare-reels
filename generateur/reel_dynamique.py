@@ -163,9 +163,12 @@ def zoom(arr, z):
 # ---------------------------------------------------------------- voix
 
 def voix_phrases(spec):
-    """Synthétise chaque phrase, accélérée de "vitesse" sans changer la hauteur. Renvoie [(échantillons 44,1 kHz)]."""
+    """Synthétise chaque phrase, accélérée de "vitesse" sans changer la hauteur. Renvoie [(échantillons 44,1 kHz)].
+    La voix Qwen ("estelle-qwen") a déjà un débit naturel : pas d'accélération par défaut."""
     textes = [p["texte"] for p in spec["phrases"]] + ([spec["fin"]["texte"]] if spec.get("fin") else [])
-    brut = synth_naturelle(spec.get("voix", "estelle"), [diction(t.replace("*", "")) for t in textes])
+    nom = spec.get("voix", "estelle")
+    vitesse = spec.get("vitesse", 1.0 if nom.endswith("-qwen") else 1.1)
+    brut = synth_naturelle(nom, [diction(t.replace("*", "")) for t in textes])
     out = []
     with tempfile.TemporaryDirectory() as tmp:
         for i, (sr, data) in enumerate(brut):
@@ -173,7 +176,7 @@ def voix_phrases(spec):
             with wave.open(src, "wb") as wf:
                 wf.setnchannels(1), wf.setsampwidth(2), wf.setframerate(sr)
                 wf.writeframes((np.clip(data, -1, 1) * 32767).astype(np.int16).tobytes())
-            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", src, "-af", f"atempo={spec.get('vitesse', 1.1)}",
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", src, "-af", f"atempo={vitesse}",
                             "-ar", str(SR), "-ac", "1", dst], check=True)
             with wave.open(dst) as wf:
                 out.append(np.frombuffer(wf.readframes(wf.getnframes()), np.int16).astype(np.float32) / 32768)
