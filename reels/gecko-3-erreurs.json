@@ -37,7 +37,7 @@
    "tag": "ERREUR",
    "title": "Croire qu'il se passe *d'UVB*",
    "text": "Crépusculaire, mais il fabrique sa vitamine D3 sous UV. Visez un UVI de 2 à 3.",
-   "narration": "Deux : croire qu'il n'a pas besoin d'ultraviolets. Il vit surtout au crépuscule, mais il fabrique sa vitamine D trois grâce à eux. Aujourd'hui, on conseille une lampe U.V. douce, avec de l'ombre.",
+   "narration": "Deux : croire qu'il n'a pas besoin d'ultraviolets. Il vit surtout au crépuscule, mais il fabrique sa vitamine D trois grâce à eux. Aujourd'hui, on conseille une lampe UVB, douce, avec des zones d'ombre.",
    "icon": "sun",
    "icon_label": "UVI 2 à 3, avec de l'ombre"
   },
@@ -59,7 +59,7 @@
    "title": "Il vit 15 à 20 ans",
    "text": "Fiche complète sur lecoinrare.com",
    "cta": "Et vous, UVB ou pas ?",
-   "narration": "Il vit quinze à vingt ans. Retrouvez toute sa fiche sur Le Coin Rare. Et chez vous, lampe U.V. ou pas ? Dites-le en commentaire."
+   "narration": "Il vit quinze à vingt ans ! Retrouvez toute sa fiche sur Le Coin Rare. Et chez vous, lampe UVB ou pas ? Dites-le en commentaire."
   }
  ]
 }

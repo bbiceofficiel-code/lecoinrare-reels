@@ -58,7 +58,7 @@ def rogner(wav, sr, seuil=0.01, marge=0.08):
 
 def main(demandes_path, name="estelle"):
     import librosa, soundfile as sf, torch
-    demandes = json.load(open(demandes_path, encoding="utf-8"))
+    demandes = json.load(open(demandes_path, encoding="utf-8-sig"))
     os.makedirs(CACHE, exist_ok=True)
     key = lambda t: hashlib.sha1(f"{name}|{REGLAGES}|{t}".encode()).hexdigest()[:16]
     todo = [d for d in demandes if not os.path.exists(os.path.join(CACHE, key(d["text"]) + ".wav"))]
