@@ -527,7 +527,7 @@ def wipe(layer, t, boundaries):
 
 VOIX_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "voix")
 DICTION = [  # ce que la voix doit dire à la place de ce qui est écrit
-    ("lecoinrare.com", "le coin rare point com"), ("@lecoinrare", "le coin rare"), ("LeCoinRare", "Le Coin Rare"),
+    ("lecoinrare.com", "Le Coin Rare"), ("@lecoinrare", "le coin rare"), ("LeCoinRare", "Le Coin Rare"),
     (" °C", " degrés"), ("°C", " degrés"), ("n°", "numéro "), ("NAC", "nac"), ("UVI", "indice UV"), ("UVB", "U V B"),
     ("&", "et"),
 ]
