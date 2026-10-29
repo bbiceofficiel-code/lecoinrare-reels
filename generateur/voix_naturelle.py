@@ -60,7 +60,7 @@ def main(demandes_path, name="estelle"):
     import librosa, soundfile as sf, torch
     demandes = json.load(open(demandes_path, encoding="utf-8-sig"))
     os.makedirs(CACHE, exist_ok=True)
-    key = lambda t: hashlib.sha1(f"{name}|{REGLAGES}|{t}".encode()).hexdigest()[:16]
+    key = lambda t: hashlib.sha1(f"{name}|{REGLAGES}|coupe|{t}".encode()).hexdigest()[:16]  # « coupe » : fin parasite retirée
     todo = [d for d in demandes if not os.path.exists(os.path.join(CACHE, key(d["text"]) + ".wav"))]
     if todo:
         from chatterbox.mtl_tts import ChatterboxMultilingualTTS
@@ -74,8 +74,16 @@ def main(demandes_path, name="estelle"):
                 torch.manual_seed(1000 + essai)
                 wav = tts.generate(d["text"], language_id="fr", **REGLAGES).squeeze().cpu().numpy()
                 wav = rogner(wav, tts.sr)
-                segs, _ = oreille.transcribe(librosa.resample(wav, orig_sr=tts.sr, target_sr=16000), language="fr")
-                entendu = " ".join(s.text for s in segs)
+                segs, _ = oreille.transcribe(librosa.resample(wav, orig_sr=tts.sr, target_sr=16000), language="fr",
+                                             word_timestamps=True)
+                mots_w = [w for s in segs for w in (s.words or [])]
+                # la voix ajoute parfois quelques mots après le texte (« Secrets ! ») : on coupe après le mot
+                # entendu qui colle le mieux à la fin du texte demandé
+                k = max(range(1, len(mots_w) + 1), key=lambda k: ressemblance(d["text"], "".join(w.word for w in mots_w[:k])),
+                        default=0)
+                if k and k < len(mots_w):
+                    wav = wav[:int(min(len(wav) / tts.sr, mots_w[k - 1].end + 0.15) * tts.sr)]
+                entendu = "".join(w.word for w in mots_w[:k]) if k else " ".join(s.text for s in segs)
                 score = ressemblance(d["text"], entendu)
                 duree, attendu = len(wav) / tts.sr, 0.42 * len(mots(d["text"])) + 1.5
                 if duree > attendu * 1.6:  # a continué à parler après le texte

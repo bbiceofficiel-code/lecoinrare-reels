@@ -1,0 +1,35 @@
+{
+ "voix": "estelle",
+ "vitesse": 1.15,
+ "musique": "musique/mixkit-trap-electro-vibes.mp3",
+ "musique_debut": 8,
+ "musique_volume": 0.4,
+ "cover_ms": 600,
+ "accroche": "Le caméléon ne change *pas* de couleur pour se cacher",
+ "sources": [
+  "Teyssier et al. 2015, Nature Communications 6:6368 (nanocristaux de guanine des iridophores, réglage actif chez Furcifer pardalis)",
+  "Stuart-Fox & Moussalli 2008, PLoS Biology 6(1):e25 (les changements de couleur ont évolué pour la communication sociale, pas pour le camouflage)",
+  "Walton & Bennett 1993, Journal of Thermal Biology (assombrissement et thermorégulation chez Chamaeleo dilepis)"
+ ],
+ "caption": "Non, le caméléon ne change pas de couleur pour se cacher 🦎\n\nAu repos, sa robe le camoufle déjà. Ses changements de couleur servent surtout à communiquer : un mâle face à un rival s'illumine, une femelle gravide prend des couleurs sombres pour repousser les mâles. Ils servent aussi à gérer sa température : plus foncé, il capte mieux la chaleur.\n\nLe mécanisme : des nanocristaux de guanine dans sa peau (les iridophores). En les écartant ou en les resserrant, il change la lumière qu'ils renvoient (Teyssier et al., 2015).\n\nSouvent sombre chez vous ? Vérifiez son point chaud et sa tranquillité : sa couleur en dit long sur son bien-être.\n\nVous le saviez ? Dites-le en commentaire 👇\n\n#cameleon #terrariophilie #reptiles #NAC #lecoinrare",
+ "phrases": [
+  {"texte": "Non, le caméléon ne change pas de couleur pour se cacher.",
+   "plans": [{"pixabay": 233037, "debut": 2, "x": 0.4}, {"pixabay": 219153, "debut": 1, "x": 0.45}]},
+  {"texte": "Au repos, il est déjà camouflé.",
+   "plans": [{"pixabay": 2878, "debut": 30, "x": 0.5}]},
+  {"texte": "Ses couleurs, c'est un *langage*.",
+   "plans": [{"pixabay": 50655, "debut": 1, "x": 0.62}]},
+  {"texte": "Un mâle face à un rival s'illumine.",
+   "plans": [{"pixabay": 2019, "debut": 1, "x": 0.42}, {"pixabay": 219153, "debut": 4, "x": 0.45, "zoom": "out"}]},
+  {"texte": "Une femelle gravide noircit pour repousser les mâles.",
+   "plans": [{"pixabay": 72389, "debut": 1, "x": 0.6}, {"pixabay": 72389, "debut": 11, "x": 0.42, "zoom": "out"}]},
+  {"texte": "Et quand il a froid, il devient foncé pour se réchauffer.",
+   "plans": [{"pixabay": 67502, "debut": 4, "x": 0.62}, {"pixabay": 67502, "debut": 20, "x": 0.3, "zoom": "out"}]},
+  {"texte": "Le secret ? Des *nanocristaux* dans sa peau, qu'il écarte ou resserre.",
+   "plans": [{"pixabay": 233037, "debut": 12, "x": 0.25}, {"pixabay": 50655, "debut": 10, "x": 0.4}, {"pixabay": 233037, "debut": 18, "x": 0.6, "zoom": "out"}]},
+  {"texte": "Il est souvent foncé chez vous ? Il a froid, ou il est stressé.",
+   "plans": [{"pixabay": 72394, "debut": 2, "x": 0.52}, {"pixabay": 216445, "debut": 2, "x": 0.58}]}
+ ],
+ "fin": {"texte": "Abonnez-vous pour la suite !",
+   "plans": [{"pixabay": 233037, "debut": 24, "x": 0.5}]}
+}
