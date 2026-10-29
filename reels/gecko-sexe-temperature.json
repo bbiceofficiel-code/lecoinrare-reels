@@ -1,0 +1,38 @@
+{
+ "voix": "estelle",
+ "vitesse": 1.15,
+ "musique": "musique/mixkit-epical-drums-02.mp3",
+ "musique_debut": 2,
+ "musique_volume": 0.38,
+ "cover_ms": 600,
+ "accroche": "Son sexe a été choisi par un *thermomètre*",
+ "sources": [
+  "Viets et al. 1993, Journal of Experimental Zoology 265:679-683 (détermination du sexe par la température chez Eublepharis macularius : 26 °C femelles, 32,5 °C majorité de mâles, 34 °C de nouveau surtout des femelles)"
+ ],
+ "caption": "Le sexe de ce gecko a été choisi… par un thermomètre 🦎🌡️\n\nChez le gecko léopard (Eublepharis macularius), ce sont les températures d'incubation qui décident, pas les chromosomes :\n• vers 26 °C : presque uniquement des femelles ;\n• vers 32 °C : surtout des mâles ;\n• vers 34 °C : de nouveau surtout des femelles (Viets et al., 1993).\n\nC'est pour ça que les éleveurs règlent leur incubateur avec autant de soin. Mais une température instable peut tuer l'embryon : un thermostat fiable et un thermomètre de contrôle sont indispensables.\n\nVous le saviez ? Dites-le en commentaire 👇\n\n#geckoleopard #terrariophilie #reptiles #NAC #lecoinrare",
+ "phrases": [
+  {"texte": "Le sexe de ce gecko a été choisi… par un thermomètre.",
+   "plans": [{"photo": "pixabay:2299365"}, {"photo": "pixabay:3651875", "zoom": "out"}]},
+  {"texte": "Chez le gecko léopard, ce ne sont pas les chromosomes qui décident.",
+   "plans": [{"photo": "pixabay:3287920"}, {"photo": "pixabay:3695960", "zoom": "out"}]},
+  {"texte": "C'est la chaleur pendant l'incubation.",
+   "plans": [{"photo": "pixabay:327110"}, {"photo": "wikimedia:7609380", "x": 0.5, "zoom": "out"}]},
+  {"texte": "Vers vingt-six degrés : presque que des femelles.",
+   "carte": "26 °C = femelles",
+   "plans": [{"photo": "pixabay:3195466"}, {"photo": "pixabay:517670", "zoom": "out"}]},
+  {"texte": "Vers trente-deux : surtout des mâles.",
+   "carte": "32 °C = mâles",
+   "plans": [{"photo": "pixabay:3782952"}]},
+  {"texte": "Et à trente-quatre degrés ? De nouveau des femelles !",
+   "carte": "34 °C = femelles",
+   "plans": [{"photo": "pixabay:8375500"}, {"photo": "pixabay:256046", "zoom": "out"}]},
+  {"texte": "Les éleveurs choisissent donc le sexe… avec un thermostat.",
+   "plans": [{"photo": "pixabay:327259"}, {"photo": "pixabay:2018986", "zoom": "out"}]},
+  {"texte": "Mais attention : une température instable peut tuer les œufs.",
+   "plans": [{"photo": "pixabay:2327817"}, {"photo": "pixabay:2842594", "zoom": "out"}]},
+  {"texte": "Vous le saviez ? Dites-le en commentaire.",
+   "plans": [{"photo": "pixabay:3782953"}, {"photo": "pixabay:8909504", "zoom": "out"}]}
+ ],
+ "fin": {"texte": "Abonnez-vous pour la suite !",
+   "plans": [{"photo": "wikimedia:7609370", "x": 0.55}]}
+}

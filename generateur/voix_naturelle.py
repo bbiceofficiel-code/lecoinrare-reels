@@ -60,7 +60,7 @@ def main(demandes_path, name="estelle"):
     import librosa, soundfile as sf, torch
     demandes = json.load(open(demandes_path, encoding="utf-8-sig"))
     os.makedirs(CACHE, exist_ok=True)
-    key = lambda t: hashlib.sha1(f"{name}|{REGLAGES}|coupe|{t}".encode()).hexdigest()[:16]  # « coupe » : fin parasite retirée
+    key = lambda t: hashlib.sha1(f"{name}|{REGLAGES}|coupe3|{t}".encode()).hexdigest()[:16]  # « coupe » : fin parasite retirée
     todo = [d for d in demandes if not os.path.exists(os.path.join(CACHE, key(d["text"]) + ".wav"))]
     if todo:
         from chatterbox.mtl_tts import ChatterboxMultilingualTTS
@@ -79,10 +79,14 @@ def main(demandes_path, name="estelle"):
                 mots_w = [w for s in segs for w in (s.words or [])]
                 # la voix ajoute parfois quelques mots après le texte (« Secrets ! ») : on coupe après le mot
                 # entendu qui colle le mieux à la fin du texte demandé
-                k = max(range(1, len(mots_w) + 1), key=lambda k: ressemblance(d["text"], "".join(w.word for w in mots_w[:k])),
-                        default=0)
-                if k and k < len(mots_w):
-                    wav = wav[:int(min(len(wav) / tts.sr, mots_w[k - 1].end + 0.15) * tts.sr)]
+                sim = lambda k: ressemblance(d["text"], "".join(w.word for w in mots_w[:k]))
+                k = max(range(1, len(mots_w) + 1), key=sim, default=0)
+                # on ne coupe que si la fin entendue est nettement en trop : un dernier mot mal transcrit
+                # (« os », « D3 ») ne doit pas être coupé
+                if not (k and k < len(mots_w) and sim(k) - sim(len(mots_w)) >= 0.04):
+                    k = len(mots_w)
+                if k:  # et rien après le dernier mot reconnu (des syllabes parasites que Whisper n'écrit pas)
+                    wav = wav[:int(min(len(wav) / tts.sr, mots_w[k - 1].end + 0.3) * tts.sr)]
                 entendu = "".join(w.word for w in mots_w[:k]) if k else " ".join(s.text for s in segs)
                 score = ressemblance(d["text"], entendu)
                 duree, attendu = len(wav) / tts.sr, 0.42 * len(mots(d["text"])) + 1.5

@@ -52,8 +52,63 @@ def pixabay_clip(vid):
     return path
 
 
+def photo_path(ref):
+    """Photo "pixabay:<id>" (1280 px au plus) ou "wikimedia:<pageid>" (CC0 ou domaine public, 2160 px) : cache reels/media/."""
+    src, pid = ref.split(":")
+    path = os.path.join(banques.CACHE, f"{src}-photo-{pid}.jpg")
+    if os.path.exists(path):
+        return path
+    os.makedirs(banques.CACHE, exist_ok=True)
+    if src == "pixabay":
+        hit = banques._json(f"https://pixabay.com/api/?key={banques.api_key('pixabay')}&id={pid}")["hits"][0]
+        url, cred = hit["largeImageURL"], f'Photo : {hit["user"]} sur Pixabay'
+    else:
+        q = banques._json("https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url|extmetadata"
+                          f"&iiextmetadatafilter=LicenseShortName|Artist&iiurlwidth=2160&pageids={pid}")
+        ii = q["query"]["pages"][pid]["imageinfo"][0]
+        lic = ii["extmetadata"]["LicenseShortName"]["value"]
+        if not lic.lower().startswith(banques.FREE_LICENSES):
+            raise ValueError(f"wikimedia:{pid} : licence {lic}, seulement CC0 ou domaine public")
+        artist = re.sub(r"<[^>]+>", "", ii["extmetadata"].get("Artist", {}).get("value", "")).strip()
+        url, cred = ii.get("thumburl") or ii["url"], f"Photo : {artist}, {lic}, Wikimedia Commons"
+    banques._download(url, path)
+    with open(path + ".json", "w", encoding="utf-8") as f:
+        json.dump({"credit": cred}, f, ensure_ascii=False)
+    return path
+
+
 def clip_path(plan, base):
+    if "photo" in plan:
+        return photo_path(plan["photo"])
     return pixabay_clip(plan["pixabay"]) if "pixabay" in plan else os.path.join(base, plan["fichier"])
+
+
+def photo_frames(path, dur, x, y):
+    """Photo en plein écran si elle est assez grande, sinon encadrée (bords arrondis) sur un fond flou de la même photo.
+    Le mouvement vient du zoom du montage."""
+    from PIL import ImageFilter
+    ow, oh = int(W * OVER) // 2 * 2, int(H * OVER) // 2 * 2
+    img = Image.open(path).convert("RGB")
+    s = max(ow / img.width, oh / img.height)
+    big = img.resize((int(img.width * s) + 1, int(img.height * s) + 1), Image.LANCZOS)
+    x0 = int((big.width - ow) * min(1, max(0, x)))
+    y0 = int((big.height - oh) * min(1, max(0, y)))
+    fond = big.crop((x0, y0, x0 + ow, y0 + oh))
+    if min(img.width, img.height * 9 / 16) < 900:  # trop petite pour le plein écran : on l'encadre
+        fond = fond.resize((ow // 8, oh // 8)).filter(ImageFilter.GaussianBlur(6)).resize((ow, oh), Image.BILINEAR)
+        fond = Image.blend(fond, Image.new("RGB", (ow, oh), c.FOND), 0.45)
+        k = min((ow - 80) / img.width, (oh * 0.62) / img.height)
+        av = img.resize((int(img.width * k), int(img.height * k)), Image.LANCZOS)
+        masque = Image.new("L", av.size, 0)
+        ImageDraw.Draw(masque).rounded_rectangle([0, 0, av.width - 1, av.height - 1], 36, fill=255)
+        ombre = Image.new("L", (ow, oh), 0)
+        px, py = (ow - av.width) // 2, int(oh * 0.47 - av.height / 2)
+        ImageDraw.Draw(ombre).rounded_rectangle([px - 6, py + 14, px + av.width + 6, py + av.height + 26], 40, fill=150)
+        fond.paste(Image.new("RGB", (ow, oh), (0, 0, 0)), (0, 0), ombre.filter(ImageFilter.GaussianBlur(18)))
+        fond.paste(av, (px, py), masque)
+    arr = np.asarray(fond)
+    for _ in range(int(round(dur * FPS))):
+        yield arr
 
 
 def credit(path):
@@ -68,8 +123,11 @@ def probe(path):
     return j["streams"][0]["width"], j["streams"][0]["height"], float(j["format"]["duration"])
 
 
-def frames(path, start, dur, x):
+def frames(path, start, dur, x, y=0.5):
     """Images du plan, recadrées en vertical autour de x et agrandies de OVER : générateur de tableaux numpy."""
+    if path.lower().endswith((".jpg", ".jpeg", ".png")):
+        yield from photo_frames(path, dur, x, y)
+        return
     w, h, _ = probe(path)
     cw = min(w, int(h * 9 / 16)) // 2 * 2
     cx = int(max(0, min(w - cw, x * w - cw / 2)))
@@ -121,7 +179,12 @@ def voix_phrases(spec):
 
 def temps_mots(texte, debut, duree):
     """Instant de début de chaque mot affiché : proportionnel à sa longueur, avec une respiration après la ponctuation."""
-    mots = parse_words(texte)
+    mots = []
+    for m, hl in parse_words(texte):  # « saviez ? » : le point d'interrogation reste avec son mot
+        if mots and re.fullmatch(r"[?!:;»…]+", m):
+            mots[-1] = (mots[-1][0] + " " + m, mots[-1][1])  # (Montserrat n'a pas l'espace fine insécable)
+        else:
+            mots.append((m, hl))
     poids = [len(m) + 2 + (4 if re.search(r"[.,;:!?…]$", m) else 0) for m, _ in mots]
     total, acc, out = sum(poids), 0, []
     for (m, hl), p in zip(mots, poids):
@@ -294,8 +357,26 @@ def carte_fin(img, t, debut, duree):
     return img
 
 
-def composer(base, t, mots_t, spec, d_accroche, fin_debut, flash):
+def carte_chiffre(img, texte, age):
+    """Grosse pastille dorée (un chiffre clé : « 26 °C = FEMELLES ») qui surgit en haut de l'image."""
+    p = min(1, age / 0.18)
+    scale = 0.6 + 0.4 * p + 0.08 * max(0, 1 - abs(age - 0.18) / 0.12)
+    f = c.font("black", int(84 * scale))
+    tw = f.getlength(texte.upper())
+    if tw > W - 160:
+        f = c.font("black", int(84 * scale * (W - 160) / tw))
+        tw = f.getlength(texte.upper())
+    d = ImageDraw.Draw(img)
+    cy = 560
+    d.rounded_rectangle([W / 2 - tw / 2 - 34, cy - 70, W / 2 + tw / 2 + 34, cy + 70], 28, fill=c.OR)
+    d.text((W / 2, cy), texte.upper(), font=f, fill=c.FOND, anchor="mm")
+
+
+def composer(base, t, mots_t, spec, d_accroche, fin_debut, flash, cartes=()):
     img = Image.composite(base, Image.new("RGB", (W, H), (0, 0, 0)), vignette())
+    for t0, t1, texte in cartes:
+        if t0 <= t < t1:
+            carte_chiffre(img, texte, t - t0)
     if fin_debut is not None and t >= fin_debut:
         img = carte_fin(img, t, fin_debut, 0)
     if flash > 0:
@@ -328,7 +409,7 @@ def planches(spec, base, dossier):
     ids = []
     for p in spec["phrases"] + ([spec["fin"]] if spec.get("fin") else []):
         for pl in p["plans"]:
-            if pl.get("pixabay") not in ids:
+            if "pixabay" in pl and pl["pixabay"] not in ids:
                 ids.append(pl.get("pixabay"))
     for vid in ids:
         path = pixabay_clip(vid)
@@ -366,13 +447,15 @@ def main(spec_path, out_path, apercu=False):
     t_voix = time.time()
 
     # chronologie : chaque phrase dure le temps de sa voix (+ un souffle), partagé entre ses plans
-    debuts, mots_t, plans, coupes = [], [], [], []
+    debuts, mots_t, plans, coupes, cartes = [], [], [], [], []
     t, seg = 0.15, 0.0  # la voix démarre à 0,15 s ; seg = début visuel de la phrase
     for p, v in zip(phrases, voix):
         d = len(v) / SR
         debuts.append(t)
         mots_t += temps_mots(p["texte"], t + 0.03, d - 0.08)
         fin = t + d + GAP + (0.9 if p is spec.get("fin") else 0)
+        if p.get("carte"):  # chiffre clé en gros pendant la phrase
+            cartes.append((t + 0.1, fin, p["carte"]))
         n = len(p["plans"])
         for k, pl in enumerate(p["plans"]):
             plans.append((pl, seg + k * (fin - seg) / n, (fin - seg) / n))
@@ -386,9 +469,9 @@ def main(spec_path, out_path, apercu=False):
     stem = os.path.splitext(out_path)[0]
     if apercu:
         for i, (pl, start, dur) in enumerate(plans):
-            arr = next(frames(clip_path(pl, base), pl.get("debut", 0) + dur * 0.6, 0.1, pl.get("x", 0.5)))
+            arr = next(frames(clip_path(pl, base), pl.get("debut", 0) + dur * 0.6, 0.1, pl.get("x", 0.5), pl.get("y", 0.5)))
             tt = start + dur * 0.6
-            composer(zoom(arr, 0.5), tt, mots_t, spec, d_accroche, fin_debut, 0).save(f"{stem}-apercu-{i + 1:02d}.png")
+            composer(zoom(arr, 0.5), tt, mots_t, spec, d_accroche, fin_debut, 0, cartes).save(f"{stem}-apercu-{i + 1:02d}.png")
         print(f"Aperçus : {stem}-apercu-*.png")
         return
 
@@ -408,7 +491,7 @@ def main(spec_path, out_path, apercu=False):
             if credit(path) not in credits:
                 credits.append(credit(path))
             n = int(round((start + dur) * FPS)) - n_img
-            for k, arr in enumerate(frames(path, pl.get("debut", 0), n / FPS + 0.05, pl.get("x", 0.5))):
+            for k, arr in enumerate(frames(path, pl.get("debut", 0), n / FPS + 0.05, pl.get("x", 0.5), pl.get("y", 0.5))):
                 if k >= n:
                     break
                 tt = n_img / FPS
@@ -416,7 +499,7 @@ def main(spec_path, out_path, apercu=False):
                 punch = max(0, 1 - k / 6)  # petit coup de zoom à chaque coupe
                 z = (0.15 + 0.6 * u if pl.get("zoom", "in") == "in" else 0.75 - 0.6 * u) + 0.25 * punch
                 flash = 0.35 * max(0, 1 - k / 3) if (i and any(abs(start - cp) < 0.05 for cp in coupes)) else 0
-                img = composer(zoom(arr, min(1, z)), tt, mots_t, spec, d_accroche, fin_debut, flash)
+                img = composer(zoom(arr, min(1, z)), tt, mots_t, spec, d_accroche, fin_debut, flash, cartes)
                 proc.stdin.write(img.tobytes())
                 n_img += 1
         proc.stdin.close()

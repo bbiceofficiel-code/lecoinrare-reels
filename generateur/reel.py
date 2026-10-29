@@ -529,7 +529,7 @@ VOIX_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "voix")
 DICTION = [  # ce que la voix doit dire à la place de ce qui est écrit
     ("lecoinrare.com", "Le Coin Rare"), ("@lecoinrare", "le coin rare"), ("LeCoinRare", "Le Coin Rare"),
     (" °C", " degrés"), ("°C", " degrés"), ("n°", "numéro "), ("NAC", "nac"), ("UVI", "indice UV"), ("UVB", "u-vé-bé"),
-    ("&", "et"), ("quiz", "kouiz"), ("Quiz", "Kouiz"),  # sinon elle dit « kizz »
+    ("&", "et"), ("D3", "D trois"), ("quiz", "kouiz"), ("Quiz", "Kouiz"),  # sinon elle dit « kizz »
 ]
 
 

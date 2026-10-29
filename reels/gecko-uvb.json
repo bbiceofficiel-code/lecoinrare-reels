@@ -1,0 +1,38 @@
+{
+ "voix": "estelle",
+ "vitesse": 1.15,
+ "musique": "musique/mixkit-coffee-or-tea.mp3",
+ "musique_debut": 9,
+ "musique_volume": 0.4,
+ "cover_ms": 600,
+ "accroche": "Il vit la nuit… et il a besoin de *soleil*",
+ "sources": [
+  "Gould et al. 2018, Journal of Herpetological Medicine and Surgery (UVB et vitamine D3 chez le gecko léopard)",
+  "ReptiFiles, Leopard Gecko Lighting (UVB recommandé, UVI 2-3 au point chaud, zones d'ombre)"
+ ],
+ "caption": "Il vit la nuit… et pourtant il a besoin d'UVB 🦎\n\nPendant des années, on a répété que le gecko léopard (Eublepharis macularius) pouvait s'en passer, parce qu'il est crépusculaire. C'est dépassé : à l'aube et au crépuscule, il s'expose à une lumière faible, et sous UVB sa peau fabrique la vitamine D3, celle qui fixe le calcium dans les os (Gould et al., 2018).\n\nLe bon réglage : une UVB douce (indice UV 2 à 3 au point chaud), des cachettes à l'ombre pour qu'il choisisse, et le calcium sur les repas.\n\nEt chez vous, UVB ou pas ? On lit tout en commentaire 👇\n\n#geckoleopard #terrariophilie #reptiles #NAC #lecoinrare",
+ "phrases": [
+  {"texte": "Le gecko léopard vit la nuit… et pourtant, il a besoin de soleil.",
+   "plans": [{"photo": "wikimedia:7609370", "x": 0.55}, {"photo": "pixabay:3782952"}]},
+  {"texte": "Pendant des années, on a dit : pas besoin de lampe UVB.",
+   "plans": [{"photo": "pixabay:2327817"}, {"photo": "pixabay:3287920", "zoom": "out"}]},
+  {"texte": "C'est *dépassé*.",
+   "plans": [{"photo": "pixabay:3695959"}]},
+  {"texte": "À l'aube et au crépuscule, il sort sous une lumière faible.",
+   "plans": [{"photo": "pixabay:3809594"}, {"photo": "pixabay:3195466", "zoom": "out"}]},
+  {"texte": "Sous UVB, sa peau fabrique de la vitamine D3.",
+   "carte": "UVB = vitamine D3",
+   "plans": [{"photo": "pixabay:3695960"}, {"photo": "pixabay:517670", "zoom": "out"}]},
+  {"texte": "Et la D3, c'est ce qui fixe le calcium dans ses os.",
+   "plans": [{"photo": "pixabay:256046"}, {"photo": "wikimedia:7609380", "x": 0.5, "zoom": "out"}]},
+  {"texte": "Le bon réglage : une UVB douce, et des cachettes à l'ombre.",
+   "carte": "Indice UV 2 à 3",
+   "plans": [{"photo": "pixabay:327259"}, {"photo": "pixabay:2842594"}, {"photo": "pixabay:2018986", "zoom": "out"}]},
+  {"texte": "Et gardez le calcium sur les repas.",
+   "plans": [{"photo": "pixabay:2299365"}]},
+  {"texte": "Et chez vous, UVB ou pas ? Dites-le en commentaire.",
+   "plans": [{"photo": "pixabay:3782953"}, {"photo": "pixabay:8909504", "zoom": "out"}]}
+ ],
+ "fin": {"texte": "Abonnez-vous pour la suite !",
+   "plans": [{"photo": "pixabay:3651875"}]}
+}
