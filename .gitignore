@@ -14,3 +14,4 @@ __pycache__/
 generateur/voix/
 *-voix.wav
 generateur/musique/*.mp3
+carrousels/media/

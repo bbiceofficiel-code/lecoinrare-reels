@@ -1,0 +1,67 @@
+{
+ "caption": "Le piège quand vous ramenez des poissons ? Le moment où vous ouvrez le sac 🐟\n\nLundi, on vous demandait comment vous acclimatez vos nouveaux poissons. Voici ce qui se joue dans l'eau du sac.\n\nDans le sac fermé, les poissons respirent : le CO2 s'accumule et l'eau devient plus acide. À ce pH plus bas, leurs déchets restent surtout sous forme d'ammonium (NH4+), peu toxique.\n\nÀ l'ouverture, le CO2 s'échappe, le pH remonte… et une partie de l'ammonium repasse en ammoniac (NH3), toxique pour les branchies : à 25 °C, environ 0,6 % à pH 7 contre 5 % à pH 8. Environ dix fois plus par point de pH.\n\nLa règle en 3 cas est dans le carrousel 👉 (et oui, la meilleure méthode fait débat : racontez-nous votre protocole après un colis de 48 h)\n\nEt vous, c'est plutôt le cas 1, 2 ou 3 ? 👇\n\nEnregistrez ce post pour votre prochain achat en bourse 📌\n\n#aquariophilie #aquarium #poissons #bourseaquariophile #lecoinrare",
+ "sources": [
+  "LSU AgCenter (Lutz), Stocking procedures : CO2 et pH bas pendant le transport, pH qui remonte à l'ouverture, aérer ou éclabousser accélère le phénomène, moins grave si trajet court : https://www.lsuagcenter.com/topics/aquaculture/recreational_ponds/stocking_managing_fish_populations/stocking_procedures/stocking-procedures",
+  "Table d'Emerson et al. 1975 (fiche SRAC) : part de NH3 à 25 °C environ 0,06 % à pH 6, 0,57 % à pH 7, 5,5 % à pH 8 : https://srac-aquaponics.tamu.edu/fact-sheets/serve/3",
+  "WetWebMedia (Fenner), acclimatation après long transport : dilution progressive : http://wetwebmedia.com/acclimcontrovf.htm",
+  "American Killifish Association, Shipping fish (sacs 1/4 eau 3/4 air, sacs respirants à ne jamais faire flotter) : https://aka.org/general-shipping-fish-an-overview/",
+  "SRAC 3903, Shipping Fish in Boxes : à jeun 24 h avant l'envoi, moins de poissons par sac, trajet plus court contre l'ammoniac : https://thefishsite.com/articles/shipping-fish-in-boxes"
+ ],
+ "slides": [
+  {
+   "type": "cover",
+   "kicker": "AQUARIOPHILIE",
+   "title": "Le piège ? *Ouvrir le sac*",
+   "subtitle": "Ce qui se passe dans l'eau du sac, et la règle en 3 cas.",
+   "media": "media/acclimatation-couverture.jpg"
+  },
+  {
+   "type": "point",
+   "n": 1,
+   "tag": "SAC FERMÉ",
+   "title": "Le CO2 s'accumule, l'eau *s'acidifie*",
+   "text": "Les poissons respirent : le CO2 s'accumule et le pH baisse. À ce pH plus bas, leurs déchets restent surtout sous forme d'ammonium (NH4+), peu toxique."
+  },
+  {
+   "type": "point",
+   "n": 2,
+   "tag": "À L'OUVERTURE",
+   "title": "Le pH remonte… et *l'ammoniac* avec lui",
+   "text": "Le CO2 s'échappe et une partie de l'ammonium repasse en ammoniac (NH3), toxique pour les branchies. À 25 °C : environ 0,6 % à pH 7, contre 5 % à pH 8. Environ dix fois plus par point de pH."
+  },
+  {
+   "type": "point",
+   "n": 3,
+   "tag": "LE TRAJET COMPTE",
+   "title": "Long trajet, poissons nourris : *plus de risque*",
+   "text": "Plus le transport a duré, et plus les poissons ont mangé juste avant, plus l'ammonium s'est accumulé dans le sac. D'où l'intérêt, côté vendeur, de les mettre à jeun 24 h avant le départ. En bourse, demandez-lui."
+  },
+  {
+   "type": "checklist",
+   "kicker": "LA RÈGLE EN 3 CAS",
+   "title": "Comment les *acclimater*",
+   "items": [
+    "1. Trajet court (bourse) : sac fermé qui flotte 15 à 30 min, puis transfert au filet et quarantaine",
+    "2. Colis de 24 h ou plus : on ne laisse pas le sac ouvert, on transfère vite (ou on dilue avec une eau ajustée au pH du sac)",
+    "3. Eau très différente (dureté) ou crevettes Caridina : goutte-à-goutte. Après un long colis, on le lance dès l'ouverture, avec un conditionneur qui neutralise l'ammoniac"
+   ]
+  },
+  {
+   "type": "checklist",
+   "warn": true,
+   "kicker": "À ÉVITER",
+   "title": "Les erreurs *classiques*",
+   "items": [
+    "Faire buller l'eau du sac après un long transport",
+    "Verser l'eau du sac dans le bac",
+    "Faire flotter un sac respirant : le poisson risque d'étouffer"
+   ]
+  },
+  {
+   "type": "end",
+   "title": "Enregistrez-le avant votre prochain achat",
+   "text": "Et vous, c'est plutôt le cas 1, 2 ou 3 ? Dites-le en commentaire.",
+   "cta": "Suivez @lecoinrare"
+  }
+ ]
+}

@@ -8,7 +8,7 @@ italique Merriweather vert (noms scientifiques : _Eublepharis macularius_).
 Une slide peut avoir une photo de fond : "media" (chemin relatif au JSON) ou "media_query"
 (recherche en anglais dans Pexels, Pixabay puis Wikimedia Commons, voir medias.py ; "media_index", "media_source").
 """
-import json, os, sys
+import json, os, re, sys
 
 import numpy as np
 from PIL import Image, ImageDraw
@@ -43,7 +43,8 @@ def backdrop(seed, photo=None):
 def _mots(text):
     """[(mot, style)] : style "hl" (*…*), "latin" (_…_) ou None."""
     out, etat = [], None
-    for raw in text.split():
+    text = re.sub(r"(\d) (°C|%|dB|Hz|cm|mm|kg|g|h|min)\b", "\\1\u00a0\\2", text)  # « 25 °C » ne se coupe pas
+    for raw in re.split(r"[ \t\n]+", text.strip()):
         ouvre = raw[:len(raw) - len(raw.lstrip("(«“"))]  # « (_Python regius_) » : le marqueur suit la parenthèse
         mot = raw[len(ouvre):]
         for marque_, style in (("*", "hl"), ("_", "latin")):
