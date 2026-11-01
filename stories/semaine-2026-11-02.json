@@ -14,11 +14,15 @@
   },
   {
    "date": "2026-11-03T12:30:00",
-   "type": "savoir",
-   "kicker": "AGENDA",
-   "title": "Vous allez en *bourse* ce week-end ?",
-   "text": "Montauban (82), Bolbec (76), Argenteuil (95)… Vérifiez dates et horaires sur le site de chaque organisateur, et dites-nous où vous allez.",
-   "media": "media/bac-malawi.jpg"
+   "type": "sondage",
+   "title": "Vous êtes plutôt *terrario* ou *aquario* ?",
+   "options": [
+    "Terrario",
+    "Aquario",
+    "Les deux"
+   ],
+   "hint": "Votez avec le sondage",
+   "sticker": "Sondage : « Terrario » / « Aquario » / « Les deux »"
   },
   {
    "date": "2026-11-04T19:30:00",
@@ -32,10 +36,14 @@
   },
   {
    "date": "2026-11-05T12:30:00",
-   "type": "question",
-   "title": "Une question avant la *bourse* ?",
-   "text": "Papiers, transport, quarantaine : posez-la ici, on vous répond en story.",
-   "sticker": "Boîte à questions dans le cadre"
+   "type": "quiz",
+   "title": "Un reptile acheté en bourse reste *au minimum* combien de temps en quarantaine ?",
+   "options": [
+    "Une semaine",
+    "60 à 90 jours, voire plus",
+    "Pas besoin s'il vient d'un éleveur"
+   ],
+   "sticker": "Quiz : bonne réponse B (60 à 90 jours minimum, jusqu'à 6 mois pour boas et pythons) ; réponse détaillée dans le carrousel de vendredi"
   },
   {
    "date": "2026-11-06T12:30:00",

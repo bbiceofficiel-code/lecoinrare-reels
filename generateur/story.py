@@ -27,7 +27,11 @@ TOP, BOTTOM = 400, H - 380  # zone sûre entre la barre de profil et la barre de
 def options(img, items, y, letters=False):
     """Options en boutons « secondaires » du site : carte, bordure verte à 30 %, lettre en vert vif."""
     d = ImageDraw.Draw(img, "RGBA")
-    f = charte.font("bold", 52)
+    place = W - 2 * M - (112 + 40 if letters else 80)  # largeur utile dans le bouton
+    taille = 52
+    while taille > 34 and max(charte.font("bold", taille).getlength(o) for o in items) > place:
+        taille -= 2  # une option longue rétrécit plutôt que de déborder
+    f = charte.font("bold", taille)
     for k, opt in enumerate(items):
         d.rounded_rectangle([M, y, W - M, y + 140], radius=36, fill=charte.a(charte.CARTE, 0.94),
                             outline=charte.a(charte.VERT, 0.6), width=3)
@@ -60,7 +64,7 @@ def story_savoir(img, s):
 
 def story_sondage(img, s):
     y = titre(img, s, "SONDAGE", 92) + 60
-    y = options(img, s["options"][:2], y)
+    y = options(img, s["options"][:4], y)  # le sondage Instagram accepte 4 réponses
     ImageDraw.Draw(img).text((W / 2, y + 30), s.get("hint", "Votez avec le sondage"), font=charte.font("medium", 40),
                              fill=charte.GRIS, anchor="mm")
     return img
