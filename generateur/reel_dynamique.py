@@ -298,7 +298,8 @@ def texte_contour(d, xy, mot, f, couleur, anchor="mm"):
 
 
 def sous_titres(img, mots_t, t):
-    """Groupe de mots en cours, le mot prononcé en or, petit effet « pop » à l'apparition du groupe."""
+    """Groupe de mots en cours, le mot prononcé sur une pastille verte (le bouton du site), petit effet « pop » à
+    l'apparition du groupe. Charte Canopée : pas d'or dans les sous-titres."""
     for g in groupes(mots_t):
         if g[0][2] - 0.02 <= t < (g[-1][3] + 0.05):
             break
@@ -316,10 +317,14 @@ def sous_titres(img, mots_t, t):
     d = ImageDraw.Draw(img)
     x = (W - larg) / 2
     for m, hl, t0, t1 in g:
-        actif = t0 <= t < t1 + 0.04
-        couleur = c.OR if actif else (c.VERT_VIF if hl else c.BLANC)
-        texte_contour(d, (x, CAP_Y), m.upper(), f, couleur, anchor="lm")
-        x += f.getlength(m.upper()) + esp
+        w = f.getlength(m.upper())
+        if t0 <= t < t1 + 0.04:  # mot prononcé : blanc sur la pastille verte
+            d.rounded_rectangle([x - 14, CAP_Y - f.size * 0.62, x + w + 14, CAP_Y + f.size * 0.6], int(f.size * 0.26),
+                                fill=c.VERT)
+            d.text((x, CAP_Y), m.upper(), font=f, fill=(255, 255, 255), anchor="lm")
+        else:
+            texte_contour(d, (x, CAP_Y), m.upper(), f, c.VERT_VIF if hl else c.BLANC, anchor="lm")
+        x += w + esp
 
 
 def accroche(img, texte, t, duree):
@@ -338,7 +343,7 @@ def accroche(img, texte, t, duree):
         cur.append((m, hl))
     lignes.append(cur)
     d = ImageDraw.Draw(img)
-    y, k, sortie = 470 - (len(lignes) - 1) * 62, 0, max(0, 1 - (duree - t) / 0.15)
+    y, k, sortie = max(300, 470 - (len(lignes) - 1) * 62), 0, max(0, 1 - (duree - t) / 0.15)  # 300 : sous le logo
     for ligne in lignes:
         lw = sum(f.getlength(m.upper()) for m, _ in ligne) + f.getlength(" ") * (len(ligne) - 1)
         x = (W - lw) / 2
@@ -346,10 +351,9 @@ def accroche(img, texte, t, duree):
             apparu = t - k * 0.07
             if apparu > 0:
                 dy = int(40 * (1 - min(1, apparu / 0.12)) ** 2) - int(30 * sortie)
-                if hl:
-                    w = f.getlength(m.upper())
-                    d.rounded_rectangle([x - 12, y - 66 + dy, x + w + 12, y + 62 + dy], 14, fill=c.OR)
-                    d.text((x, y + dy), m.upper(), font=f, fill=c.FOND, anchor="lm")
+                if hl:  # titre « hero » : dégradé vert → or du site, sur toute la largeur de l'accroche
+                    c.degrade(img, (x, y + dy), m.upper(), f, anchor="lm", etendue=(70, W - 70),
+                              contour=max(4, f.size // 11))
                 else:
                     texte_contour(d, (x, y + dy), m.upper(), f, c.BLANC, anchor="lm")
             x += f.getlength(m.upper()) + f.getlength(" ")
@@ -369,11 +373,14 @@ def carte_fin(img, t, debut, duree):
     img.paste(lg, (W // 2 - 130, 640 - int(40 * (1 - p))), lg)
     c.marque(img, W // 2, 980, size=64, center=True)
     d.text((W // 2, 1080), "lecoinrare.com", font=c.font("semibold", 40), fill=c.GRIS, anchor="mm")
+    if p >= 1:
+        c.bouton(img, "Suivez @lecoinrare", W / 2, 1160, size=46, center=True)
     return img
 
 
 def carte_chiffre(img, texte, age):
-    """Grosse pastille dorée (un chiffre clé : « 26 °C = FEMELLES ») qui surgit en haut de l'image."""
+    """Carte du site (surface, bordure vert vif) avec un chiffre clé (« 26 °C = FEMELLES »), qui surgit en haut de
+    l'image. Plus d'or : la charte Canopée le réserve aux micro-accents."""
     p = min(1, age / 0.18)
     scale = 0.6 + 0.4 * p + 0.08 * max(0, 1 - abs(age - 0.18) / 0.12)
     f = c.font("black", int(84 * scale))
@@ -381,10 +388,10 @@ def carte_chiffre(img, texte, age):
     if tw > W - 160:
         f = c.font("black", int(84 * scale * (W - 160) / tw))
         tw = f.getlength(texte.upper())
-    d = ImageDraw.Draw(img)
     cy = 560
-    d.rounded_rectangle([W / 2 - tw / 2 - 34, cy - 70, W / 2 + tw / 2 + 34, cy + 70], 28, fill=c.OR)
-    d.text((W / 2, cy), texte.upper(), font=f, fill=c.FOND, anchor="mm")
+    c.carte(img, [W / 2 - tw / 2 - 40, cy - 76, W / 2 + tw / 2 + 40, cy + 76], opacite=0.93, bord=c.a(c.VERT_VIF, 0.6),
+            epaisseur=4)
+    ImageDraw.Draw(img).text((W / 2, cy), texte.upper(), font=f, fill=c.BLANC, anchor="mm")
 
 
 def composer(base, t, mots_t, spec, d_accroche, fin_debut, flash, cartes=()):
@@ -406,14 +413,9 @@ def composer(base, t, mots_t, spec, d_accroche, fin_debut, flash, cartes=()):
 
 
 def marque_lisible(img, x=64, y=150, size=36):
-    """Logo sur une pastille sombre arrondie : « Rare » (vert) reste lisible sur un fond clair."""
+    """Logo sur une pastille « carte » du site (surface translucide, bordure) : « Rare » (vert) reste lisible."""
     w = int(c.largeur_marque(size)) + 44
-    box = (x - 22, y - 38, x - 22 + w, y + 38)
-    zone = img.crop(box)
-    sombre = Image.blend(zone, Image.new("RGB", zone.size, c.FOND), 0.62)
-    masque = Image.new("L", zone.size, 0)
-    ImageDraw.Draw(masque).rounded_rectangle([0, 0, zone.width - 1, zone.height - 1], 38, fill=255)
-    img.paste(sombre, box[:2], masque)
+    c.carte(img, [x - 22, y - 38, x - 22 + w, y + 38], opacite=0.7, rayon=38, epaisseur=2)
     c.marque(img, x, y, size=size)
 
 
