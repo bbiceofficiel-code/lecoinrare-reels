@@ -245,6 +245,26 @@ def son(args):
         api("sendAudio", {"chat_id": str(chat), "title": titre, "performer": "LeCoinRare"}, {"audio": f})
 
 
+def retirer(args):
+    """Retire des envois abandonnés : leurs boutons disparaissent (plus de validation possible), une note le dit,
+    et ils sortent de l'état."""
+    etat = charger()
+    chat = etat.get("chat")
+    for id_ in args.ids:
+        e = etat["envois"].pop(id_, None)
+        if not e:
+            print(f"Inconnu : {id_}")
+            continue
+        try:
+            api("editMessageReplyMarkup", {"chat_id": chat, "message_id": e["message_id"], "reply_markup": {"inline_keyboard": []}})
+            api("sendMessage", {"chat_id": chat, "text": f"🗑 Retiré : {e['titre']}" + (f"\n{args.raison}" if args.raison else ""),
+                                "reply_parameters": {"message_id": e["message_id"]}})
+        except RuntimeError as err:
+            print(f"{id_} : {err}")
+        print(f"Retiré : {e['titre']} (Metricool {e.get('metricool') or '-'})")
+    sauver(etat)
+
+
 def oublier(args):
     """Retire de l'état les envois traités (publiés ou abandonnés), pour garder la liste courte."""
     etat = charger()
@@ -279,6 +299,10 @@ if __name__ == "__main__":
     a.add_argument("fichiers", nargs="+")
     a.add_argument("-t", "--texte", default="", help="message envoyé avant les fichiers")
     a.set_defaults(f=son)
+    r = sub.add_parser("retirer", help="retire des envois abandonnés (boutons enlevés, note dans la conversation)")
+    r.add_argument("ids", nargs="+")
+    r.add_argument("--raison", default="")
+    r.set_defaults(f=retirer)
     o = sub.add_parser("oublier")
     o.add_argument("ids", nargs="*")
     o.add_argument("--messages", action="store_true", help="vider aussi les messages libres déjà lus")

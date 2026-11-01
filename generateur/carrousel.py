@@ -44,10 +44,12 @@ def _mots(text):
     """[(mot, style)] : style "hl" (*…*), "latin" (_…_) ou None."""
     out, etat = [], None
     for raw in text.split():
-        mot = raw
+        ouvre = raw[:len(raw) - len(raw.lstrip("(«“"))]  # « (_Python regius_) » : le marqueur suit la parenthèse
+        mot = raw[len(ouvre):]
         for marque_, style in (("*", "hl"), ("_", "latin")):
             if mot.startswith(marque_):
                 etat, mot = style, mot[1:]
+        mot = ouvre + mot
         fin = None
         for marque_, style in (("*", "hl"), ("_", "latin")):
             coeur = mot.rstrip(".,;:!?…»)")

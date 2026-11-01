@@ -6,7 +6,10 @@
    "date": "2026-11-02T12:30:00",
    "type": "sondage",
    "title": "Vos nouveaux poissons, vous les *acclimatez* comment ?",
-   "options": ["Au goutte-à-goutte", "Sac qui flotte, puis épuisette"],
+   "options": [
+    "Au goutte-à-goutte",
+    "Sac qui flotte, puis épuisette"
+   ],
    "sticker": "Sondage : « Goutte-à-goutte » / « Sac qui flotte »"
   },
   {
@@ -19,13 +22,13 @@
   },
   {
    "date": "2026-11-04T19:30:00",
-   "type": "teaser",
+   "type": "savoir",
    "title": "Incubé à 32 °C… et c'est une *femelle* ?",
+   "text": "Chez le gecko léopard (_Eublepharis macularius_), la température d'incubation oriente le sexe. Vers 26 °C : que des femelles. Vers 32 °C : surtout des mâles, jamais 100 %. Vers 34 °C : de nouveau surtout des femelles. Au-dessus de 35 °C en continu, les embryons meurent.",
    "media_query": "leopard gecko",
    "media_source": "wikimedia",
    "media_index": 0,
-   "cta": "Le Reel est sur notre profil",
-   "sticker": "Lien ou mention du Reel du jour"
+   "sticker": "Sondage : « Je le savais » / « Pas du tout »"
   },
   {
    "date": "2026-11-05T12:30:00",
@@ -38,16 +41,22 @@
    "date": "2026-11-06T12:30:00",
    "type": "quiz",
    "title": "En hiver, pour transporter des poissons, le sac contient…",
-   "options": ["Que de l'eau", "1/4 d'eau, 3/4 d'air", "Moitié eau, moitié air"],
+   "options": [
+    "Que de l'eau",
+    "1/4 d'eau, 3/4 d'air",
+    "Moitié eau, moitié air"
+   ],
    "sticker": "Quiz : bonne réponse B (1/4 d'eau, 3/4 d'air)"
   },
   {
    "date": "2026-11-07T19:30:00",
-   "type": "teaser",
-   "title": "Votre serpent vous entend… mais pas comme vous *croyez*",
-   "media": "media/serpent-des-bles.jpg",
-   "cta": "Le Reel est sur notre profil",
-   "sticker": "Lien ou mention du Reel du jour"
+   "type": "savoir",
+   "title": "Votre python royal vous *sent* venir",
+   "text": "Pas de tympan, mais une oreille interne. Le python royal (_Python regius_) entend mal les sons de l'air : il lui faut environ 78 dB, plus fort qu'une voix (environ 60 dB). En revanche, il perçoit très finement les vibrations : une porte qui claque ou des pas lourds lui parviennent sans doute mieux que votre voix.",
+   "sticker": "Sondage : « Mon terrarium est près d'une enceinte ou d'une porte ? » Oui / Non",
+   "media_query": "ball python",
+   "media_source": "pixabay",
+   "media_index": 3
   },
   {
    "date": "2026-11-08T11:00:00",

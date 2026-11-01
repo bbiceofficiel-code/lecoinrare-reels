@@ -49,7 +49,10 @@ def titre(img, s, kicker, size):
 def story_savoir(img, s):
     y = titre(img, s, "LE SAVIEZ-VOUS ?", 96)
     if s.get("text") and (s.get("media") or s.get("media_query")):  # sur une photo : le texte dans une carte
-        c.texte_en_carte(img, s["text"], y + 40, size=46)
+        taille = 46
+        while taille > 36 and c.texte_en_carte(img, s["text"], y + 40, size=taille, dessiner=False) > BOTTOM - 20:
+            taille -= 2  # la carte ne doit pas toucher le logo ni la barre de réponse
+        c.texte_en_carte(img, s["text"], y + 40, size=taille)
     elif s.get("text"):
         c.rich(img, s["text"], y + 40, "medium", 50, charte.GRIS, gap=1.3)
     return img
