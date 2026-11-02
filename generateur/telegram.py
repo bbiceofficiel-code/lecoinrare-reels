@@ -24,7 +24,8 @@ import argparse, json, mimetypes, os, re, sys, urllib.error, urllib.request, uui
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(ROOT, ".telegram_etat.json")
 UA = {"User-Agent": "lecoinrare-reels/1.0 (https://github.com/bbiceofficiel-code/lecoinrare-reels)"}
-STATUTS = {"attente": "⏳ en attente", "ok": "✅ validé", "non": "❌ refusé", "corriger": "✏️ à corriger"}
+STATUTS = {"attente": "⏳ en attente", "ok": "✅ validé", "non": "❌ refusé", "corriger": "✏️ à corriger",
+           "auto": "🟢 programmé"}  # auto : validation par refus (02/11/2026), ça part tout seul sauf « Refuser »
 
 
 def token():
@@ -87,6 +88,8 @@ def api(method, params=None, files=None):
 
 
 def boutons(id_, statut="attente"):
+    if statut == "auto":  # déjà programmé : un seul bouton, pour l'annuler
+        return {"inline_keyboard": [[{"text": "❌ Refuser (ne pas publier)", "callback_data": f"non:{id_}"}]]}
     if statut == "attente":
         return {"inline_keyboard": [[{"text": "✅ Valider", "callback_data": f"ok:{id_}"},
                                      {"text": "❌ Refuser", "callback_data": f"non:{id_}"}]]}
@@ -165,8 +168,11 @@ def envoyer(args):
     texte = (entete + "\n\n" + legende(args.legende)).strip()
     if len(texte) > 4000:
         texte = texte[:3990] + "…"
-    msg = api("sendMessage", {"chat_id": chat, "text": texte, "reply_markup": boutons(args.id)})
-    etat["envois"][args.id] = {"titre": args.titre, "quand": args.quand, "metricool": args.metricool, "statut": "attente",
+    statut = "auto" if args.auto else "attente"
+    if args.auto:
+        texte = "🟢 Programmé : part tout seul. Appuie sur Refuser seulement si tu n'en veux pas.\n\n" + texte
+    msg = api("sendMessage", {"chat_id": chat, "text": texte[:4000], "reply_markup": boutons(args.id, statut)})
+    etat["envois"][args.id] = {"titre": args.titre, "quand": args.quand, "metricool": args.metricool, "statut": statut,
                                "message_id": msg["message_id"], "corrections": []}
     sauver(etat)
     print(f"Envoyé sur Telegram : {args.titre} ({len(videos)} vidéo(s), {len(images)} image(s)).")
@@ -245,6 +251,28 @@ def son(args):
         api("sendAudio", {"chat_id": str(chat), "title": titre, "performer": "LeCoinRare"}, {"audio": f})
 
 
+def programmer(args):
+    """Passe des envois en attente au mode automatique (validation par refus) : ils sont programmés dans Metricool,
+    leur message ne garde qu'un bouton « Refuser »."""
+    etat = charger()
+    chat = etat.get("chat")
+    for paire in args.envois:
+        id_, _, ids = paire.partition("=")
+        e = etat["envois"].get(id_)
+        if not e:
+            print(f"Inconnu : {id_}")
+            continue
+        e["statut"] = "auto"
+        if ids:
+            e["metricool"] = ids
+        try:
+            api("editMessageReplyMarkup", {"chat_id": chat, "message_id": e["message_id"], "reply_markup": boutons(id_, "auto")})
+        except RuntimeError as err:
+            print(f"{id_} : {err}")
+        print(f"Programmé : {e['titre']}")
+    sauver(etat)
+
+
 def retirer(args):
     """Retire des envois abandonnés : leurs boutons disparaissent (plus de validation possible), une note le dit,
     et ils sortent de l'état."""
@@ -286,6 +314,7 @@ if __name__ == "__main__":
     e.add_argument("--quand", default="", help="date prévue, ex. « lun. 3 nov., 18h »")
     e.add_argument("--legende", default="", help="texte, fichier .txt, ou JSON du Reel/carrousel (champ caption)")
     e.add_argument("--metricool", default="", help="id du brouillon Metricool à programmer une fois validé")
+    e.add_argument("--auto", action="store_true", help="déjà programmé : seul un bouton Refuser (validation par refus)")
     e.add_argument("fichiers", nargs="*")
     e.set_defaults(f=envoyer)
     d = sub.add_parser("decisions")
@@ -299,6 +328,9 @@ if __name__ == "__main__":
     a.add_argument("fichiers", nargs="+")
     a.add_argument("-t", "--texte", default="", help="message envoyé avant les fichiers")
     a.set_defaults(f=son)
+    g = sub.add_parser("programmer", help="passe des envois en mode automatique : id=ids_metricool ...")
+    g.add_argument("envois", nargs="+")
+    g.set_defaults(f=programmer)
     r = sub.add_parser("retirer", help="retire des envois abandonnés (boutons enlevés, note dans la conversation)")
     r.add_argument("ids", nargs="+")
     r.add_argument("--raison", default="")
