@@ -435,14 +435,14 @@ def scene_outro(layer, s, lt):
     p = lt / 0.45
     if p > 0:
         paste_scaled(layer, charte.logo(300), W / 2, 400, 0.4 + 0.6 * ease_back(p), ease_out(p * 1.5))
-    word = "LeCoinRare"
+    word = charte.NOM
     f = font("bold", 128)
     x = (W - f.getlength(word)) / 2
     for k, ch in enumerate(word):
         p = (lt - 0.2 - k * 0.045) / 0.4
         w = f.getlength(ch)
         if p > 0:
-            col = charte.VERT_RARE if k >= 6 else CREME
+            col = charte.VERT_RARE if k >= len(charte.NOM_DEBUT) else CREME
             paste_scaled(layer, word_sprite(ch, "bold", 128, col), x + w / 2, 660 + (1 - ease_out(p)) * 50, 0.5 + 0.5 * ease_back(p), ease_out(p * 1.5))
         x += w
     y = kinetic_text(layer, s["title"], lt, 0.6, "display", 76, CREME, 800, align="center", max_w=900, stagger=0.06)
@@ -527,7 +527,7 @@ def wipe(layer, t, boundaries):
 
 VOIX_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "voix")
 DICTION = [  # ce que la voix doit dire à la place de ce qui est écrit
-    ("lecoinrare.com", "Le Coin Rare"), ("@lecoinrare", "le coin rare"), ("LeCoinRare", "Le Coin Rare"),
+    *(tuple(paire) for paire in charte.MARQUE.get("diction", [])),
     (" °C", " degrés"), ("°C", " degrés"), ("n°", "numéro "), ("NAC", "nac"), ("UVI", "indice u-vé"), ("indice UV", "indice u-vé"), ("UVB", "u-vé-bé"),
     ("&", "et"), ("D3", "D trois"), ("pH", "pé-hache"),("quiz", "kouiz"), ("Quiz", "Kouiz"),  # sinon elle dit « kizz »
 ]

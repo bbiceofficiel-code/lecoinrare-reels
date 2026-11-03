@@ -20,7 +20,8 @@ import html, json, os, re, sys, unicodedata, urllib.parse, urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE = os.path.join(ROOT, "reels", "media")
-UA = {"User-Agent": "lecoinrare-reels/1.0 (https://github.com/bbiceofficiel-code/lecoinrare-reels)"}
+_MARQUE = json.load(open(os.path.join(ROOT, "generateur", "marque", "marque.json"), encoding="utf-8"))
+UA = {"User-Agent": f"agent-cm/1.0 ({_MARQUE.get('depot', '')})"}
 SOURCES = ("pexels", "pixabay", "wikimedia")
 MIN_SHARP = {"video": 600, "photo": 700}  # largeur utile minimale après recadrage vertical (Pixabay plafonne ses photos à 1280 px)
 FREE_LICENSES = ("cc0", "public domain", "pd")

@@ -372,9 +372,9 @@ def carte_fin(img, t, debut, duree):
     lg = c.logo(260)
     img.paste(lg, (W // 2 - 130, 640 - int(40 * (1 - p))), lg)
     c.marque(img, W // 2, 980, size=64, center=True)
-    d.text((W // 2, 1080), "lecoinrare.com", font=c.font("semibold", 40), fill=c.GRIS, anchor="mm")
+    d.text((W // 2, 1080), c.SITE, font=c.font("semibold", 40), fill=c.GRIS, anchor="mm")
     if p >= 1:
-        c.bouton(img, "Suivez @lecoinrare", W / 2, 1160, size=46, center=True)
+        c.bouton(img, "Suivez " + c.COMPTE, W / 2, 1160, size=46, center=True)
     return img
 
 

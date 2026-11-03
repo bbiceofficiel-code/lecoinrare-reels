@@ -9,8 +9,11 @@ Référence : docs/design-system.md (fourni par l'équipe le 01/11/2026). Les r�
 - pas de bleu saturé ; halos d'ambiance #1A3A2A très flous derrière les titres.
 Polices : Montserrat (OFL) pour tout, Merriweather italique (OFL) pour les accents (noms scientifiques).
 Logo : le caméléon du site (marque/logo.png), suivi de « LeCoin » en blanc et « Rare » en vert accent.
+Nom, compte, site et couleurs propres à la marque : marque/marque.json (pour dupliquer l'agent, on ne change que ce
+dossier et docs/design-system.md).
 Partagée par reel_dynamique.py, reel.py, carrousel.py et story.py.
 """
+import json
 import os
 from functools import lru_cache
 
@@ -26,12 +29,19 @@ VERT = (50, 100, 70)         # primary         #326446  boutons, accents forts
 ANNEAU = (45, 90, 63)        # ring            #2D5A3F
 VERT_TEXTE = (94, 154, 110)  # accent-text     #5E9A6E  texte vert, noms scientifiques, icônes
 VERT_VIF = (76, 168, 130)    # accent-bright   #4CA882  survols, liens actifs, mots surlignés
-VERT_RARE = VERT_TEXTE       # le « Rare » du nom
 OR = (212, 168, 83)          # gold            #D4A853  micro-accents uniquement
 BLANC = (244, 244, 245)      # foreground      #F4F4F5
 GRIS = (176, 176, 184)       # muted-fg        #B0B0B8  texte secondaire
 GRIS_SUBTIL = (113, 113, 122)  # subtle-fg     #71717A  texte tertiaire
 ROUGE = (239, 68, 68)        # destructive     #EF4444  erreurs
+
+MARQUE = json.load(open(os.path.join(HERE, "marque", "marque.json"), encoding="utf-8"))
+for _nom, _hex in MARQUE.get("couleurs", {}).items():  # une autre marque garde les noms, change les teintes
+    globals()[_nom] = tuple(int(_hex.lstrip("#")[i:i + 2], 16) for i in (0, 2, 4))
+VERT_RARE = VERT_TEXTE       # le « Rare » du nom
+NOM_DEBUT, NOM_FIN = MARQUE["nom"]
+NOM = NOM_DEBUT + NOM_FIN    # « LeCoinRare »
+COMPTE, SITE = MARQUE["compte"], MARQUE["site"]
 
 FONTS = {"black": "Montserrat-Black.ttf", "display": "Montserrat-ExtraBold.ttf", "bold": "Montserrat-Bold.ttf",
          "semibold": "Montserrat-SemiBold.ttf", "medium": "Montserrat-Medium.ttf",
@@ -53,7 +63,7 @@ def logo(size):
 
 
 def largeur_marque(size):
-    return size * 1.6 + size * 0.3 + font("bold", size).getlength("LeCoinRare")
+    return size * 1.6 + size * 0.3 + font("bold", size).getlength(NOM)
 
 
 def marque(img, x, y, size=42, center=False, alpha=255):
@@ -70,8 +80,8 @@ def marque(img, x, y, size=42, center=False, alpha=255):
     d = ImageDraw.Draw(img)
     tx = x + ico + size * 0.3
     rgba = img.mode == "RGBA"
-    d.text((tx, y), "LeCoin", font=f, fill=BLANC + ((alpha,) if rgba else ()), anchor="lm")
-    d.text((tx + f.getlength("LeCoin"), y), "Rare", font=f, fill=VERT_RARE + ((alpha,) if rgba else ()), anchor="lm")
+    d.text((tx, y), NOM_DEBUT, font=f, fill=BLANC + ((alpha,) if rgba else ()), anchor="lm")
+    d.text((tx + f.getlength(NOM_DEBUT), y), NOM_FIN, font=f, fill=VERT_RARE + ((alpha,) if rgba else ()), anchor="lm")
     return w
 
 

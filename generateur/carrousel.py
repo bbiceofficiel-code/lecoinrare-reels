@@ -178,13 +178,13 @@ def slide_end(img, s):
     img.paste(charte.logo(220), ((W - 220) // 2, 150), charte.logo(220))
     d = ImageDraw.Draw(img)
     f = font("bold", 104)
-    x = (W - f.getlength("LeCoinRare")) / 2
-    d.text((x, 470), "LeCoin", font=f, fill=charte.BLANC, anchor="ls")
-    d.text((x + f.getlength("LeCoin"), 470), "Rare", font=f, fill=charte.VERT_RARE, anchor="ls")
+    x = (W - f.getlength(charte.NOM)) / 2
+    d.text((x, 470), charte.NOM_DEBUT, font=f, fill=charte.BLANC, anchor="ls")
+    d.text((x + f.getlength(charte.NOM_DEBUT), 470), charte.NOM_FIN, font=f, fill=charte.VERT_RARE, anchor="ls")
     y = rich(img, s["title"], 540, "display", 64, charte.BLANC, align="center")
     if s.get("text"):
         y = rich(img, s["text"], y + 20, "semibold", 42, charte.GRIS, align="center", gap=1.3)
-    y = charte.bouton(img, s.get("cta", "Suivez @lecoinrare"), W / 2, y + 56, size=44, center=True)
+    y = charte.bouton(img, s.get("cta", "Suivez " + charte.COMPTE), W / 2, y + 56, size=44, center=True)
     confiance(img, y + 70)
     return img
 
@@ -200,7 +200,7 @@ def footer(img, i, n):
         cx = W / 2 + (k - (n - 1) / 2) * 26
         r = 7 if k == i - 1 else 5
         d.ellipse([cx - r, y - r, cx + r, y + r], fill=charte.VERT_VIF if k == i - 1 else (38, 74, 54))
-    d.text((W - M, y), "Glissez →" if i < n else "lecoinrare.com", font=font("bold", 30),
+    d.text((W - M, y), "Glissez →" if i < n else charte.SITE, font=font("bold", 30),
            fill=charte.VERT_TEXTE if i < n else charte.GRIS, anchor="rm")
 
 

@@ -23,7 +23,9 @@ import argparse, json, mimetypes, os, re, sys, urllib.error, urllib.request, uui
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(ROOT, ".telegram_etat.json")
-UA = {"User-Agent": "lecoinrare-reels/1.0 (https://github.com/bbiceofficiel-code/lecoinrare-reels)"}
+MARQUE = json.load(open(os.path.join(ROOT, "generateur", "marque", "marque.json"), encoding="utf-8"))
+NOM = "".join(MARQUE["nom"])
+UA = {"User-Agent": f"agent-cm/1.0 ({MARQUE.get('depot', '')})"}
 STATUTS = {"attente": "⏳ en attente", "ok": "✅ validé", "non": "❌ refusé", "corriger": "✏️ à corriger",
            "auto": "🟢 programmé"}  # auto : validation par refus (02/11/2026), ça part tout seul sauf « Refuser »
 
@@ -125,7 +127,7 @@ def lier(_args):
     chat = starts[-1]["chat"]
     etat["chat"] = chat["id"]
     sauver(etat)
-    api("sendMessage", {"chat_id": chat["id"], "text": "C'est relié 🦎 Je t'enverrai ici chaque publication de LeCoinRare avant qu'elle parte. "
+    api("sendMessage", {"chat_id": chat["id"], "text": f"C'est relié ✅ Je t'enverrai ici chaque publication de {NOM} avant qu'elle parte. "
                                                        "Valider, Refuser, ou réponds à la légende pour demander une correction."})
     print(f"Relié à la conversation de {chat.get('first_name', '')} {chat.get('last_name', '')}".strip() + ".")
 
@@ -248,7 +250,7 @@ def son(args):
         api("sendMessage", {"chat_id": chat, "text": args.texte[:4000]})
     for f in args.fichiers:
         titre = os.path.splitext(os.path.basename(f))[0]
-        api("sendAudio", {"chat_id": str(chat), "title": titre, "performer": "LeCoinRare"}, {"audio": f})
+        api("sendAudio", {"chat_id": str(chat), "title": titre, "performer": NOM}, {"audio": f})
 
 
 def programmer(args):
@@ -304,7 +306,7 @@ def oublier(args):
 
 
 if __name__ == "__main__":
-    p = argparse.ArgumentParser(description="Validation des publications LeCoinRare sur Telegram.")
+    p = argparse.ArgumentParser(description=f"Validation des publications {NOM} sur Telegram.")
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("jeton", help="enregistre le jeton copié dans le presse-papiers").set_defaults(f=jeton)
     sub.add_parser("lier").set_defaults(f=lier)
