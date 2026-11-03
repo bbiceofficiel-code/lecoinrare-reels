@@ -1,9 +1,10 @@
 {
-  "_aide": "Tout ce qui nomme la marque sur les visuels. nom : [début en blanc, fin en couleur d'accent]. couleurs : remplace les couleurs de charte.py (même nom, en hex). diction : ce que la voix off dit à la place de ce qui est écrit. Le logo est logo.png (carré, fond transparent), dans ce dossier.",
+  "_aide": "Tout ce qui nomme la marque sur les visuels. nom : [début en blanc, fin en couleur d'accent]. confiance : deux arguments courts en capitales sous le bouton de la dernière slide d'un carrousel. couleurs : remplace les couleurs de charte.py (même nom, en hex). diction : ce que la voix off dit à la place de ce qui est écrit. Le logo est logo.png (carré, fond transparent), dans ce dossier.",
   "nom": ["LeCoin", "Rare"],
   "compte": "@lecoinrare",
   "site": "lecoinrare.com",
   "depot": "https://github.com/bbiceofficiel-code/lecoinrare-reels",
+  "confiance": ["MARKETPLACE SÉCURISÉE", "ENTRE PASSIONNÉS"],
   "couleurs": {},
   "diction": [["lecoinrare.com", "Le Coin Rare"], ["@lecoinrare", "le coin rare"], ["LeCoinRare", "Le Coin Rare"]]
 }

@@ -165,9 +165,9 @@ def confiance(img, y):
     """Bandeau de confiance du site : capitales espacées gris discret, puce verte."""
     d = ImageDraw.Draw(img)
     f = font("semibold", 24)
-    textes = ["MARKETPLACE SÉCURISÉE", "ENTRE PASSIONNÉS"]
+    textes = charte.MARQUE.get("confiance", [])
     largeurs = [sum(f.getlength(ch) for ch in t) + 24 * 0.14 * (len(t) - 1) for t in textes]
-    x = (W - sum(largeurs) - 2 * 30 - 60) / 2
+    x = (W - sum(largeurs) - len(textes) * 30 - max(0, len(textes) - 1) * 60) / 2
     for t, lw in zip(textes, largeurs):
         d.ellipse([x, y - 7, x + 14, y + 7], fill=charte.VERT)
         charte.espace(d, (x + 30, y), t, f, charte.GRIS_SUBTIL, pas=0.14)
