@@ -1,0 +1,87 @@
+{
+ "sources": [
+  "La Poste, produits interdits à l'expédition (animaux vivants) : https://aide.laposte.fr/contenu/quels-sont-les-produits-interdits-a-l-expedition-de-colis",
+  "Colissimo, marchandises dangereuses et interdites : https://www.colissimo.entreprise.laposte.fr/en/practical-advice/right-packaging/dangerous-and-prohibited-goods",
+  "Douane française, alerte du 27/08/2025 « achat de chiots bloqué par la douane » (la douane ne valide pas les cages et ne taxe pas ces envois) : https://www.douane.gouv.fr/actualites/alerte-arnaque-achat-de-chiots-bloque-par-la-douane",
+  "Police belge, arnaques autour des animaux : https://www.police.be/5998/fr/actualites/de-nombreuses-arnaques-autour-des-animaux-soyez-sur-vos-gardes",
+  "Arrêté du 8 octobre 2018 consolidé (art. 10 attestation de cession, art. 11 document d'information) : https://www.legifrance.gouv.fr/loda/id/JORFTEXT000037491137",
+  "Signalement : https://www.internet-signalement.gouv.fr"
+ ],
+ "caption": "6 signes d'une fausse annonce de reptile 🦎\n\n1. On vous propose un envoi par colis : La Poste et Colissimo interdisent l'expédition d'animaux vivants.\n2. On vous demande un paiement non traçable : coupons prépayés, transfert d'argent, acompte « pour réserver », PayPal « entre proches » (aucune protection acheteur).\n3. Les frais s'enchaînent après le premier paiement : transport, assurance, « cage non conforme bloquée à la douane ». La douane française l'a rappelé : elle ne valide pas les cages et ne taxe pas ces envois.\n4. Les photos viennent d'ailleurs : faites une recherche d'image inversée, et demandez une photo de l'animal avec votre prénom et la date du jour.\n5. Le prix est trop beau, souvent avec une histoire touchante pour vous presser.\n6. Pas de papiers : attestation de cession, document d'information, CIC pour une tortue d'Hermann.\n\nVous êtes tombé sur une annonce louche ? Signalez-la sur internet-signalement.gouv.fr.\n\nEt vous, quel détail vous a déjà fait fuir une annonce ? 👇\n\nEnregistrez ce post avant votre prochain achat 📌 et partagez-le à un ami qui cherche son premier reptile.\n\n#terrariophilie #reptiles #arnaque #nac #lecoinrare",
+ "slides": [
+  {
+   "type": "cover",
+   "kicker": "ACHETER EN CONFIANCE",
+   "title": "*6 signes* d'une fausse annonce de reptile",
+   "subtitle": "Le premier se repère dès la description.",
+   "media_query": "leopard gecko",
+   "media_source": "wikimedia",
+   "media_index": 0
+  },
+  {
+   "type": "point",
+   "n": 1,
+   "warn": true,
+   "tag": "SIGNE 1",
+   "title": "Un envoi *par colis*",
+   "text": "La Poste et Colissimo interdisent l'expédition d'animaux vivants. Un vendeur qui propose d'envoyer un reptile par colis postal se moque de la santé de l'animal, ou bien il vous arnaque."
+  },
+  {
+   "type": "point",
+   "n": 2,
+   "warn": true,
+   "tag": "SIGNE 2",
+   "title": "Un paiement *non traçable*",
+   "text": "Coupons prépayés, transfert d'argent, acompte « pour réserver » à un inconnu : une fois l'argent parti, vous n'avez plus aucun recours."
+  },
+  {
+   "type": "point",
+   "n": 3,
+   "warn": true,
+   "tag": "SIGNE 3",
+   "title": "Des frais *en cascade*",
+   "text": "Après le premier paiement : transport, assurance, « cage non conforme bloquée à la douane ». La douane l'a rappelé en 2025 à propos d'arnaques aux chiots : elle ne valide pas les cages et ne taxe pas ces envois."
+  },
+  {
+   "type": "point",
+   "n": 4,
+   "warn": true,
+   "tag": "SIGNE 4",
+   "title": "Des *photos* trouvées ailleurs",
+   "text": "Faites une recherche d'image inversée. Puis demandez une photo de l'animal à côté d'un papier avec votre prénom et la date du jour."
+  },
+  {
+   "type": "point",
+   "n": 5,
+   "warn": true,
+   "tag": "SIGNE 5",
+   "title": "Un *prix* trop beau",
+   "text": "Une morphe recherchée bradée, souvent avec une histoire touchante (déménagement, deuil, allergie) pour vous presser. Un éleveur sérieux connaît la valeur de ses animaux."
+  },
+  {
+   "type": "point",
+   "n": 6,
+   "warn": true,
+   "tag": "SIGNE 6",
+   "title": "*Pas de papiers*",
+   "text": "Ni attestation de cession, ni document d'information sur l'espèce, ni CIC pour une tortue d'Hermann, et un refus de vous montrer l'animal : passez votre chemin."
+  },
+  {
+   "type": "checklist",
+   "kicker": "LES BONS RÉFLEXES",
+   "title": "Avant de payer",
+   "items": [
+    "Voir l'animal, sur place ou en vidéo en direct",
+    "Demander les papiers avant tout paiement",
+    "Payer par un moyen qui vous protège (jamais « entre proches »)",
+    "Signaler l'annonce : internet-signalement.gouv.fr"
+   ]
+  },
+  {
+   "type": "end",
+   "title": "Enregistrez-le avant votre prochain achat",
+   "text": "Vendeurs vérifiés et paiement sécurisé sur lecoinrare.com",
+   "cta": "Suivez @lecoinrare"
+  }
+ ]
+}

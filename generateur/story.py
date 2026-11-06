@@ -74,8 +74,12 @@ def consigne(img, s, y, n):
 
 
 def story_sondage(img, s):
-    y = titre(img, s, "SONDAGE", 92) + 60
-    y = options(img, s["options"][:4], y, letters=True)
+    if len(s["options"]) > 2:  # 3 options ou plus : mise en page compacte du quiz, sinon la consigne touche le logo
+        y = titre(img, s, "SONDAGE", 80) + 44
+        y = options(img, s["options"][:4], y, letters=True, h=118, pas=142)
+    else:
+        y = titre(img, s, "SONDAGE", 92) + 60
+        y = options(img, s["options"][:4], y, letters=True)
     consigne(img, s, y, len(s["options"][:4]))
     return img
 

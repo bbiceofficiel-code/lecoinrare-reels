@@ -1,0 +1,64 @@
+{
+ "semaine": "2026-11-09",
+ "theme": "Aquario : démarrer et comprendre son bac (+ arnaques aux annonces de reptiles le mardi)",
+ "automatique": "Aucune story n'a d'autocollant : tout part en publication automatique (décision de l'utilisateur, 01/11/2026).",
+ "sources": [
+  "Fagernes et al. 2017, Scientific Reports, doi:10.1038/s41598-017-07385-4 (carassin et poisson rouge : lactate transformé en éthanol, rejeté par les branchies ; plus de 50 mg/100 ml dans le sang du carassin selon M. Berenbrink)",
+  "López-Sepulcre et al. 2013, Proc. R. Soc. B 280: 20131116 (guppys sauvages de Trinidad : environ 14 % des petits issus de pères morts, jusqu'à 25 % en fin d'étude ; jusqu'à 10 mois après la mort du père)",
+  "Dias et al. 2024, Zoological Journal of the Linnean Society (Corydoradinae en 7 genres : Corydoras, Aspidoras, Scleromystax, Brochis, Gastrodermus, Hoplisoma, Osteogaster) ; Practical Fishkeeping : https://practicalfishkeeping.co.uk/fishkeeping-news/corydoradinae-revision-changes-names-for-hundreds-of-species ; FishBase (Osteogaster aenea) : https://fishbase.se/summary/7777",
+  "ReptiFiles (d'après Baines) : gecko léopard en zone de Ferguson 1, UVI 0,5 à 1,5 (déjà vérifié par le critique le 29/10)"
+ ],
+ "stories": [
+  {
+   "date": "2026-11-09T19:30:00",
+   "type": "sondage",
+   "title": "Votre premier bac : combien de temps avant d'y mettre les *poissons* ?",
+   "options": ["Le jour même", "Une à deux semaines", "Un mois ou plus"]
+  },
+  {
+   "date": "2026-11-10T12:30:00",
+   "type": "sondage",
+   "title": "Une annonce de reptile propose un *envoi par colis postal*. Vous faites quoi ?",
+   "options": ["J'accepte, c'est pratique", "Je demande à le voir d'abord", "Je fuis l'annonce"]
+  },
+  {
+   "date": "2026-11-11T12:30:00",
+   "type": "quiz",
+   "title": "Une femelle guppy peut garder le sperme d'un mâle pendant…",
+   "options": ["Quelques jours", "Deux semaines", "Plusieurs mois"],
+   "hint2": "La réponse ce soir en story"
+  },
+  {
+   "date": "2026-11-11T20:00:00",
+   "type": "savoir",
+   "kicker": "LA RÉPONSE DU QUIZ",
+   "title": "C : *plusieurs mois*",
+   "text": "Chez le guppy (_Poecilia reticulata_), dans une rivière de Trinidad, des mâles ont encore eu des petits jusqu'à 10 mois après leur mort (López-Sepulcre et al., 2013). Une femelle qui sort d'un bac mixte peut donc donner plusieurs portées chez vous, sans aucun mâle : prévoyez la place pour les alevins."
+  },
+  {
+   "date": "2026-11-12T19:30:00",
+   "type": "savoir",
+   "title": "Votre corydoras bronze a *changé de nom*",
+   "text": "En 2024, une grande révision a réparti les corydoras en 7 genres (Dias et al.). Le corydoras bronze s'appelle désormais _Osteogaster aenea_. Les étiquettes de magasin n'ont pas encore toutes suivi."
+  },
+  {
+   "date": "2026-11-13T12:30:00",
+   "type": "sondage",
+   "title": "Les *nitrites* de votre bac, vous les mesurez comment ?",
+   "options": ["Bandelettes", "Tests en gouttes", "Je ne les mesure pas"]
+  },
+  {
+   "date": "2026-11-14T19:30:00",
+   "type": "savoir",
+   "title": "Sous la glace, le poisson rouge fabrique de *l'alcool*",
+   "text": "Sans oxygène, le carassin (_Carassius carassius_) et le poisson rouge (_C. auratus_) transforment l'acide lactique en éthanol, rejeté par les branchies (Fagernes, 2017). Ça ne les rend pas invincibles : dans un bassin gelé, gardez un trou dans la glace, sans jamais la casser."
+  },
+  {
+   "date": "2026-11-15T19:30:00",
+   "type": "savoir",
+   "kicker": "À ENREGISTRER",
+   "title": "Nos 2 guides de la *semaine*",
+   "text": "Repérer une fausse annonce de reptile, et cycler son aquarium avant d'y mettre des poissons : les deux carrousels sont sur notre profil. Enregistrez-les avant votre prochain bac ou votre prochaine bourse."
+  }
+ ]
+}
