@@ -1,0 +1,79 @@
+{
+ "sources": [
+  "Baines F. et al. 2016, How much UV-B does my reptile need? The UV-Tool, a guide to the selection of UV lighting for reptiles and amphibians in captivity. Journal of Zoo and Aquarium Research 4(1) : 42-63 (tableau 1 d'après Ferguson et al. 2010 ; méthodes « ombre » et « rayon de soleil » ; UVI 3 à 5 au soleil du matin ; 7 à 8 maximum absolu sous lampe ; gradient jusqu'à zéro pour toutes les zones ; lampe au-dessus de l'animal ; animaux hypopigmentés)",
+  "Ferguson G.W. et al. 2010, Voluntary exposure of some western-hemisphere snake and lizard species to ultraviolet-B radiation in the field, Zoo Biology 29 : 317-334 (15 espèces mesurées au Solarmeter 6.5, cité par Baines 2016)",
+  "ReptiFiles d'après F. Baines : gecko léopard UVI 0,5 à 1,5 au point chaud, 0,7 au plus pour un albinos ; pogona UVI 4 à 6 au point chaud (savoir/reptiles.md, vérifié par le critique le 29/10) ; annexe de Baines 2016 : Eublepharis macularius zone 1, Pogona vitticeps zone 3-4 (relu par le critique le 13/11)"
+ ],
+ "caption": "Lampe UVB : le bon indice pour votre reptile, zone par zone 🦎\n\nLe « 10 % » ou « 12 % » de la boîte ne dit pas ce que reçoit votre animal. Ce qui compte, c'est l'indice UV (UVI) mesuré à sa hauteur.\n\nLa grille de référence vient du terrain : Ferguson et al. (2010) ont mesuré l'UV reçu par 15 espèces de reptiles sauvages, en Jamaïque et dans le sud et l'ouest des États-Unis, puis Baines et al. (2016) en ont tiré un guide pour la captivité (le UV-Tool).\n\n• Zones 1 et 2 (ombre, crépuscule, exposition occasionnelle) : des UV faibles sur une grande partie du terrarium.\n• Zones 3 et 4 (lézards qui se chauffent en plein soleil) : un « rayon de soleil » vers UVI 3 à 5 (4 à 6 pour un pogona), jamais plus de 7 à 8 sous une lampe.\n• Pour toutes : une ombre sans UV, et la lampe au-dessus.\n\nVotre reptile est en zone 1, 2, 3 ou 4 ? Répondez par un chiffre en commentaire 👇\n\nEnregistrez ce post pour votre prochain changement de lampe 📌\n\n#terrariophilie #reptiles #uvb #pogona #geckoleopard",
+ "slides": [
+  {
+   "type": "cover",
+   "kicker": "ÉCLAIRAGE",
+   "title": "Lampe UVB : *quel indice* pour votre reptile ?",
+   "subtitle": "Gecko léopard 1,5 au plus, pogona 4 à 6 : les 4 zones de Ferguson.",
+   "media_query": "bearded dragon basking",
+   "media_source": "pixabay",
+   "media_index": 0
+  },
+  {
+   "type": "point",
+   "n": 1,
+   "tag": "LA MESURE",
+   "title": "On parle en *UVI*, pas en %",
+   "text": "Le « 10 % » de la boîte, c'est la part d'UVB dans les UV émis, pas ce que reçoit l'animal. Ce qui compte : l'indice UV à sa hauteur, au Solarmeter 6.5 ou d'après les tableaux de distances du fabricant."
+  },
+  {
+   "type": "point",
+   "n": 2,
+   "tag": "ZONES 1 ET 2",
+   "title": "Ombre et crépuscule : des UV *faibles*",
+   "text": "Zone 1 : UVI moyen de 0 à 0,7 dans la nature, 0,6 à 1,4 au plus près de la lampe. Zone 2 (exposition occasionnelle) : moyenne de 0,7 à 1, jusqu'à 3 au plus près."
+  },
+  {
+   "type": "point",
+   "n": 3,
+   "tag": "ZONES 3 ET 4",
+   "title": "Les lézards de plein soleil : un *rayon de soleil*",
+   "text": "Un point chaud lumineux vers UVI 3 à 5, comme le soleil du matin, puis zéro à l'ombre. Jamais plus de 7 à 8 sous une lampe, même en zone 4."
+  },
+  {
+   "type": "point",
+   "n": 4,
+   "tag": "EXEMPLES",
+   "title": "Gecko léopard et *pogona*",
+   "text": "_Eublepharis macularius_ : zone 1, UVI 0,5 à 1,5 au plus près de la lampe. _Pogona vitticeps_ : zone 3 à 4, UVI 4 à 6 au point chaud (T5 HO). Pas la même lampe ni la même distance."
+  },
+  {
+   "type": "point",
+   "n": 5,
+   "tag": "ALBINOS",
+   "title": "Peu de mélanine, *moins d'UV*",
+   "text": "Chez un albinos ou un hypo, les UV entrent plus profondément dans la peau et les yeux. Gecko léopard albinos : 0,7 au plus. Il devrait quand même fabriquer sa vitamine D3."
+  },
+  {
+   "type": "point",
+   "n": 6,
+   "tag": "LA POSITION",
+   "title": "La lampe toujours *au-dessus*",
+   "text": "Venue du haut, la lumière est arrêtée par les arcades et les paupières, qui protègent les yeux. Et la lampe reste hors de portée : brûlures thermiques et brûlures par les UV."
+  },
+  {
+   "type": "checklist",
+   "warn": true,
+   "kicker": "À RETENIR",
+   "title": "Les erreurs à éviter",
+   "items": [
+    "Du verre ou du plexiglas ordinaire sous la lampe",
+    "Le même UV partout, sans coin d'ombre",
+    "Choisir au %, sans jamais mesurer",
+    "Un tube T5 HO gardé plus d'un an sans mesure"
+   ]
+  },
+  {
+   "type": "end",
+   "title": "Votre reptile : zone *1, 2, 3 ou 4* ?",
+   "text": "Répondez par un chiffre en commentaire, et enregistrez ce guide pour votre prochain changement de lampe.",
+   "cta": "Suivez @lecoinrare"
+  }
+ ]
+}

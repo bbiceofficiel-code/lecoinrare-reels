@@ -1,0 +1,68 @@
+{
+ "semaine": "2026-11-16",
+ "theme": "Terrario (UVB, zones de Ferguson) + coupure de courant en hiver (aquario et terrario)",
+ "automatique": "Aucune story n'a d'autocollant : tout part en publication automatique (décision de l'utilisateur, 01/11/2026). Une story par jour, chacune finit par une question A/B ou A/B/C, la réponse d'un quiz arrive le lendemain (bilan du 09/11).",
+ "sources": [
+  "Baines, fiche UVB Lafeber Vet (verre extra-blanc jusqu'à 50 %, acrylique UVT jusqu'à 80 % ; grilles : environ 25 % pour 6 mm, 35 % pour les grilles du commerce) : https://lafeber.com/vet/wp-content/uploads/2024/08/UVB-lighting-for-reptiles-Baines-LV-shorter-version-FINAL.pdf ; Anapsid : https://anapsid.org/uvtable.html",
+  "Baines et al. 2016, Journal of Zoo and Aquarium Research 4(1) : le verre et la plupart des plastiques arrêtent les UVB ; une grille en arrête une partie (savoir/reptiles.md)",
+  "Chewy, page coupure de courant (oxygène d'abord) ; Bulk Reef Supply (pompe à air sur piles) : voir carrousels/coupure-courant.json"
+ ],
+ "stories": [
+  {
+   "date": "2026-11-16T20:00:00",
+   "type": "sondage",
+   "title": "Votre premier animal *hors chien et chat*, c'était…",
+   "options": ["Un reptile", "Un poisson", "Un autre (amphibien, mygale…)"]
+  },
+  {
+   "date": "2026-11-17T12:30:00",
+   "type": "quiz",
+   "title": "Une *vitre ordinaire* entre la lampe UVB et votre reptile laisse passer…",
+   "options": ["Tous les UVB", "Environ la moitié", "Presque rien"],
+   "hint2": "La réponse demain en story"
+  },
+  {
+   "date": "2026-11-18T20:00:00",
+   "type": "savoir",
+   "kicker": "LA RÉPONSE DU QUIZ",
+   "title": "C : *presque rien*",
+   "text": "Le verre ordinaire et l'acrylique courant arrêtent l'essentiel des UVB. Une grille en arrête 25 à 35 % environ : on mesure sous la grille.",
+   "text_size": 42,
+   "question": "Chez vous, l'UVB se règle…",
+   "options": ["Mesuré (Solarmeter)", "D'après la boîte", "Pas de lampe UVB"]
+  },
+  {
+   "date": "2026-11-19T20:00:00",
+   "type": "sondage",
+   "title": "Combien de *bacs et terrariums* chez vous ?",
+   "options": ["Un seul", "2 à 4", "5 et plus"]
+  },
+  {
+   "date": "2026-11-20T12:30:00",
+   "type": "quiz",
+   "title": "Coupure de courant : la *priorité n° 1* pour vos poissons ?",
+   "options": ["Les garder au chaud", "Oxygéner l'eau", "Les nourrir"],
+   "hint2": "La réponse demain en story"
+  },
+  {
+   "date": "2026-11-21T19:00:00",
+   "type": "savoir",
+   "kicker": "LA RÉPONSE DU QUIZ",
+   "title": "B : *l'oxygène*",
+   "text": "Le chaud vient juste après. Sans pompe, la surface ne bouge plus et l'oxygène baisse : pompe à air sur piles d'abord, puis couvertures autour du bac. Et on ne nourrit pas.",
+   "text_size": 42,
+   "question": "Une pompe à air sur piles, vous en avez une ?",
+   "options": ["Oui, prête", "Non, pas encore"]
+  },
+  {
+   "date": "2026-11-22T20:00:00",
+   "type": "savoir",
+   "kicker": "À ENREGISTRER",
+   "title": "Nos 2 guides de la *semaine*",
+   "text": "Le bon indice UV pour votre reptile, et le plan en cas de coupure de courant : les deux carrousels sont sur notre profil.",
+   "text_size": 46,
+   "question": "Lequel vous sert le plus ?",
+   "options": ["Les UVB", "La coupure de courant"]
+  }
+ ]
+}

@@ -59,7 +59,12 @@ def story_savoir(img, s):
             taille -= 2  # la carte ne doit pas toucher le logo ni la barre de réponse
         c.texte_en_carte(img, s["text"], y + 40, size=taille)
     elif s.get("text"):
-        c.rich(img, s["text"], y + 40, "medium", 50, charte.GRIS, gap=1.3)
+        y = c.rich(img, s["text"], y + 40, "medium", s.get("text_size", 50), charte.GRIS, gap=1.3)
+    if s.get("options"):  # le savoir se termine par une question A/B (bilan du 09/11 : 0 réponse sans question)
+        if s.get("question"):
+            y = c.rich(img, s["question"], y + 50, "bold", 56, charte.BLANC, gap=1.2)
+        y = options(img, s["options"][:3], y + 30, letters=True, h=104, pas=124)
+        consigne(img, s, y, len(s["options"][:3]))
     return img
 
 

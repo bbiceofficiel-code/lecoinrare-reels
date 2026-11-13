@@ -1,0 +1,82 @@
+{
+ "sources": [
+  "Chewy, How to keep your aquarium fish alive during a power outage : https://www.chewy.com/education/fish/general/how-to-keep-your-aquarium-fish-alive-during-a-power-outage (oxygène d'abord ; couvercle et couvertures ; petit bac = refroidit plus vite ; filtre fermé sans oxygène en 4 à 6 h, vider l'eau stagnante et nettoyer la turbine avant de relancer ; tester ammoniaque et nitrites ; ne pas nourrir ; points blancs jusqu'à deux semaines après un coup de froid)",
+  "Bulk Reef Supply, Power outages : https://www.bulkreefsupply.com/content/post/power-outages-what-to-do-to-keep-your-tank-alive (pompe à air sur piles)",
+  "Zen Habitats, Weather, fire and other emergencies : https://www.zenhabitats.com/pages/weather-fire-and-other-emergencies-ensuring-your-reptiles-health (terrarium : couvrir en gardant une aération, boîte isotherme, chaufferettes et bouillottes jamais au contact)",
+  "American Killifish Association : les chaufferettes consomment de l'air, il leur faut une aération (https://aka.org/general-shipping-fish-an-overview/)",
+  "RTE, EcoWatt (monecowatt.fr) : alerte en cas de tension sur le réseau ou de délestage, pas des coupures dues aux tempêtes (https://www.info.gouv.fr/actualite/ecowatt-le-dispositif-pour-signaler-les-tensions-sur-le-reseau-electrique)",
+  "Reptiles : pas de repas au froid (Zen Habitats https://www.zenhabitats.com/blogs/reptile-care-sheets-resources/emergency-preparedness-and-care-for-reptiles ; Petco ; anapsid.org/vomiting.html) ; surchauffe des chaufferettes (MorphMarket https://support.morphmarket.com/article/183-should-i-use-a-heat-pack)"
+ ],
+ "caption": "Coupure de courant en hiver : le plan pour votre aquarium et votre terrarium ⚡\n\nAquarium\n1. L'oxygène d'abord : pompe à air sur piles avec diffuseur.\n2. La chaleur : couvercle fermé, couvertures ou polystyrène autour du bac.\n3. Le filtre externe : fermé, il peut manquer d'oxygène dès 4 à 6 h, selon son encrassement. Au retour du courant, videz son eau stagnante et nettoyez la turbine avant de le relancer.\n4. Pas de nourriture pendant la panne.\n\nTerrarium\n5. On n'ouvre pas, on couvre en gardant une aération. Petit animal : boîte isotherme percée, avec un thermomètre (la chaufferette consomme de l'oxygène et peut surchauffer). Bouillotte ou chaufferette enveloppée, jamais au contact. On ne nourrit pas un reptile refroidi : on attend qu'il soit revenu à ses températures.\n\nAprès\n6. Tests ammoniaque et nitrites, contrôle de chaque thermostat, et l'œil sur les points blancs pendant deux semaines.\n\nRécifal : la circulation compte autant que l'air, une pompe de brassage sur batterie est le meilleur investissement. Groupe électrogène ou chauffage d'appoint à combustion : jamais à l'intérieur (monoxyde de carbone).\n\nVotre plus longue coupure, c'était combien d'heures ? Répondez en commentaire 👇\n\nEnvoyez-le à un ami qui a un bac, et enregistrez-le avant la prochaine tempête 📌\n\n#aquariophilie #terrariophilie #aquarium #reptiles #poissons",
+ "slides": [
+  {
+   "type": "cover",
+   "kicker": "TEMPÊTES D'HIVER",
+   "title": "Coupure de courant : *le plan* pour votre bac et votre terrarium",
+   "subtitle": "À enregistrer maintenant, pas pendant la panne.",
+   "media_query": "planted freshwater aquarium",
+   "media_source": "wikimedia",
+   "media_index": 1
+  },
+  {
+   "type": "point",
+   "n": 1,
+   "tag": "AQUARIUM",
+   "title": "*L'oxygène* avant tout",
+   "text": "Sans pompe ni filtre, la surface ne bouge plus, et c'est là que se font les échanges de gaz. Une pompe à air sur piles avec diffuseur, c'est le premier réflexe."
+  },
+  {
+   "type": "point",
+   "n": 2,
+   "tag": "AQUARIUM",
+   "title": "Garder la *chaleur*",
+   "text": "Couvercle fermé, bac entouré de couvertures ou de plaques de polystyrène. Un petit bac refroidit plus vite qu'un grand : surveillez-le en premier."
+  },
+  {
+   "type": "point",
+   "n": 3,
+   "tag": "AQUARIUM",
+   "title": "Le *filtre externe* au redémarrage",
+   "text": "Fermé, il peut manquer d'oxygène dès 4 à 6 h. Avant de le relancer : videz son eau stagnante, nettoyez la turbine, remplissez-le d'eau du bac."
+  },
+  {
+   "type": "point",
+   "n": 4,
+   "tag": "AQUARIUM",
+   "title": "On ne *nourrit pas*",
+   "text": "Sans filtration, restes et déjections finissent en ammoniaque. Un poisson adulte en bonne santé tient sans problème quelques jours à jeun. Reprise 24 h après, en petites rations."
+  },
+  {
+   "type": "point",
+   "n": 5,
+   "tag": "TERRARIUM",
+   "title": "On n'ouvre pas, on *couvre*",
+   "text": "Couvertures autour, en gardant une aération. Petit animal : boîte isotherme percée et thermomètre. Chaufferette ou bouillotte enveloppée, jamais au contact. Pas de repas avant le retour du chaud."
+  },
+  {
+   "type": "point",
+   "n": 6,
+   "tag": "APRÈS",
+   "title": "Les *contrôles* à faire",
+   "text": "Tests ammoniaque et nitrites, chaque thermostat vérifié au thermomètre. Et l'œil sur les points blancs : ils peuvent sortir jusqu'à deux semaines après un coup de froid."
+  },
+  {
+   "type": "checklist",
+   "kicker": "À PRÉPARER CET HIVER",
+   "title": "Le kit coupure de courant",
+   "items": [
+    "Pompe à air sur piles et piles neuves",
+    "Couvertures ou plaques de polystyrène",
+    "Bouillottes ou chaufferettes",
+    "Un thermomètre par bac",
+    "L'appli EcoWatt (alertes de délestage)"
+   ]
+  },
+  {
+   "type": "end",
+   "title": "Votre plus longue coupure : *combien d'heures* ?",
+   "text": "Répondez en commentaire, et envoyez ce guide à un ami qui a un bac ou un terrarium.",
+   "cta": "Suivez @lecoinrare"
+  }
+ ]
+}
