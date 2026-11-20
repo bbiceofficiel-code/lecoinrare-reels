@@ -1,0 +1,80 @@
+{
+ "sources": [
+  "ReptiFiles, Leopard Gecko Care Sheet (15 à 20 ans, parfois plus) : https://reptifiles.com/wp-content/uploads/2020/10/Leopard-Gecko-Care-Sheet-PDF.pdf (ne pas citer cette fiche pour l'UVB : elle affiche encore UVI 2-3)",
+  "ReptiFiles, Enclosure Size (no smaller than 36 x 18 x 18 pouces = 90 x 45 x 45 cm ; larger is always better) : https://reptifiles.com/leopard-gecko-care/leopard-gecko-enclosure-size/",
+  "RSPCA, Leopard Gecko Care Sheet (10 à 20 ans en captivité) : https://www.rspca.org.uk/documents/1494939/0/Leopard%2BGecko%2BCare%2BSheet%2B%28PDF%2B379KB%29.pdf",
+  "Point chaud 34-36 °C mesuré en surface, cachette humide : savoir/reptiles.md (ReptiFiles) ; UVB zone 1 de Ferguson (UVI 0,5 à 1,5) : Baines et al. 2016, carrousel uvb-zones-ferguson",
+  "Arrêté du 8 octobre 2018 consolidé (attestation de cession art. 10, document d'information art. 11) : https://www.legifrance.gouv.fr/loda/id/JORFTEXT000037491137",
+  "Photo de couverture : HTO, domaine public, Wikimedia Commons (recherche Eublepharis macularius, candidat 5), recadrée par compose.py",
+  "Message de saison : ecosysteme-france.md, décembre (un animal n'est pas un cadeau impulsif)"
+ ],
+ "caption": "Un gecko léopard sous le sapin ? Avant de dire oui, voici ce qu'il demande vraiment 🦎\n\n1. Du temps : bien maintenu, il vit 15 à 20 ans, parfois plus (ReptiFiles).\n2. De la place : au moins 90 × 45 × 45 cm pour un adulte, plus grand si possible.\n3. Un terrarium réglé AVANT son arrivée : point chaud mesuré en surface, thermostat, cachette humide, UVB doux si vous en mettez.\n4. Des insectes vivants chaque semaine, saupoudrés de calcium, toute l'année.\n5. Un vétérinaire NAC repéré à l'avance.\n6. Les papiers : à la vente, une attestation de cession (une facture peut suffire pour un gecko léopard) et un document d'information, qui doit indiquer le coût d'entretien annuel.\n\nUn animal se choisit en famille, avec un adulte qui s'en occupe pour de vrai. Pour Noël, offrez plutôt le matériel, un livre d'élevage ou une sortie en bourse.\n\nEt vous, votre premier reptile, vous l'avez eu enfant, ado ou adulte ? 👇\n\nEnregistrez ce post 📌 et envoyez-le à quelqu'un qui hésite avant Noël.\n\n#geckoleopard #terrariophilie #reptiles #nac #lecoinrare",
+ "slides": [
+  {
+   "type": "cover",
+   "kicker": "AVANT NOËL",
+   "title": "Un gecko léopard sous le sapin ? *Ce qu'il demande vraiment*",
+   "subtitle": "Il sera peut-être encore là dans 20 ans.",
+   "media": "media/gecko-noel-cover.jpg"
+  },
+  {
+   "type": "point",
+   "n": 1,
+   "tag": "1. DU TEMPS",
+   "title": "*15 à 20 ans*, parfois plus",
+   "text": "Bien maintenu, un gecko léopard (_Eublepharis macularius_) vit 15 à 20 ans. L'enfant de 10 ans qui le reçoit aura 25 ou 30 ans, et le gecko sera peut-être toujours là."
+  },
+  {
+   "type": "point",
+   "n": 2,
+   "tag": "2. DE LA PLACE",
+   "title": "Au moins *90 × 45 × 45 cm*",
+   "text": "C'est le minimum conseillé par ReptiFiles pour un adulte, et plus grand vaut mieux. Le petit kit en coffret sera vite trop petit : prévoyez directement la taille adulte."
+  },
+  {
+   "type": "point",
+   "n": 3,
+   "tag": "3. LE MATÉRIEL",
+   "title": "Réglé *avant* son arrivée",
+   "text": "Point chaud mesuré en surface, thermostat, cachette humide, UVB doux si vous en mettez : tout doit tourner et être stable plusieurs jours avant, pas le 25 au matin."
+  },
+  {
+   "type": "point",
+   "n": 4,
+   "tag": "4. LA NOURRITURE",
+   "title": "Des insectes *vivants*, toute l'année",
+   "text": "Grillons, blattes, vers : il faut les acheter, les nourrir et les saupoudrer de calcium, chaque semaine, vacances comprises."
+  },
+  {
+   "type": "point",
+   "n": 5,
+   "tag": "5. LA SANTÉ",
+   "title": "Un vétérinaire *NAC*",
+   "text": "Tous les vétérinaires ne soignent pas les reptiles. Repérez un vétérinaire NAC près de chez vous avant l'arrivée, pas le jour où il ne mange plus."
+  },
+  {
+   "type": "point",
+   "n": 6,
+   "tag": "6. LES PAPIERS",
+   "title": "Les *papiers* de la vente",
+   "text": "À la vente, le vendeur doit vous remettre une attestation de cession (une facture peut suffire) et un document d'information avec le coût d'entretien annuel : lisez-le avant de dire oui."
+  },
+  {
+   "type": "checklist",
+   "kicker": "L'IDÉE CADEAU",
+   "title": "Offrir à un passionné *sans offrir d'animal*",
+   "items": [
+    "Un thermomètre infrarouge",
+    "Un bon thermostat",
+    "Un livre d'élevage de référence",
+    "Une sortie en bourse ensemble"
+   ]
+  },
+  {
+   "type": "end",
+   "title": "Enfant, ado ou adulte ?",
+   "text": "Votre premier reptile, vous l'avez eu à quel âge ? Un mot en commentaire. Et envoyez ce post à qui hésite avant Noël.",
+   "cta": "Suivez @lecoinrare"
+  }
+ ]
+}

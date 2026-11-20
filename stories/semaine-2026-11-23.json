@@ -1,0 +1,72 @@
+{
+ "semaine": "2026-11-23",
+ "theme": "Fin d'année responsable : un animal n'est pas un cadeau impulsif (gecko léopard) + acheter un poisson en bonne santé",
+ "automatique": "Aucune story n'a d'autocollant : tout part en publication automatique (décision de l'utilisateur, 01/11/2026). Une story par jour, chacune finit par une question A/B ou A/B/C, la réponse d'un quiz arrive le lendemain (bilan du 09/11).",
+ "sources": [
+  "ReptiFiles, Leopard Gecko Care Sheet (15 à 20 ans, parfois plus) : https://reptifiles.com/wp-content/uploads/2020/10/Leopard-Gecko-Care-Sheet-PDF.pdf ; RSPCA (10 à 20 ans)",
+  "Iridovirus du gourami nain (DGIV) : 18,7 % des 2 086 gouramis importés testés avant quarantaine, 21,9 % en animalerie (Rimmer et al. 2015, Prev. Vet. Med., projet FRDC 2009/044) : https://researchprofiles.canberra.edu.au/en/publications/detection-of-dwarf-gourami-iridovirus-infectious-spleen-and-kidne/ ; savoir/aqua-complements.md",
+  "Ichthyophthirius vulnérable aux traitements seulement au stade nageur (théronte) ; cycle plus rapide au chaud : savoir/mythes-aqua.md"
+ ],
+ "stories": [
+  {
+   "date": "2026-11-23T20:00:00",
+   "type": "sondage",
+   "title": "Un animal *en cadeau de Noël*, chez vous…",
+   "options": ["J'en ai déjà offert un", "J'en ai déjà reçu un", "Jamais"]
+  },
+  {
+   "date": "2026-11-24T12:30:00",
+   "type": "quiz",
+   "title": "Bien maintenu, un *gecko léopard* vit environ…",
+   "options": ["5 ans", "10 ans", "15 à 20 ans"],
+   "hint2": "La réponse demain en story"
+  },
+  {
+   "date": "2026-11-25T19:00:00",
+   "type": "savoir",
+   "kicker": "LA RÉPONSE DU QUIZ",
+   "title": "C : *15 à 20 ans*",
+   "text": "Et parfois plus. Offert à un enfant de 10 ans, un gecko léopard peut encore être là quand il en aura 30.",
+   "text_size": 44,
+   "question": "Quand l'enfant part faire ses études, le gecko…",
+   "options": ["Part avec lui", "Reste chez les parents", "On n'y a pas pensé"]
+  },
+  {
+   "date": "2026-11-26T19:00:00",
+   "type": "savoir",
+   "kicker": "LE SAVIEZ-VOUS ?",
+   "title": "*Un virus* qui ne se voit pas",
+   "text": "En Australie, près de 19 % des gouramis importés, testés avant leur quarantaine, portaient l'iridovirus du gourami nain. Aucun traitement n'existe.",
+   "text_size": 40,
+   "question": "Vos nouveaux poissons, quarantaine ?",
+   "options": ["Oui, toujours", "Pas toujours"]
+  },
+  {
+   "date": "2026-11-27T12:30:00",
+   "type": "quiz",
+   "title": "En eau douce, le parasite des *points blancs* se traite le mieux quand il est…",
+   "options": ["Sur la peau du poisson", "Dans l'eau, en train de nager", "Enkysté au fond du bac"],
+   "hint2": "La réponse demain en story"
+  },
+  {
+   "date": "2026-11-28T19:00:00",
+   "type": "savoir",
+   "kicker": "LA RÉPONSE DU QUIZ",
+   "title": "B : *quand il nage*",
+   "text": "Sous la peau du poisson ou dans son kyste, _Ichthyophthirius_ est protégé. Seul le stade nageur est touché : on traite jusqu'à plusieurs jours après le dernier point blanc.",
+   "text_size": 42,
+   "question": "Les points blancs, vous les avez déjà eus ?",
+   "options": ["Oui", "Non, jamais"]
+  },
+  {
+   "date": "2026-11-29T20:00:00",
+   "type": "savoir",
+   "kicker": "À ENREGISTRER",
+   "title": "Nos 2 guides de la *semaine*",
+   "text": "Ce qu'un gecko léopard demande vraiment avant d'être offert, et les 6 signes à repérer dans le bac avant d'acheter un poisson : les deux carrousels sont sur notre profil.",
+   "text_size": 42,
+   "question": "Lequel vous sert le plus ?",
+   "options": ["Le gecko", "Les poissons"]
+  }
+ ]
+}

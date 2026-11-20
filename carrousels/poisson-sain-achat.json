@@ -1,0 +1,84 @@
+{
+ "sources": [
+  "Points blancs comme du sel = Ichthyophthirius ; ne pas acheter dans un bac où un poisson est malade ou mort, prudence avec les bacs sur la même filtration ; nageoires collées ; respiration rapide : https://gensou.sg/how-to-pick-healthy-fish-at-shop/ ; https://www.tankflare.com/blogs/how-to-buy-healthy-fish-at-the-pet-store ; https://www.petplace.com/article/fish/general/how-to-tell-if-your-fish-are-sick",
+  "Cycle d'Ichthyophthirius (vulnérable seulement au stade nageur) : savoir/mythes-aqua.md",
+  "Quarantaine de 2 à 4 semaines (et plus selon les sources) : https://theifishstore.com/blogs/news/common-freshwater-fish-diseases-symptoms-prevention-when-to-treat ; savoir/aqua-complements.md (iridovirus du gourami nain, FRDC)",
+  "Photo de couverture : Mariajudyta, domaine public, Wikimedia Commons (néons, recherche Paracheirodon innesi, candidat 4)",
+  "Ne pas verser l'eau du sac : carrousel acclimatation-sac (SRAC 3903)"
+ ],
+ "caption": "Avant d'acheter un poisson, regardez le bac, pas seulement le poisson 🐟\n\n1. Un poisson mort ou mourant : tout le bac est suspect, et parfois toute la rangée reliée au même filtre.\n2. Des points blancs comme du sel, éparpillés : souvent Ichthyophthirius, très contagieux.\n3. Des nageoires collées au corps, un poisson prostré dans un coin.\n4. Des ouïes qui battent vite, des poissons qui happent l'air en surface (sauf les espèces qui respirent l'air, comme les bettas, les gouramis ou les corydoras, qui montent normalement).\n5. Un ventre creusé : demandez à les voir manger.\n6. Des poissons arrivés la veille : demandez la date d'arrivée.\n\nEt chez vous : jamais l'eau du sac dans le bac, et une quarantaine de quelques semaines, dans un bac au filtre déjà maturé, avant le bac principal.\n\nEt vous, vous regardez quoi en premier ? Un mot en commentaire 👇\n\nEnregistrez ce post 📌 avant votre prochain passage en animalerie.\n\n#aquariophilie #aquarium #poissons #aquariumeaudouce #lecoinrare",
+ "slides": [
+  {
+   "type": "cover",
+   "kicker": "ACHETER EN CONFIANCE",
+   "title": "*6 signes* à repérer dans le bac avant d'acheter un poisson",
+   "subtitle": "Le premier se voit en dix secondes.",
+   "media": "media/poisson-cover.jpg"
+  },
+  {
+   "type": "point",
+   "n": 1,
+   "warn": true,
+   "tag": "SIGNE 1",
+   "title": "Un poisson *mort* dans le bac",
+   "text": "Ses voisins sont peut-être déjà malades sans le montrer. Tout le bac est suspect, et parfois toute la rangée de bacs reliés au même filtre."
+  },
+  {
+   "type": "point",
+   "n": 2,
+   "warn": true,
+   "tag": "SIGNE 2",
+   "title": "Des *points blancs* comme du sel",
+   "text": "Éparpillés sur le corps et les nageoires : souvent _Ichthyophthirius_, très contagieux, on n'achète rien dans ce bac. Alignés sur les opercules d'un poisson rouge mâle : tubercules nuptiaux."
+  },
+  {
+   "type": "point",
+   "n": 3,
+   "warn": true,
+   "tag": "SIGNE 3",
+   "title": "Des *nageoires collées* au corps",
+   "text": "Nageoires repliées, poisson qui se dandine sur place ou reste prostré dans un coin : stress ou maladie. Dans le doute, on attend."
+  },
+  {
+   "type": "point",
+   "n": 4,
+   "warn": true,
+   "tag": "SIGNE 4",
+   "title": "Une *respiration* trop rapide",
+   "text": "Ouïes qui battent vite, poissons qui happent l'air en surface : eau pauvre en oxygène ou parasites des branchies. Sauf bettas, gouramis et corydoras, qui montent respirer normalement."
+  },
+  {
+   "type": "point",
+   "n": 5,
+   "warn": true,
+   "tag": "SIGNE 5",
+   "title": "Un *ventre creusé*",
+   "text": "Ventre creux, dos qui se voûte : le poisson ne mange plus depuis un moment, ou il est parasité. Demandez à voir le bac nourri."
+  },
+  {
+   "type": "point",
+   "n": 6,
+   "warn": true,
+   "tag": "SIGNE 6",
+   "title": "Arrivés *la veille* ? Demandez",
+   "text": "Les poissons tout juste importés sont les plus fragiles. Demandez la date d'arrivée : un vendeur sérieux la connaît et peut vous les réserver quelques jours."
+  },
+  {
+   "type": "checklist",
+   "kicker": "LES BONS RÉFLEXES",
+   "title": "Une fois chez vous",
+   "items": [
+    "Jamais l'eau du sac dans votre bac",
+    "Un bac de quarantaine avec un filtre déjà maturé",
+    "Quelques semaines d'observation avant le bac principal",
+    "Au moindre doute, demander à un passionné ou à un vétérinaire"
+   ]
+  },
+  {
+   "type": "end",
+   "title": "Vous regardez quoi en premier ?",
+   "text": "Nageoires, ventre, yeux... Un mot en commentaire. Et envoyez ce post à qui va acheter ses prochains poissons.",
+   "cta": "Suivez @lecoinrare"
+  }
+ ]
+}
